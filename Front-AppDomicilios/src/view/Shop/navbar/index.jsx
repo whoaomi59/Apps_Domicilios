@@ -21,12 +21,12 @@ export default function NavbarShop({ logo }) {
         </div>
 
         <div class="flex items-center gap-x-1 lg:gap-x-2 ms-auto py-1 lg:ps-6 lg:order-3 lg:col-span-3">
-          <button
-            type="button"
+          <a
+            href="/login"
             class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium text-nowrap rounded-xl border border-transparent bg-green-500 text-black hover:bg-green-600 text-white"
           >
             Ingresar
-          </button>
+          </a>
 
           <div class="lg:hidden">
             <button

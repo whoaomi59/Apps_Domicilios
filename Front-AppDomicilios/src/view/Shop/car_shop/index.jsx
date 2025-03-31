@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function Car_Shop() {
+export default function Car_Shop({ usuarios }) {
   const [products, setProducts] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
   const shippingCost = 2.0;
@@ -83,7 +83,7 @@ export default function Car_Shop() {
         const totalPedido = productos.reduce((sum, p) => sum + p.subtotal, 0);
 
         let response = await axios.post(`/api/pedidos/controller.php`, {
-          cliente_id: 3,
+          cliente_id: usuarios.id,
           negocio_id: negocioId,
           total: totalPedido.toFixed(2),
           estado: "pendiente",

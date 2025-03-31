@@ -139,3 +139,6 @@ CREATE TABLE rol_rutas (
     FOREIGN KEY (ruta_id) REFERENCES rutas(id) ON DELETE CASCADE
 );
 
+
+ALTER TABLE `negocios` CHANGE `logo` `logo` BLOB NOT NULL;
+

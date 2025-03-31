@@ -5,11 +5,32 @@ import { fields, ModelsUsuarios } from "./models";
 
 const Usuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
+  const [refresh, setrefresh] = useState([]);
 
   const abrirModal = () => {};
   const Verdetalle = () => {};
-  const handleFormSubmit = (newData) => {
-    setData([...data, { id: data.length + 1, ...newData }]);
+
+  const handleFormSubmit = async (newData) => {
+    try {
+      let response = await axios.post(`/api/usuarios/controller.php`, {
+        email: newData.email,
+
+        empresa_id: 1,
+
+        nombre: newData.nombre,
+
+        password: newData.password,
+
+        rol: newData.rol,
+
+        telefono: newData.telefono,
+      });
+      console.log(response);
+      setrefresh((prev) => !prev);
+      return alert("Registrado!");
+    } catch (error) {
+      alert(error);
+    }
   };
 
   useEffect(() => {
@@ -17,7 +38,7 @@ const Usuarios = () => {
       .get("/api/usuarios/controller.php")
       .then((response) => setUsuarios(response.data))
       .catch((error) => console.error("Error al obtener usuarios", error));
-  }, []);
+  }, [refresh]);
 
   return (
     <div className="p-4">

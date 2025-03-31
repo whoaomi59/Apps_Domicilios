@@ -1,7 +1,8 @@
 export const Columns = [
   { key: "id_producto", label: "id" },
-  { key: "Negocio", label: "Negocio" },
+  { key: "img", label: "img" },
   { key: "nombre_producto", label: "Nombre" },
+  { key: "Negocio", label: "Negocio" },
   { key: "descripcion_productos", label: "Descripcion" },
   { key: "precio_producto", label: "Precio" },
   { key: "stock_producto", label: "Stock" },

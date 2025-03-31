@@ -2,9 +2,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-export default function Detalle_Pedido({ logo, empresa }) {
-  const { id } = useParams();
+export default function Detalle_Pedido({
+  logo,
+  empresa,
+  datos_empresa,
+  usuarios,
+}) {
+  const { id, nombre } = useParams();
   const [data, setData] = useState([]);
+  const FechaHoy = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
 
   useEffect(() => {
     if (!id) return; // Evita hacer la solicitud si id es undefined o null
@@ -25,7 +31,7 @@ export default function Detalle_Pedido({ logo, empresa }) {
     GET();
   }, [id]); // ✅ Agrega `id` como dependencia
 
-  console.log(data);
+  console.log(usuarios);
 
   return (
     <div className="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto my-4 sm:my-10">
@@ -56,13 +62,13 @@ export default function Detalle_Pedido({ logo, empresa }) {
               <span className="mt-1 block text-gray-500">3682303</span>
 
               <address className="mt-4 not-italic text-gray-800">
-                45 Roker Terrace
+                {datos_empresa.nombre}
                 <br />
-                Latheronwheel
+                {datos_empresa.descripcion}
                 <br />
-                KW5 8NW, London
+                {datos_empresa.direccion}
                 <br />
-                United Kingdom
+                {datos_empresa.telefono},{datos_empresa.email}
                 <br />
               </address>
             </div>
@@ -74,15 +80,9 @@ export default function Detalle_Pedido({ logo, empresa }) {
           <div className="mt-8 grid sm:grid-cols-2 gap-3">
             <div>
               <h3 className="text-lg font-semibold text-gray-800">Cobrar a:</h3>
-              <h3 className="text-lg font-semibold text-gray-800">
-                Sara Williams
-              </h3>
+              <h3 className="text-lg font-semibold text-gray-800">{nombre}</h3>
               <address className="mt-2 not-italic text-gray-500">
-                280 Suzanne Throughway,
-                <br />
-                Breannabury, OR 45801,
-                <br />
-                United States
+                Colombia
                 <br />
               </address>
             </div>
@@ -95,13 +95,13 @@ export default function Detalle_Pedido({ logo, empresa }) {
                   <dt className="col-span-3 font-semibold text-gray-800">
                     Fecha de factura:
                   </dt>
-                  <dd className="col-span-2 text-gray-500">03/10/2018</dd>
+                  <dd className="col-span-2 text-gray-500">{FechaHoy}</dd>
                 </dl>
                 <dl className="grid sm:grid-cols-5 gap-x-3">
                   <dt className="col-span-3 font-semibold text-gray-800">
                     Fecha de vencimiento:
                   </dt>
-                  <dd className="col-span-2 text-gray-500">03/11/2018</dd>
+                  <dd className="col-span-2 text-gray-500">{FechaHoy}</dd>
                 </dl>
               </div>
               {/* End Grid */}

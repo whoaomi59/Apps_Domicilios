@@ -5,8 +5,8 @@ import { ArrowRightCircleIcon } from "@heroicons/react/24/outline";
 export default function PedidosShop() {
   const [usuarios, setUsuarios] = useState([]);
 
-  const Detalle = (id) => {
-    window.location.href = `/shop/pedidos/detalle/${id}`;
+  const Detalle = (item) => {
+    window.location.href = `/shop/pedidos/detalle/${item.id_pedido}/${item.usuario_pedido}`;
   };
 
   useEffect(() => {
@@ -119,7 +119,7 @@ export default function PedidosShop() {
 
                         <td class="px-4 py-4 text-sm whitespace-nowrap">
                           <button
-                            onClick={() => Detalle(item.id_pedido)}
+                            onClick={() => Detalle(item)}
                             className={`p-2 rounded bg-green-500   hover:bg-gray-400 m-0.5`}
                           >
                             <ArrowRightCircleIcon className="w-5 text-white" />

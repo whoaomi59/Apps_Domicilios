@@ -25,7 +25,16 @@ switch ($request_method) {
 //OK
 function get() {
     global $conn;
-    $result = $conn->query("SELECT * FROM pedidos");
+    $result = $conn->query("SELECT 
+                    pe.id AS id_pedido,
+                        u.nombre AS usuario_pedido,
+                        n.logo AS logo_pedido,
+                        n.nombre AS nombre_negocio  -- Cambié pe.nombre a n.nombre para evitar confusión
+                        ,pe.estado,
+                        pe.total
+                    FROM pedidos pe
+                    LEFT JOIN usuarios u ON pe.cliente_id = u.id
+                    LEFT JOIN negocios n ON pe.negocio_id = n.id");
     $empresas = $result->fetch_all(MYSQLI_ASSOC);
     echo json_encode($empresas);
 }
@@ -35,7 +44,7 @@ function post() {
     
     $data = json_decode(file_get_contents("php://input"), true);
 
-    if (!isset($data["cliente_id"], $data["negocio_id"], $data["domiciliario_id"], $data["total"], $data["estado"], $data["productos"]) || !is_array($data["productos"])) {
+    if (!isset($data["cliente_id"], $data["negocio_id"], $data["total"], $data["estado"], $data["productos"]) || !is_array($data["productos"])) {
         echo json_encode(["error" => "Faltan datos o formato incorrecto"]);
         return;
     }

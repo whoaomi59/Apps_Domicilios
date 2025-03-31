@@ -15,7 +15,7 @@ FROM pedidos pe
 JOIN usuarios u ON pe.cliente_id = u.id
 JOIN negocios n ON pe.negocio_id = n.id
 JOIN detalle_pedidos dp ON pe.id = dp.pedido_id
-JOIN productos p ON dp.producto_id = p.id;
+JOIN productos p ON dp.producto_id = p.id WHERE pe.id = 20;
 
 
 SELECT * FROM empresa_imagenes;
@@ -32,3 +32,15 @@ SELECT rutas.nombre, rutas.path
 FROM rol_rutas
 JOIN rutas ON rol_rutas.ruta_id = rutas.id
 WHERE rol_rutas.rol = 'admin';
+
+
+SELECT 
+ pe.id AS id_pedido,
+    u.nombre AS usuario_pedido,
+    n.logo AS logo_pedido,
+    n.nombre AS nombre_negocio  -- Cambié pe.nombre a n.nombre para evitar confusión
+    ,pe.estado,
+    pe.total
+FROM pedidos pe
+LEFT JOIN usuarios u ON pe.cliente_id = u.id
+LEFT JOIN negocios n ON pe.negocio_id = n.id WHERE pe.cliente_id=3;

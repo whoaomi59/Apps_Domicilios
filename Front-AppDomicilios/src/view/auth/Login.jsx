@@ -1,4 +1,5 @@
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
 
 const Login = () => {
@@ -20,14 +21,22 @@ const Login = () => {
           },
         }
       );
-      console.log(response.data);
       const token = await response.data.token;
 
       if (token) {
         localStorage.setItem("token", token);
         setMessage("Login exitoso. Redirigiendo...");
+
+        const decoded = jwtDecode(token);
+
+        const rutas = {
+          admin: "/dashboard",
+          negocio: "/dashboard",
+          default: "/shop/negocios",
+        };
+
         setTimeout(() => {
-          window.location.href = "/dashboard"; // Redirigir a dashboard o panel de usuario
+          window.location.href = rutas[decoded.rol] || rutas.default;
         }, 1000);
       } else {
         setMessage(data.error);

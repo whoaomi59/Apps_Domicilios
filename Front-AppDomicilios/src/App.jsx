@@ -20,11 +20,14 @@ import { jwtDecode } from "jwt-decode"; // ✅ Forma correcta
 import PedidosShop from "./view/Shop/Pedidos";
 import Car_Shop from "./view/Shop/car_shop";
 import Detalle_Pedido from "./view/Shop/detalle_pedido";
+import Page_Fount from "./components/content/pague_fout";
+import Pedidos from "./view/admin/pedidos";
 
 function App() {
   const [Rol, setRol] = useState(null);
   const [IdUser, setIdUser] = useState(null);
   const [empresa, setEmpresa] = useState({});
+  const [usuarios, setusuarios] = useState(null);
 
   axios.defaults.baseURL = "http://localhost/API/";
 
@@ -33,9 +36,9 @@ function App() {
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        console.log(decoded);
         setIdUser(decoded.id);
         setRol(decoded.rol); // ✅ Se actualiza solo una vez
+        return setusuarios(decoded);
       } catch (error) {
         console.error("Error decodificando el token:", error);
       }
@@ -59,6 +62,7 @@ function App() {
       <Router>
         <Routes>
           {/* AUTENTICACIÓN */}
+
           <Route path="/login" element={<Login />} />
           <Route path="/request-reset" element={<RequestReset />} />
           <Route path="/reset-password" element={<ResetPassword />} />
@@ -75,10 +79,17 @@ function App() {
                     <Route path="/usuarios" element={<Usuarios />} />
                     <Route path="/empresas" element={<Empresas />} />
                     <Route
+                      path="/pedidos"
+                      element={<Pedidos IdUser={IdUser} Roles={Rol} />}
+                    />
+                    <Route
                       path="/negocios"
                       element={<Negocios IdUser={IdUser} Roles={Rol} />}
                     />
-                    <Route path="/productos" element={<Productos />} />
+                    <Route
+                      path="/productos/:id"
+                      element={<Productos IdUser={IdUser} Roles={Rol} />}
+                    />
                   </Routes>
                 </Container>
               </PrivateRoute>
@@ -95,24 +106,41 @@ function App() {
                     path="/productos/:id/:name"
                     element={<ProductosShop />}
                   />
-                  <Route path="/car_shop" element={<Car_Shop />} />
-                  <Route path="/pedidos" element={<PedidosShop />} />
                   <Route
-                    path="/pedidos/detalle/:id"
+                    path="/car_shop"
                     element={
-                      <Detalle_Pedido
-                        logo={empresa.logo}
-                        empresa={empresa.nombre}
-                      />
+                      <PrivateRoute>
+                        <Car_Shop usuarios={usuarios} />
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/pedidos"
+                    element={
+                      <PrivateRoute>
+                        <PedidosShop />
+                      </PrivateRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/pedidos/detalle/:id/:nombre"
+                    element={
+                      <PrivateRoute>
+                        <Detalle_Pedido
+                          logo={empresa.logo}
+                          empresa={empresa.nombre}
+                          datos_empresa={empresa}
+                          usuarios={usuarios}
+                        />
+                      </PrivateRoute>
                     }
                   />
                 </Routes>
               </>
             }
           />
-
-          {/* Página No Encontrada */}
-          <Route path="*" element={<h1>No Found</h1>} />
+          <Route path="*" element={<Page_Fount />} />
         </Routes>
       </Router>
     </AuthProvider>

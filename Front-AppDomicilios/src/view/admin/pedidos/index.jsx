@@ -3,47 +3,22 @@ import axios from "axios";
 import Grid from "../../../components/grid/grid";
 import { Columns, fields } from "./models";
 
-const Negocios = ({ IdUser, Roles }) => {
+const Pedidos = ({ IdUser, Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
-  const [refresh, setrefresh] = useState([]);
 
   const abrirModal = () => {};
   const Verdetalle = () => {};
-
-  const VerProductos = (record) => {
-    console.log(record.idnegocio);
-    window.location.href = `/productos/${record.idnegocio}`;
+  const VerProductos = () => {
+    window.location.href = "/productos";
   };
-
-  const handleFormSubmit = async (formData) => {
-    const form = new FormData(); // Crear un nuevo FormData
-
-    // Recorremos el formData actual y agregamos cada campo al FormData
-    for (const key in formData) {
-      if (formData[key]) {
-        form.append(key, formData[key]); // Si el campo tiene valor, lo agregamos
-      }
-    }
-
-    try {
-      let response = await axios.post("/api/negocios/controller.php", form, {
-        headers: {
-          "Content-Type": "multipart/form-data", // Indicamos que estamos enviando archivos
-        },
-      });
-      console.log(response.data);
-      setrefresh((prev) => !prev);
-      alert("Registrado!");
-    } catch (error) {
-      alert("Error al registrar");
-      console.error(error);
-    }
+  const handleFormSubmit = (newData) => {
+    setData([...data, { id: data.length + 1, ...newData }]);
   };
 
   useEffect(() => {
     const Get = async () => {
       try {
-        let response = await axios.get("/api/negocios/controller.php");
+        let response = await axios.get("/api/pedidos/controller.php");
 
         // Si el usuario es admin, mostrar todas las rutas
         if (Roles.includes("admin")) {
@@ -60,18 +35,21 @@ const Negocios = ({ IdUser, Roles }) => {
       }
     };
     Get();
-  }, [IdUser, Roles, refresh]); // Dependencias para actualizar si cambia el rol
+  }, [IdUser, Roles]); // Dependencias para actualizar si cambia el rol
 
   const Formater = usuarios.map((item) => ({
-    idnegocio: item.idnegocio,
-    logo_negocio: <img src={item.logo_negocio} className="w-15" />,
-    Negocio: item.Negocio,
-    Categoria: item.Categoria,
-    usuario: item.usuario,
-    direccion: item.direccion,
-    telefono: item.telefono,
-    email: item.email,
-    created_at: item.created_at,
+    id_pedido: item.id_pedido,
+    logo_pedido: <img src={item.logo_pedido} className="w-15" />,
+    nombre_negocio: item.nombre_negocio,
+    usuario_pedido: item.usuario_pedido,
+    estado: (
+      <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-gray-100/60">
+        <span class="h-1.5 w-1.5 rounded-full bg-gray-500"></span>
+
+        <h2 class="text-sm font-normal text-gray-500">{item.estado}</h2>
+      </div>
+    ),
+    total: item.total,
   }));
 
   return (
@@ -104,4 +82,4 @@ const Negocios = ({ IdUser, Roles }) => {
   );
 };
 
-export default Negocios;
+export default Pedidos;

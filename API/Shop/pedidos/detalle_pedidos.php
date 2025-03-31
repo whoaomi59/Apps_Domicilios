@@ -26,28 +26,23 @@ switch ($request_method) {
 function get() {
     global $conn;
 
-    $negocio_id = isset($_GET['negocio_id']) ? intval($_GET['negocio_id']) : 0;
+    $id_pedido = isset($_GET['id_pedido']) ? intval($_GET['id_pedido']) : 0;
 
-    if ($negocio_id > 0) {
-        $query = "SELECT p.id AS id_producto, p.nombre AS Producto, p.precio, p.img, n.nombre AS Negocio, t.nombre AS Tipo, P.negocio_id AS negocio_id
-                  FROM productos p
-                  JOIN negocios n ON p.negocio_id = n.id
-                  JOIN tipos_productos t ON p.tipo_id = t.id 
-                  WHERE p.negocio_id  = ?";
+    if ($id_pedido > 0) {
+        $query = "SELECT pe.id AS Pedido, u.nombre AS Cliente, n.nombre AS Negocio, p.nombre AS Producto, dp.cantidad, dp.subtotal
+                FROM pedidos pe
+                JOIN usuarios u ON pe.cliente_id = u.id
+                JOIN negocios n ON pe.negocio_id = n.id
+                JOIN detalle_pedidos dp ON pe.id = dp.pedido_id
+                JOIN productos p ON dp.producto_id = p.id WHERE pe.id = ?";
         
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("i", $negocio_id);
+        $stmt->bind_param("i", $id_pedido);
         $stmt->execute();
         $result = $stmt->get_result();
 
         $productos = [];
         while ($row = $result->fetch_assoc()) {
-            // Convertir la imagen a Base64 si existe
-            if (!empty($row['img'])) {
-                $row['img'] = "data:image/jpeg;base64," . base64_encode($row['img']);
-            } else {
-                $row['img'] = null; // Si no hay imagen, devuelve null
-            }
             $productos[] = $row;
         }
 

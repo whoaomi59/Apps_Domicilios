@@ -34,11 +34,23 @@ function get() {
                     p.negocio_id AS id_negocio,
                     p.precio AS precio_producto,
                     p.stock AS stock_producto,
-                    p.created_at AS fecha_producto
+                    p.created_at AS fecha_producto,p.img,n.usuario_id
                     FROM productos p
                     JOIN negocios n ON p.negocio_id = n.id
-                    JOIN tipos_productos t ON p.tipo_id = t.id;");
-    $empresas = $result->fetch_all(MYSQLI_ASSOC);
+                    JOIN tipos_productos t ON p.tipo_id = t.id");
+ 
+    $empresas = [];
+    while ($row = $result->fetch_assoc()) {
+        // Convertir la imagen a Base64 si existe
+        if (!empty($row['img'])) {
+            $row['img'] = "data:image/jpeg;base64," . base64_encode($row['img']);
+        } else {
+            $row['img'] = null; // Si no hay imagen, devuelve null
+        }
+        $empresas[] = $row;
+    }
+
+
     echo json_encode($empresas);
 }
 //OK

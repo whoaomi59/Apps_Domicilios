@@ -8,13 +8,19 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title }) => {
   );
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value, files } = e.target;
+
+    // Si el campo es un archivo, agregamos el archivo a formData
+    if (files && files.length > 0) {
+      setFormData({ ...formData, [name]: files[0] }); // Solo tomamos el primer archivo
+    } else {
+      setFormData({ ...formData, [name]: value }); // Si no es un archivo, manejamos como texto
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    onSubmit(formData); // Enviar el formData con el archivo incluido
     setFormData(
       fields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {})
     );
@@ -48,6 +54,14 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title }) => {
                     </option>
                   ))}
                 </select>
+              ) : field.type === "file" ? ( // Condición para tipo "file"
+                <input
+                  type="file"
+                  name={field.name}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
+                  required
+                />
               ) : (
                 <input
                   type={field.type || "text"}
