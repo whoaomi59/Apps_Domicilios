@@ -1,0 +1,34 @@
+
+SELECT * FROM usuarios;
+
+SELECT n.nombre AS Negocio, c.nombre AS Categoria 
+FROM negocios n
+JOIN categorias_negocios c ON n.categoria_id = c.id;
+
+SELECT p.nombre AS Producto, n.nombre AS Negocio, t.nombre AS Tipo
+FROM productos p
+JOIN negocios n ON p.negocio_id = n.id
+JOIN tipos_productos t ON p.tipo_id = t.id;
+
+SELECT pe.id AS Pedido, u.nombre AS Cliente, n.nombre AS Negocio, p.nombre AS Producto, dp.cantidad, dp.subtotal
+FROM pedidos pe
+JOIN usuarios u ON pe.cliente_id = u.id
+JOIN negocios n ON pe.negocio_id = n.id
+JOIN detalle_pedidos dp ON pe.id = dp.pedido_id
+JOIN productos p ON dp.producto_id = p.id;
+
+
+SELECT * FROM empresa_imagenes;
+
+SELECT * FROM negocio_imagenes WHERE negocio_id = 1;
+
+SELECT * FROM empresa_videos;
+
+
+SELECT DATE_FORMAT(Horario_inicial, '%r') AS Horario_inicial, DATE_FORMAT(Horario_final, '%r') AS Horario_final FROM negocios;
+
+
+SELECT rutas.nombre, rutas.path
+FROM rol_rutas
+JOIN rutas ON rol_rutas.ruta_id = rutas.id
+WHERE rol_rutas.rol = 'admin';
