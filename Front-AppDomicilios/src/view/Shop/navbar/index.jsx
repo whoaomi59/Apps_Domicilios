@@ -81,7 +81,7 @@ export default function NavbarShop({ logo }) {
             <div>
               <a
                 class="relative inline-block text-black focus:outline-hidden before:absolute before:bottom-0.5 before:start-0 before:-z-1 before:w-full before:h-1 before:bg-green-500 .:text-white"
-                href="#"
+                href="/"
                 aria-current="page"
               >
                 Inicio
@@ -90,7 +90,7 @@ export default function NavbarShop({ logo }) {
             <div>
               <a
                 class="inline-block text-black hover:text-gray-600 focus:outline-hidden focus:text-gray-600 .:text-white .:hover:text-neutral-300 .:focus:text-neutral-300"
-                href="#"
+                href="/shop/negocios"
               >
                 Negocios
               </a>
@@ -98,7 +98,7 @@ export default function NavbarShop({ logo }) {
             <div>
               <a
                 class="inline-block text-black hover:text-gray-600 focus:outline-hidden focus:text-gray-600 .:text-white .:hover:text-neutral-300 .:focus:text-neutral-300"
-                href="#"
+                href="/shop/car_shop"
               >
                 Carrito
               </a>
@@ -106,7 +106,7 @@ export default function NavbarShop({ logo }) {
             <div>
               <a
                 class="inline-block text-black hover:text-gray-600 focus:outline-hidden focus:text-gray-600 .:text-white .:hover:text-neutral-300 .:focus:text-neutral-300"
-                href="#"
+                href="/shop/pedidos"
               >
                 Mis pedidos
               </a>

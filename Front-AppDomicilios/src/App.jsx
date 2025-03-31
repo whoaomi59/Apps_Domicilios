@@ -17,11 +17,15 @@ import { useEffect, useState } from "react";
 import NavbarShop from "./view/Shop/navbar";
 import ProductosShop from "./view/Shop/Productos";
 import { jwtDecode } from "jwt-decode"; // ✅ Forma correcta
+import PedidosShop from "./view/Shop/Pedidos";
+import Car_Shop from "./view/Shop/car_shop";
+import Detalle_Pedido from "./view/Shop/detalle_pedido";
 
 function App() {
   const [Rol, setRol] = useState(null);
   const [IdUser, setIdUser] = useState(null);
   const [empresa, setEmpresa] = useState({});
+
   axios.defaults.baseURL = "http://localhost/API/";
 
   useEffect(() => {
@@ -90,6 +94,17 @@ function App() {
                   <Route
                     path="/productos/:id/:name"
                     element={<ProductosShop />}
+                  />
+                  <Route path="/car_shop" element={<Car_Shop />} />
+                  <Route path="/pedidos" element={<PedidosShop />} />
+                  <Route
+                    path="/pedidos/detalle/:id"
+                    element={
+                      <Detalle_Pedido
+                        logo={empresa.logo}
+                        empresa={empresa.nombre}
+                      />
+                    }
                   />
                 </Routes>
               </>

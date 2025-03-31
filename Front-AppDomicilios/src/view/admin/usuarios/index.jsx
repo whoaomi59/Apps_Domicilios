@@ -14,7 +14,7 @@ const Usuarios = () => {
 
   useEffect(() => {
     axios
-      .get("http://192.168.120.144/API/api/usuarios/controller.php")
+      .get("/api/usuarios/controller.php")
       .then((response) => setUsuarios(response.data))
       .catch((error) => console.error("Error al obtener usuarios", error));
   }, []);
