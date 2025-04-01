@@ -6,14 +6,35 @@ import { useParams } from "react-router-dom";
 
 const Productos = ({ Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
+  const [refresh, setrefresh] = useState([]);
   const { id } = useParams();
-  console.log(id);
 
   const abrirModal = () => {};
   const Verdetalle = () => {};
-  const VerProductos = (record) => {};
-  const handleFormSubmit = (newData) => {
-    setData([...data, { id: data.length + 1, ...newData }]);
+
+  const handleFormSubmit = async (formData) => {
+    const form = new FormData(); // Crear un nuevo FormData
+
+    // Recorremos el formData actual y agregamos cada campo al FormData
+    for (const key in formData) {
+      if (formData[key]) {
+        form.append(key, formData[key]); // Si el campo tiene valor, lo agregamos
+      }
+    }
+
+    try {
+      let response = await axios.post("/api/productos/controller.php", form, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Indicamos que estamos enviando archivos
+        },
+      });
+      console.log(response.data);
+      setrefresh((prev) => !prev);
+      alert("Registrado!");
+    } catch (error) {
+      alert("Error al registrar");
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -37,7 +58,7 @@ const Productos = ({ Roles }) => {
       }
     };
     Get();
-  }, [Roles]); // Dependencias para actualizar si cambia el rol
+  }, [Roles, refresh]); // Dependencias para actualizar si cambia el rol
 
   const Formater = usuarios.map((item) => ({
     id_producto: item.id_producto,
@@ -53,7 +74,7 @@ const Productos = ({ Roles }) => {
   return (
     <div className="p-4">
       <Grid
-        module={"Negocios"}
+        module={"Productos"}
         columns={Columns}
         data={Formater}
         fields={fields}
@@ -68,11 +89,6 @@ const Productos = ({ Roles }) => {
             icon: "TrashIcon",
             className: "bg-red-500 text-white",
             onClick: (record) => Verdetalle(record), // Llama a la función abrirModal con el registro
-          },
-          {
-            icon: "ArrowRightCircleIcon",
-            className: "bg-blue-500 text-white",
-            onClick: (record) => VerProductos(record), // Llama a la función abrirModal con el registro
           },
         ]}
       />

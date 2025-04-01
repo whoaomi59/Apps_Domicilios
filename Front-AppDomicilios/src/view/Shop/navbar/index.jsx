@@ -1,4 +1,4 @@
-export default function NavbarShop({ logo }) {
+export default function NavbarShop({ logo, Roles }) {
   return (
     <header class="flex flex-wrap lg:justify-start lg:flex-nowrap z-50 w-full py-7">
       <nav class="relative max-w-7xl w-full flex flex-wrap lg:grid lg:grid-cols-12 basis-full items-center px-4 md:px-6 lg:px-8 mx-auto">
@@ -111,6 +111,16 @@ export default function NavbarShop({ logo }) {
                 Mis pedidos
               </a>
             </div>
+            {Roles === "admin" && (
+              <div>
+                <a
+                  class="inline-block text-black hover:text-gray-600 focus:outline-hidden focus:text-gray-600 .:text-white .:hover:text-neutral-300 .:focus:text-neutral-300"
+                  href="/dashboard"
+                >
+                  Admin
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </nav>

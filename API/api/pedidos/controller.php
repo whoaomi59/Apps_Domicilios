@@ -25,16 +25,7 @@ switch ($request_method) {
 //OK
 function get() {
     global $conn;
-    $result = $conn->query("SELECT 
-                    pe.id AS id_pedido,
-                        u.nombre AS usuario_pedido,
-                        n.logo AS logo_pedido,
-                        n.nombre AS nombre_negocio  -- Cambié pe.nombre a n.nombre para evitar confusión
-                        ,pe.estado,
-                        pe.total
-                    FROM pedidos pe
-                    LEFT JOIN usuarios u ON pe.cliente_id = u.id
-                    LEFT JOIN negocios n ON pe.negocio_id = n.id");
+    $result = $conn->query("SELECT pe.id AS id_pedido, u.nombre AS usuario_pedido, n.logo AS logo_pedido, n.nombre AS nombre_negocio,pe.estado, pe.total, n.usuario_id FROM pedidos pe LEFT JOIN usuarios u ON pe.cliente_id = u.id LEFT JOIN negocios n ON pe.negocio_id = n.id;");
     $empresas = $result->fetch_all(MYSQLI_ASSOC);
     echo json_encode($empresas);
 }

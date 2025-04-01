@@ -8,14 +8,33 @@ export const Columns = [
   { key: "stock_producto", label: "Stock" },
   { key: "fecha_producto", label: "Fecha" },
 ];
-export const fields = [];
+export const fields = [
+  {
+    name: "negocio_id",
+    label: "Negocio",
+    type: "select",
+    options: [
+      { value: "1", label: "Restaurante Don Pepe" },
+      { value: "2", label: "Supermercado La Oferta" },
+      { value: "3", label: "Babaria" },
+      { value: "4", label: "Restaurante Carlos" },
+      { value: "8", label: "Andres Carnes de pez" },
+    ],
+  },  {
+    name: "tipo_id",
+    label: "Tipo",
+    type: "select",
+    options: [
+      { value: "1", label: "Comidas" },
+      { value: "2", label: "Bebidas" },
+      { value: "3", label: "Adicionales" },
+      { value: "5", label: "Aseo" },
+    ],
+  },
+  { name: "nombre", label: "nombre", type: "text" },
+  { name: "descripcion", label: "descripcion", type: "text" },
+  { name: "precio", label: "precio", type: "number" },
+  { name: "stock", label: "stock", type: "number" },
+  { name: "img", label: "img", type: "file" },
+];
 
-/* "id": "1",
-        "usuario_id": "2",
-        "categoria_id": "1",
-        "nombre": "Restaurante Don Pepe",
-        "direccion": "Avenida Siempre Viva 742",
-        "telefono": "3100000001",
-        "email": "donpepe@negocio.com",
-        "created_at": "2025-03-11 14:11:38",
-        "updated_at": "2025-03-11 14:11:38" */

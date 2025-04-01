@@ -1,20 +1,28 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { ArrowRightCircleIcon } from "@heroicons/react/24/outline";
 
-export default function PedidosShop() {
+export default function PedidosShop({ IdUser }) {
   const [usuarios, setUsuarios] = useState([]);
+  let id = localStorage.getItem("id");
+
+  useEffect(() => {
+    const GET = async () => {
+      try {
+        let response = await axios.get(
+          `/Shop/pedidos/controller.php?cliente_id=${id}`
+        );
+        setUsuarios(response.data);
+      } catch (error) {
+        alert(error);
+      }
+    };
+    GET();
+  }, []);
 
   const Detalle = (item) => {
     window.location.href = `/shop/pedidos/detalle/${item.id_pedido}/${item.usuario_pedido}`;
   };
-
-  useEffect(() => {
-    axios
-      .get("/Shop/pedidos/controller.php?cliente_id=3")
-      .then((response) => setUsuarios(response.data))
-      .catch((error) => console.error("Error al obtener usuarios", error));
-  }, []);
 
   return (
     <div className="p-4">

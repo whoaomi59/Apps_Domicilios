@@ -26,7 +26,7 @@ const Pedidos = ({ IdUser, Roles }) => {
         } else {
           // Filtrar las rutas basadas en los roles del usuario
           const rutasPermitidas = response.data.filter((item) =>
-            item.iduser.includes(IdUser)
+            item.usuario_id.includes(IdUser)
           );
           setUsuarios(rutasPermitidas);
         }

@@ -38,6 +38,7 @@ function App() {
         const decoded = jwtDecode(token);
         setIdUser(decoded.id);
         setRol(decoded.rol); // ✅ Se actualiza solo una vez
+        localStorage.setItem("id", decoded.id);
         return setusuarios(decoded);
       } catch (error) {
         console.error("Error decodificando el token:", error);
@@ -99,7 +100,7 @@ function App() {
             path="/shop/*"
             element={
               <>
-                <NavbarShop logo={empresa.logo} />
+                <NavbarShop logo={empresa.logo} Roles={Rol} />
                 <Routes>
                   <Route path="/negocios" element={<NegociosShop />} />
                   <Route
