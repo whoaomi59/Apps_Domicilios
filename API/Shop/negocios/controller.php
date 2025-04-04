@@ -2,8 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
-
-include($_SERVER['DOCUMENT_ROOT'] . '/API/config/db.php');
+require __DIR__ . '/../../config/db.php'; // Ajustar si es necesario
 $request_method = $_SERVER["REQUEST_METHOD"];
 
 switch ($request_method) {
