@@ -29,7 +29,7 @@ function App() {
   const [empresa, setEmpresa] = useState({});
   const [usuarios, setusuarios] = useState(null);
 
-  axios.defaults.baseURL = "http://localhost/Apps_Domicilios/API/";
+  axios.defaults.baseURL = " http://10.5.25.190/Apps_Domicilios/API/";
 
   useEffect(() => {
     const token = localStorage.getItem("token"); // Obtiene el token

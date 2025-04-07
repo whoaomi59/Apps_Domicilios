@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { Alertas } from "../../../components/content/alert/Sweealert";
 
 export default function ProductosShop() {
   const { id, name } = useParams();
@@ -56,8 +57,8 @@ export default function ProductosShop() {
 
       // Guardar en localStorage
       localStorage.setItem("cart", JSON.stringify(updatedCart));
-      alert("Producto En El Carrito!!");
 
+      Alertas({ icon: "success", message: "Producto En El Carrito!!" });
       return updatedCart;
     });
   };

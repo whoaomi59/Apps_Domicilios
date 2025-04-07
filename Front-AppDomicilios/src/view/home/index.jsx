@@ -1,8 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { handleWhatsappClick } from "../../API/Whassapp";
 
 export default function Home() {
   const [empresa, setEmpresa] = useState({});
+  let texto =
+    "Hola, Sr. Administrador. ¿Podría ayudarme con un domiciliario, por favor?";
   useEffect(() => {
     const Get = async () => {
       try {
@@ -29,8 +32,10 @@ export default function Home() {
         <div class="grid md:grid-cols-2 gap-4 md:gap-8 xl:gap-20 md:items-center mt-20">
           <div>
             <h1 class="block text-3xl font-bold text-gray-800 sm:text-4xl lg:text-6xl lg:leading-tight">
-              {empresa.nombre ? empresa.nombre : 'Domicilios '} 
-              <span class="text-green-500">{empresa.descripcion ? empresa.descripcion :'Online'}</span>
+              {empresa.nombre ? empresa.nombre : "Domicilios "}
+              <span class="text-green-500">
+                {empresa.descripcion ? empresa.descripcion : "Online"}
+              </span>
             </h1>
             <p class="mt-3 text-lg text-gray-800">
               {empresa.email},<br />
@@ -38,8 +43,9 @@ export default function Home() {
             </p>
 
             <div class="mt-7 grid gap-3 w-full sm:inline-flex">
-              <a
-                class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-green-500 text-white hover:bg-green-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+              <button
+                onClick={() => handleWhatsappClick(texto)}
+                class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-green-500 text-white hover:bg-green-700  disabled:opacity-50 disabled:pointer-events-none"
                 href="#"
               >
                 Domiciliario
@@ -57,7 +63,7 @@ export default function Home() {
                 >
                   <path d="m9 18 6-6-6-6" />
                 </svg>
-              </a>
+              </button>
               <a
                 class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none hover:bg-green-500 hover:text-white"
                 href="/shop/negocios"
@@ -182,7 +188,11 @@ export default function Home() {
           <div class="relative ms-4">
             <img
               class="w-full rounded-md h-100"
-              src={empresa.logo ?empresa.logo:'Baners/undraw_real-time-sync_ro77.svg' }
+              src={
+                empresa.logo
+                  ? empresa.logo
+                  : "Baners/undraw_real-time-sync_ro77.svg"
+              }
               alt="Hero Image"
             />
           </div>
