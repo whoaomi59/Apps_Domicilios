@@ -64,7 +64,7 @@ function App() {
         <Routes>
           {/* AUTENTICACIÓN */}
 
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login logo={empresa.logo} />} />
           <Route path="/request-reset" element={<RequestReset />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/" element={<Home />} />

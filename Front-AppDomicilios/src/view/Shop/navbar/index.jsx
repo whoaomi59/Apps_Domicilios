@@ -1,4 +1,7 @@
+import { useState } from "react";
+
 export default function NavbarShop({ logo, Roles }) {
+  const [Toggle, setToggle] = useState(false);
   return (
     <header class="flex flex-wrap lg:justify-start lg:flex-nowrap z-50 w-full py-7">
       <nav class="relative max-w-7xl w-full flex flex-wrap lg:grid lg:grid-cols-12 basis-full items-center px-4 md:px-6 lg:px-8 mx-auto">
@@ -34,6 +37,7 @@ export default function NavbarShop({ logo, Roles }) {
 
           <div class="lg:hidden">
             <button
+              onClick={() => setToggle((prev) => !prev)}
               type="button"
               class="hs-collapse-toggle size-9.5 flex justify-center items-center text-sm font-semibold rounded-xl border border-gray-200 text-black hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none .:text-white .:border-neutral-700 .:hover:bg-neutral-700 .:focus:bg-neutral-700"
               id="hs-navbar-hcail-collapse"
@@ -78,7 +82,9 @@ export default function NavbarShop({ logo, Roles }) {
         </div>
         <div
           id="hs-navbar-hcail"
-          class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow lg:block lg:w-auto lg:basis-auto lg:order-2 lg:col-span-6"
+          className={`hs-collapse ${
+            Toggle ? "" : "hidden"
+          }  overflow-hidden transition-all duration-300 basis-full grow lg:block lg:w-auto lg:basis-auto lg:order-2 lg:col-span-6`}
           aria-labelledby="hs-navbar-hcail-collapse"
         >
           <div class="flex flex-col gap-y-4 gap-x-0 mt-5 lg:flex-row lg:justify-center lg:items-center lg:gap-y-0 lg:gap-x-7 lg:mt-0">

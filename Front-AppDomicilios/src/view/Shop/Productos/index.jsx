@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Alertas } from "../../../components/content/alert/Sweealert";
+import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
 
 export default function ProductosShop() {
   const { id, name } = useParams();
@@ -65,9 +66,14 @@ export default function ProductosShop() {
 
   return (
     <div className="p-4 mx-auto lg:max-w-6xl md:max-w-4xl">
-      <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-6 sm:mb-12">
-        Productos, {name}
-      </h2>
+      <div className="flex">
+        <a href="/shop/negocios" className="mr-3">
+          <ArrowLeftCircleIcon className="w-10 text-green-500 hover:text-green-700" />
+        </a>
+        <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-6 sm:mb-12">
+          Productos, {name}
+        </h2>
+      </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
         {data.map((item) => (

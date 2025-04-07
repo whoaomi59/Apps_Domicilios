@@ -45,7 +45,7 @@ export default function Home() {
             <div class="mt-7 grid gap-3 w-full sm:inline-flex">
               <button
                 onClick={() => handleWhatsappClick(texto)}
-                class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-green-500 text-white hover:bg-green-700  disabled:opacity-50 disabled:pointer-events-none"
+                class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-green-500 text-white hover:bg-green-500  disabled:opacity-50 disabled:pointer-events-none"
                 href="#"
               >
                 Domiciliario
