@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import PrivateRoute from "../../../midelware/PrivateRoute";
+import { Navigate } from "react-router-dom";
 
 export default function Car_Shop({ usuarios }) {
   const [products, setProducts] = useState([]);
@@ -96,12 +98,30 @@ export default function Car_Shop({ usuarios }) {
       // 🟢 BORRAR EL LOCAL STORAGE DESPUÉS DE GUARDAR EL PEDIDO
       localStorage.removeItem("cart"); // Asegúrate de que la clave sea la misma que usaste al guardar
       setProducts([]); // Limpiar el estado del carrito
-
       alert("Pedidos enviados correctamente.");
     } catch (error) {
       alert("Error al enviar los pedidos");
       console.error(error);
     }
+  };
+
+  const handleBuyClick = () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      // No autenticado, redirigir al login o mostrar mensaje
+      const currentPath = window.location.pathname;
+      localStorage.setItem("redirectAfterLogin", currentPath); // guarda la ruta actual
+      window.location.href = "/login";
+      return;
+    }
+
+    // Si tiene token, hacer el post
+    PostCar();
+  };
+
+  const Comprar = async () => {
+    return (window.location.href = "/shop/negocios");
   };
 
   return (
@@ -228,14 +248,15 @@ export default function Car_Shop({ usuarios }) {
 
           <div className="mt-8 space-y-2">
             <button
-              onClick={PostCar}
+              onClick={handleBuyClick}
               type="button"
               className="text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-green-500 hover:bg-green-900 text-white rounded-md"
             >
               Comprar ahora
             </button>
+
             <button
-              type="button"
+              onClick={() => Comprar()}
               className="text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-transparent hover:bg-green-100 text-green-900 border border-green-300 rounded-md"
             >
               Seguir comprando

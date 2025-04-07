@@ -34,14 +34,21 @@ const Login = () => {
           negocio: "/dashboard",
           default: "/shop/negocios",
         };
-
-        setTimeout(() => {
-          window.location.href = rutas[decoded.rol] || rutas.default;
-        }, 1000);
+        const redirectPath = localStorage.getItem("redirectAfterLogin") || "/"; //REDIRIJE ALCARRITO SI LA POCISION DEL USUARIO LO REQUIERE
+        if (redirectPath === "/shop/car_shop") {
+          localStorage.removeItem("redirectAfterLogin");
+          window.location.href = redirectPath;
+          return;
+        } else {
+          setTimeout(() => {
+            window.location.href = rutas[decoded.rol] || rutas.default;
+          }, 1000);
+        }
       } else {
         setMessage(data.error);
       }
     } catch (error) {
+      console.log(error);
       setMessage("Error en el login");
     }
   };

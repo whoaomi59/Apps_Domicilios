@@ -29,7 +29,7 @@ function App() {
   const [empresa, setEmpresa] = useState({});
   const [usuarios, setusuarios] = useState(null);
 
-  axios.defaults.baseURL = "http://localhost/API/";
+  axios.defaults.baseURL = "http://localhost/Apps_Domicilios/API/";
 
   useEffect(() => {
     const token = localStorage.getItem("token"); // Obtiene el token
@@ -109,11 +109,7 @@ function App() {
                   />
                   <Route
                     path="/car_shop"
-                    element={
-                      <PrivateRoute>
-                        <Car_Shop usuarios={usuarios} />
-                      </PrivateRoute>
-                    }
+                    element={<Car_Shop usuarios={usuarios} />}
                   />
                   <Route
                     path="/pedidos"

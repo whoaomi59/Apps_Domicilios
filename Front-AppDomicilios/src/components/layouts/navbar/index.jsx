@@ -40,6 +40,14 @@ export default function Navbar({ toggle, Roles }) {
             General Settings
           </h6>
           <ul className="mt-3 space-y-2">
+            <li className="text-[#636363]">
+              <a
+                href="/shop/negocios"
+                className="text-sm flex items-center hover:bg-gray-100 rounded-md px-4 py-2 transition-all"
+              >
+                <span>Tienda</span>
+              </a>
+            </li>
             {rutas.map((item, index) => {
               const IconComponent = Icons[item.icono];
               return (

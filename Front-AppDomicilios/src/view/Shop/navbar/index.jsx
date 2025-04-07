@@ -21,12 +21,16 @@ export default function NavbarShop({ logo, Roles }) {
         </div>
 
         <div class="flex items-center gap-x-1 lg:gap-x-2 ms-auto py-1 lg:ps-6 lg:order-3 lg:col-span-3">
-          <a
-            href="/login"
-            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium text-nowrap rounded-xl border border-transparent bg-green-500 text-black hover:bg-green-600 text-white"
-          >
-            Ingresar
-          </a>
+          {Roles ? (
+            ""
+          ) : (
+            <a
+              href="/login"
+              class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium text-nowrap rounded-xl border border-transparent bg-green-500 text-black hover:bg-green-600 text-white"
+            >
+              Ingresar
+            </a>
+          )}
 
           <div class="lg:hidden">
             <button
@@ -103,14 +107,17 @@ export default function NavbarShop({ logo, Roles }) {
                 Carrito
               </a>
             </div>
-            <div>
-              <a
-                class="inline-block text-black hover:text-gray-600 focus:outline-hidden focus:text-gray-600 .:text-white .:hover:text-neutral-300 .:focus:text-neutral-300"
-                href="/shop/pedidos"
-              >
-                Mis pedidos
-              </a>
-            </div>
+            {Roles && (
+              <div>
+                <a
+                  class="inline-block text-black hover:text-gray-600 focus:outline-hidden focus:text-gray-600 .:text-white .:hover:text-neutral-300 .:focus:text-neutral-300"
+                  href="/shop/pedidos"
+                >
+                  Mis pedidos
+                </a>
+              </div>
+            )}
+
             {Roles === "admin" && (
               <div>
                 <a
