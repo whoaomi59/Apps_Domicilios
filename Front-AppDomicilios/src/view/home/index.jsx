@@ -33,12 +33,12 @@ export default function Home() {
           <div>
             <h1 class="block text-3xl font-bold text-gray-800 sm:text-4xl lg:text-6xl lg:leading-tight">
               {empresa.nombre ? empresa.nombre : "Domicilios "}
-              <span class="text-green-500">
+              <span class="text-green-500 ml-2">
                 {empresa.descripcion ? empresa.descripcion : "Online"}
               </span>
             </h1>
             <p class="mt-3 text-lg text-gray-800">
-              {empresa.email},<br />
+              {empresa.email}<br />
               {empresa.direccion}
             </p>
 
