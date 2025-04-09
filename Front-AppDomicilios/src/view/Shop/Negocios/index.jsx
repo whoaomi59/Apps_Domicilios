@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import Header from "./Header";
 import axios from "axios";
+import Loader from "../../../components/content/loader";
 
 export default function NegociosShop() {
   const [data, setData] = useState([]);
   const [horaActual, setHoraActual] = useState(new Date());
+  const [loader, setloader] = useState(false);
 
   // Función para verificar si el negocio está abierto
   function estaAbierto(horarioInicial, horarioFinal) {
@@ -25,10 +27,13 @@ export default function NegociosShop() {
   useEffect(() => {
     const fetchNegocios = async () => {
       try {
+        setloader(true);
         const response = await axios.get("/Shop/negocios/controller.php");
         setData(response.data);
+        return setloader(false);
       } catch (error) {
         alert("Error al obtener negocios: " + error);
+        return setloader(false);
       }
     };
     fetchNegocios();
@@ -41,6 +46,10 @@ export default function NegociosShop() {
     }, 60000); // Se ejecuta cada 1 minuto
     return () => clearInterval(interval); // Limpia el intervalo cuando el componente se desmonta
   }, []);
+
+  if (loader) {
+    return <Loader />;
+  }
 
   return (
     <section>

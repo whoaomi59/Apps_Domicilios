@@ -22,6 +22,7 @@ import Car_Shop from "./view/Shop/car_shop";
 import Detalle_Pedido from "./view/Shop/detalle_pedido";
 import Page_Fount from "./components/content/pague_fout";
 import Pedidos from "./view/admin/pedidos";
+import "./App.css";
 
 function App() {
   const [Rol, setRol] = useState(null);

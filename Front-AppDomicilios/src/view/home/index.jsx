@@ -1,22 +1,32 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { handleWhatsappClick } from "../../API/Whassapp";
+import Loader from "../../components/content/loader";
 
 export default function Home() {
   const [empresa, setEmpresa] = useState({});
+  const [loader, setloader] = useState(false);
   let texto =
     "Hola, Sr. Administrador. ¿Podría ayudarme con un domiciliario, por favor?";
   useEffect(() => {
     const Get = async () => {
       try {
+        setloader(true);
         const response = await axios.get("/api/empresas/controller.php");
-        return setEmpresa(response.data[0]);
+        setEmpresa(response.data[0]);
+
+        return setloader(false);
       } catch (error) {
         console.log(error);
+        return setloader(false);
       }
     };
     Get();
   }, []);
+
+  if (loader) {
+    return <Loader />;
+  }
 
   return (
     <div>
@@ -38,7 +48,8 @@ export default function Home() {
               </span>
             </h1>
             <p class="mt-3 text-lg text-gray-800">
-              {empresa.email}<br />
+              {empresa.email}
+              <br />
               {empresa.direccion}
             </p>
 

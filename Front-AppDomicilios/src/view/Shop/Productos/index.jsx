@@ -3,9 +3,11 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Alertas } from "../../../components/content/alert/Sweealert";
 import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
+import Loader from "../../../components/content/loader";
 
 export default function ProductosShop() {
   const { id, name } = useParams();
+  const [loader, setloader] = useState(false);
   const [data, setData] = useState([]);
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem("cart");
@@ -26,13 +28,16 @@ export default function ProductosShop() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        setloader(true);
         let response = await axios.get(
           `/Shop/productos/controller.php?negocio_id=${id}`
         );
         setData(response.data);
+        return setloader(false);
       } catch (error) {
         console.error("Error al obtener productos:", error);
         alert("Error al obtener productos");
+        return setloader(false);
       }
     };
     fetchProducts();
@@ -63,6 +68,10 @@ export default function ProductosShop() {
       return updatedCart;
     });
   };
+
+  if (loader) {
+    return <Loader />;
+  }
 
   return (
     <div className="p-4 mx-auto lg:max-w-6xl md:max-w-4xl">
