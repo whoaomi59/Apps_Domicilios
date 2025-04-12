@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 export default function Header({ setFilter }) {
   const [empresa, setEmpresa] = useState({});
@@ -7,7 +8,6 @@ export default function Header({ setFilter }) {
   const [loader, setLoader] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState([]);
-  const [selectedNegocio, setSelectedNegocio] = useState(null);
 
   useEffect(() => {
     const Get = async () => {
@@ -38,7 +38,6 @@ export default function Header({ setFilter }) {
     fetchNegocios();
   }, []);
 
-  // Filtrar en tiempo real
   useEffect(() => {
     if (searchTerm.trim() === "") {
       setFilteredData([]);
@@ -87,21 +86,22 @@ export default function Header({ setFilter }) {
               <div className="relative w-full">
                 <input
                   type="text"
-                  className="flex-1 h-9 w-full bg-white px-3 py-6 text-sm text-black focus:outline-none"
-                  placeholder="Buscar Negocio...."
+                  className="flex-1 h-9 w-full bg-white px-3 py-2 text-sm text-black focus:outline-none"
+                  placeholder="Buscar Por Categorias...."
+                  autoComplete="off"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 {filteredData.length > 0 && (
-                  <ul className="absolute z-10 w-full bg-white border border-gray-300 max-h-40 overflow-y-auto">
+                  <ul className="absolute top-full mt-1 z-10 w-full bg-white border border-gray-300 max-h-40 overflow-y-auto rounded-md shadow-md">
                     {filteredData.map((negocio, index) => (
                       <li
                         key={index}
                         className="px-4 py-2 cursor-pointer hover:bg-gray-100"
                         onClick={() => {
                           setSearchTerm(negocio.nombre);
-                          setFilter(negocio.id); // <-- AQUÍ ENVÍAS EL ID
-                          setFilteredData([]); // Oculta las sugerencias
+                          setFilter(negocio.id);
+                          setFilteredData([]);
                         }}
                       >
                         {negocio.nombre}
@@ -110,11 +110,13 @@ export default function Header({ setFilter }) {
                   </ul>
                 )}
               </div>
-              <input
+
+              <button
                 type="submit"
-                value="Buscar"
                 className="relative w-auto cursor-pointer bg-green-500 px-6 py-2 text-center font-semibold text-white"
-              />
+              >
+                <MagnifyingGlassIcon className="w-5" />
+              </button>
             </form>
           </div>
           <div>

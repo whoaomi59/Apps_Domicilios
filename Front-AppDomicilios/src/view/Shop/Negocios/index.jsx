@@ -9,12 +9,10 @@ export default function NegociosShop() {
   const [loader, setloader] = useState(false);
   const [Filter, setFilter] = useState("");
 
-  // Función para verificar si el negocio está abierto
   function estaAbierto(horarioInicial, horarioFinal) {
     const ahora = new Date();
-    const horaActualMin = ahora.getHours() * 60 + ahora.getMinutes(); // Convertir hora actual a minutos
+    const horaActualMin = ahora.getHours() * 60 + ahora.getMinutes();
 
-    // Convertir horarios a minutos
     const [horaIni, minIni] = horarioInicial.split(":").map(Number);
     const [horaFin, minFin] = horarioFinal.split(":").map(Number);
 
