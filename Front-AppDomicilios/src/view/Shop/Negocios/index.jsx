@@ -7,13 +7,12 @@ export default function NegociosShop() {
   const [data, setData] = useState([]);
   const [horaActual, setHoraActual] = useState(new Date());
   const [loader, setloader] = useState(false);
+  const [Filter, setFilter] = useState("");
 
-  // Función para verificar si el negocio está abierto
   function estaAbierto(horarioInicial, horarioFinal) {
     const ahora = new Date();
-    const horaActualMin = ahora.getHours() * 60 + ahora.getMinutes(); // Convertir hora actual a minutos
+    const horaActualMin = ahora.getHours() * 60 + ahora.getMinutes();
 
-    // Convertir horarios a minutos
     const [horaIni, minIni] = horarioInicial.split(":").map(Number);
     const [horaFin, minFin] = horarioFinal.split(":").map(Number);
 
@@ -23,7 +22,6 @@ export default function NegociosShop() {
     return horaActualMin >= inicioMin && horaActualMin <= finMin;
   }
 
-  // Obtener datos del backend
   useEffect(() => {
     const fetchNegocios = async () => {
       try {
@@ -39,13 +37,17 @@ export default function NegociosShop() {
     fetchNegocios();
   }, []);
 
-  // Actualizar la hora actual cada minuto
   useEffect(() => {
     const interval = setInterval(() => {
       setHoraActual(new Date());
-    }, 60000); // Se ejecuta cada 1 minuto
-    return () => clearInterval(interval); // Limpia el intervalo cuando el componente se desmonta
+    }, 60000);
+    return () => clearInterval(interval);
   }, []);
+
+  const negociosFiltrados = data.filter((item) => {
+    if (!Filter || Filter === "") return true;
+    return item.categoria_id.toString() === Filter.toString();
+  });
 
   if (loader) {
     return <Loader />;
@@ -53,11 +55,11 @@ export default function NegociosShop() {
 
   return (
     <section>
-      <Header />
+      <Header setFilter={setFilter} />
       <div className="mx-auto w-full max-w-7xl px-5">
         {/* Grid de negocios */}
         <div className="grid gap-5 sm:grid-cols-2 md:grid-cols-3 md:gap-4">
-          {data.map((item, index) => {
+          {negociosFiltrados.map((item, index) => {
             const negocioAbierto = estaAbierto(
               item.Horario_inicial,
               item.Horario_final
