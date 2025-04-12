@@ -8,8 +8,10 @@ const Pedidos = ({ IdUser, Roles }) => {
 
   const abrirModal = () => {};
   const Verdetalle = () => {};
-  const VerProductos = () => {
-    window.location.href = "/productos";
+  const VerProductos = (record) => {
+    const { id_pedido, usuario_pedido } = record;
+    //console.log(record);
+    window.location.href = `/shop/pedidos/detalle/${id_pedido}/${usuario_pedido}`;
   };
   const handleFormSubmit = (newData) => {
     setData([...data, { id: data.length + 1, ...newData }]);
@@ -55,7 +57,7 @@ const Pedidos = ({ IdUser, Roles }) => {
   return (
     <div className="p-4">
       <Grid
-        module={"Negocios"}
+        module={"Pedidos"}
         columns={Columns}
         data={Formater}
         fields={fields}
