@@ -1,8 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function Header() {
+export default function Header({ setFilter }) {
   const [empresa, setEmpresa] = useState({});
+  const [data, setData] = useState([]);
+  const [loader, setLoader] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [selectedNegocio, setSelectedNegocio] = useState(null);
+
   useEffect(() => {
     const Get = async () => {
       try {
@@ -14,6 +20,47 @@ export default function Header() {
     };
     Get();
   }, []);
+
+  useEffect(() => {
+    const fetchNegocios = async () => {
+      try {
+        setLoader(true);
+        const response = await axios.get(
+          "/api/categorias_negocios/controller.php"
+        );
+        setData(response.data);
+      } catch (error) {
+        alert("Error al obtener negocios: " + error);
+      } finally {
+        setLoader(false);
+      }
+    };
+    fetchNegocios();
+  }, []);
+
+  // Filtrar en tiempo real
+  useEffect(() => {
+    if (searchTerm.trim() === "") {
+      setFilteredData([]);
+    } else {
+      const resultados = data.filter((negocio) =>
+        negocio.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      console.log(searchTerm);
+      setFilteredData(resultados);
+    }
+  }, [searchTerm, data]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const found = data.find((neg) =>
+      neg.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    if (found) {
+      setFilter(found.id);
+    }
+  };
+
   return (
     <section>
       {/* Container */}
@@ -34,16 +81,35 @@ export default function Header() {
 
             {/* Form */}
             <form
-              name="email-form"
-              method="get"
+              onSubmit={handleSubmit}
               className="flex relative w-full max-w-lg border border-solid border-gray-300 p-1 focus-within:outline focus-within:outline-2"
             >
-              <input
-                type="email"
-                className="flex-1 h-9 w-full bg-white px-3 py-6 text-sm text-black focus:outline-none"
-                placeholder="Buscar Negocio...."
-                required=""
-              />
+              <div className="relative w-full">
+                <input
+                  type="text"
+                  className="flex-1 h-9 w-full bg-white px-3 py-6 text-sm text-black focus:outline-none"
+                  placeholder="Buscar Negocio...."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                {filteredData.length > 0 && (
+                  <ul className="absolute z-10 w-full bg-white border border-gray-300 max-h-40 overflow-y-auto">
+                    {filteredData.map((negocio, index) => (
+                      <li
+                        key={index}
+                        className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                        onClick={() => {
+                          setSearchTerm(negocio.nombre);
+                          setFilter(negocio.id); // <-- AQUÍ ENVÍAS EL ID
+                          setFilteredData([]); // Oculta las sugerencias
+                        }}
+                      >
+                        {negocio.nombre}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
               <input
                 type="submit"
                 value="Buscar"
