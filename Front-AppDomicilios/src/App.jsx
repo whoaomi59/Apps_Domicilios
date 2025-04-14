@@ -76,7 +76,7 @@ function App() {
             path="/*"
             element={
               <PrivateRoute>
-                <Container Roles={Rol}>
+                <Container Roles={Rol} usuarios={usuarios}>
                   <Routes>
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/usuarios" element={<Usuarios />} />
