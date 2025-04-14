@@ -8,6 +8,7 @@ import {
 } from "@heroicons/react/24/outline";
 import Loader from "../../../components/content/loader";
 import FilterProduct from "./filter";
+import { formatearCOP } from "../../../components/content/formatoMoneda";
 
 export default function ProductosShop() {
   const { id, name } = useParams();
@@ -200,7 +201,7 @@ export default function ProductosShop() {
                     </li>
                   </ul>
                   <p class="text-2xl font-extrabold leading-tight text-gray-900">
-                    ${item.precio}
+                    {formatearCOP(item.precio)}
                   </p>
                   <div class="mt-2 flex items-center justify-between gap-4">
                     <div className="mt-auto flex items-center gap-2">
