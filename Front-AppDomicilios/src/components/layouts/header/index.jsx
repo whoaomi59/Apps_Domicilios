@@ -4,6 +4,11 @@ import Hora from "./Hora";
 /* import Reloj from "./reloj"; */
 
 export default function Header({ nombre, Toggle }) {
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/"; // Redirigir a la página de login
+  };
+
   return (
     <header className="flex shadow-md py-1 px-4 sm:px-7 bg-white min-h-[70px] tracking-wide z-[110] fixed top-0 w-full">
       <div className="flex flex-wrap items-center justify-between gap-4 w-full relative">
@@ -54,8 +59,8 @@ export default function Header({ nombre, Toggle }) {
                     </a>
                     <hr className="my-2 -mx-2" />
 
-                    <a
-                      href="javascript:void(0)"
+                    <button
+                      onClick={handleLogout}
                       className="text-sm text-gray-800 cursor-pointer flex items-center p-2 rounded-md hover:bg-gray-100 dropdown-item transition duration-300 ease-in-out"
                     >
                       <svg
@@ -74,7 +79,7 @@ export default function Header({ nombre, Toggle }) {
                         ></path>
                       </svg>
                       Salir
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>

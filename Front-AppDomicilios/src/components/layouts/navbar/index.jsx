@@ -6,7 +6,7 @@ export default function Navbar({ toggle, Roles }) {
   const [rutas, setRutas] = useState([]);
 
   const handleLogout = () => {
-    sessionStorage.removeItem("user");
+    localStorage.removeItem("token");
     window.location.href = "/login"; // Redirigir a la página de login
   };
 
@@ -45,6 +45,7 @@ export default function Navbar({ toggle, Roles }) {
                 href="/shop/negocios"
                 className="text-sm flex items-center hover:bg-gray-100 rounded-md px-4 py-2 transition-all"
               >
+                <Icons.BuildingStorefrontIcon className="w-5 mr-2" />
                 <span>Tienda</span>
               </a>
             </li>

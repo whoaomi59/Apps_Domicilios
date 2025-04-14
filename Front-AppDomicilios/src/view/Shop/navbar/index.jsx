@@ -134,6 +134,16 @@ export default function NavbarShop({ logo, Roles }) {
                 </a>
               </div>
             )}
+            {Roles === "negocio" && (
+              <div>
+                <a
+                  class="inline-block text-black hover:text-gray-600 focus:outline-hidden focus:text-gray-600 .:text-white .:hover:text-neutral-300 .:focus:text-neutral-300"
+                  href="/dashboard"
+                >
+                  Admin
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </nav>

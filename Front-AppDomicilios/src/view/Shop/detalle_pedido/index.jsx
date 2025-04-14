@@ -18,7 +18,7 @@ export default function Detalle_Pedido({
     const GET = async () => {
       try {
         let response = await axios.get(
-          `http://localhost/API/Shop/pedidos/detalle_pedidos.php?id_pedido=${id}`
+          `/Shop/pedidos/detalle_pedidos.php?id_pedido=${id}`
         );
 
         setData(response.data);
