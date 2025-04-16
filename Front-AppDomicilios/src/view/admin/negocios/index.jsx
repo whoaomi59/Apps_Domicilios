@@ -22,7 +22,6 @@ const Negocios = ({ IdUser, Roles }) => {
         form.append(key, formData[key]);
       }
     }
-
     try {
       let response = await axios.post("/api/negocios/controller.php", form, {
         headers: {

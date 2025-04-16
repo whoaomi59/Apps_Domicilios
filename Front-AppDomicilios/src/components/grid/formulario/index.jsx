@@ -45,7 +45,6 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title }) => {
                   value={formData[field.name]}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
-                  required
                 >
                   <option value="">Seleccione...</option>
                   {field.options.map((option) => (
@@ -60,7 +59,6 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title }) => {
                   name={field.name}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
-                  required
                 />
               ) : field.type === "dinamiselect" ? (
                 <DynamicSelect
@@ -78,7 +76,6 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title }) => {
                   value={formData[field.name]}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
-                  required
                 />
               )}
             </div>
