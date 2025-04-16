@@ -33,7 +33,7 @@ function get() {
                     pe.id AS id_pedido,
                         u.nombre AS usuario_pedido,
                         n.logo AS logo_pedido,
-                        n.nombre AS nombre_negocio  -- Cambié pe.nombre a n.nombre para evitar confusión
+                        n.nombre AS nombre_negocio 
                         ,pe.estado,
                         pe.total
                     FROM pedidos pe
@@ -44,14 +44,20 @@ function get() {
         $stmt->bind_param("i", $cliente_id);
         $stmt->execute();
         $result = $stmt->get_result();
-
-        $productos = [];
+        
+        $data = [];
         while ($row = $result->fetch_assoc()) {
-            $productos[] = $row;
+            // Convertir la imagen a Base64 si existe
+            if (!empty($row['logo_pedido'])) {
+                $row['logo_pedido'] = "data:image/jpeg;base64," . base64_encode($row['logo_pedido']);
+            } else {
+                $row['logo_pedido'] = null; // Si no hay imagen, devuelve null
+            }
+            $data[] = $row;
         }
-
-        echo json_encode($productos);
-        $stmt->close();
+    
+    
+        echo json_encode($data);
     } else {
         echo json_encode(["error" => "ID inválido"]);
     }

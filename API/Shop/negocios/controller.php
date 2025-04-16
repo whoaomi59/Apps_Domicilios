@@ -2,6 +2,8 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
+
+
 require __DIR__ . '/../../config/db.php'; // Ajustar si es necesario
 $request_method = $_SERVER["REQUEST_METHOD"];
 
@@ -33,25 +35,21 @@ function utf8_encode_array($array) {
 
 function get() {
     global $conn;
-
-    header('Content-Type: application/json; charset=utf-8');
-    header('Access-Control-Allow-Origin: *');
-
     $result = $conn->query("SELECT * FROM negocios");
-    
-    if (!$result) {
-        echo json_encode(["error" => "Error en la consulta: " . $conn->error]);
-        return;
-    }
 
-    $empresas = $result->fetch_all(MYSQLI_ASSOC);
-    
-    // Convertir a UTF-8
-    $empresas = utf8_encode_array($empresas);
+    $empresas = [];
+
+    while ($row = $result->fetch_assoc()) {
+        // Convertir la imagen a Base64 si existe
+        if (!empty($row['logo'])) {
+            $row['logo'] = "data:image/jpeg;base64," . base64_encode($row['logo']);
+        } else {
+            $row['logo'] = null; // Si no hay imagen, devuelve null
+        }
+        $empresas[] = $row;
+    }
 
     echo json_encode($empresas);
 }
-
-
 
 ?>

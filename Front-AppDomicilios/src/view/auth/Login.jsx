@@ -115,7 +115,7 @@ const Login = ({ logo }) => {
         </span>
 
         <a
-          href="#"
+          href="/registro"
           class="mx-2 text-sm font-bold text-green-500   :text-green-400 hover:underline"
         >
           Registro

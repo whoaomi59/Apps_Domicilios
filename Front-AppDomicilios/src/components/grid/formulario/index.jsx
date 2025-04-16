@@ -1,37 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import DynamicSelect from "./DynamicSelect ";
 
-const Form = ({ isOpen, onClose, fields, onSubmit, title }) => {
-  if (!isOpen) return null;
+const Form = ({ isOpen, onClose, fields, onSubmit, title, initialValues }) => {
+  const [formData, setFormData] = useState({});
 
-  const [formData, setFormData] = useState(
-    fields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {})
-  );
+  useEffect(() => {
+    const initial = fields.reduce((acc, field) => {
+      acc[field.name] = initialValues?.[field.name] || "";
+      return acc;
+    }, {});
+    setFormData(initial);
+  }, [initialValues, fields]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-
-    // Si el campo es un archivo, agregamos el archivo a formData
     if (files && files.length > 0) {
-      setFormData({ ...formData, [name]: files[0] }); // Solo tomamos el primer archivo
+      setFormData({ ...formData, [name]: files[0] });
     } else {
-      setFormData({ ...formData, [name]: value }); // Si no es un archivo, manejamos como texto
+      setFormData({ ...formData, [name]: value });
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData); // Enviar el formData con el archivo incluido
-    setFormData(
-      fields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {})
-    );
+    onSubmit(formData); // quien lo use decide si insertar o actualizar
     onClose();
   };
 
-  return (
-    <div className="fixed inset-0 flex items-center justify-center bg-[#0000007a] bg-opacity-50 z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-120">
-        <h2 className="text-2xl font-semibold text-gray-700 mb-4">{title}</h2>
+  if (!isOpen) return null;
 
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-[#0000007a] bg-opacity-50 z-100 p-4">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl z-50 overflow-y-auto max-h-[90vh] mt-20">
+        <h2 className="text-2xl font-semibold text-gray-700 mb-4">{title}</h2>
         <form onSubmit={handleSubmit}>
           {fields.map((field) => (
             <div key={field.name} className="mb-4">
@@ -45,7 +46,6 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title }) => {
                   value={formData[field.name]}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
-                  required
                 >
                   <option value="">Seleccione...</option>
                   {field.options.map((option) => (
@@ -54,13 +54,21 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title }) => {
                     </option>
                   ))}
                 </select>
-              ) : field.type === "file" ? ( // Condición para tipo "file"
+              ) : field.type === "file" ? (
                 <input
                   type="file"
                   name={field.name}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
-                  required
+                />
+              ) : field.type === "dinamiselect" ? (
+                <DynamicSelect
+                  url={field.url}
+                  name={field.name}
+                  value={formData[field.name]}
+                  onChange={handleChange}
+                  valueKey={field.value}
+                  labelKey={field.text}
                 />
               ) : (
                 <input
@@ -68,8 +76,10 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title }) => {
                   name={field.name}
                   value={formData[field.name]}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
-                  required
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 ${
+                    field.disable && "bg-gray-300"
+                  }`}
+                  disabled={field.disable}
                 />
               )}
             </div>
@@ -87,7 +97,7 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title }) => {
               type="submit"
               className="px-4 py-2 bg-green-500 rounded-lg text-white hover:bg-green-600"
             >
-              Guardar
+              {initialValues ? "Actualizar" : "Guardar"}
             </button>
           </div>
         </form>
