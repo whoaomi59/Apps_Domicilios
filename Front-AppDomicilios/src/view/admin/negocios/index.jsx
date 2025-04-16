@@ -23,14 +23,27 @@ const Negocios = ({ IdUser, Roles }) => {
       }
     }
     try {
-      let response = await axios.post("/api/negocios/controller.php", form, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      console.log(response.data);
+      if (formData.id) {
+        let response = await axios.post(
+          "/api/negocios/update_negocios.php",
+          form,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log(response.data);
+      } else {
+        let response = await axios.post("/api/negocios/controller.php", form, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        console.log(response.data);
+      }
       setrefresh((prev) => !prev);
-      alert("Registrado!");
+      return alert("Registrado!");
     } catch (error) {
       alert("Error al registrar");
       console.error(error);
@@ -41,8 +54,6 @@ const Negocios = ({ IdUser, Roles }) => {
     const Get = async () => {
       try {
         let response = await axios.get("/api/negocios/controller.php");
-
-        // Si el usuario es admin, mostrar todas las rutas
         if (Roles.includes("admin")) {
           setUsuarios(response.data);
         } else {
@@ -60,14 +71,16 @@ const Negocios = ({ IdUser, Roles }) => {
   }, [IdUser, Roles, refresh]); // Dependencias para actualizar si cambia el rol
 
   const Formater = usuarios.map((item) => ({
-    idnegocio: item.idnegocio,
+    id: item.idnegocio,
     logo_negocio: <img src={item.logo_negocio} className="w-15" />,
-    Negocio: item.Negocio,
-    Categoria: item.Categoria,
-    usuario: item.usuario,
+    nombre: item.Negocio,
+    categoria_id: item.Categoria,
+    usuario_id: item.usuario,
     direccion: item.direccion,
     telefono: item.telefono,
     email: item.email,
+    Horario_inicial: item.Horario_inicial,
+    Horario_final: item.Horario_final,
     created_at: item.created_at,
   }));
 
@@ -83,11 +96,6 @@ const Negocios = ({ IdUser, Roles }) => {
           {
             icon: "CalendarDaysIcon",
             className: "bg-blue-400 text-white",
-            onClick: (record) => abrirModal(record), // Llama a la función abrirModal con el registro
-          },
-          {
-            icon: "PencilSquareIcon",
-            className: "bg-green-500 text-white",
             onClick: (record) => abrirModal(record), // Llama a la función abrirModal con el registro
           },
           {

@@ -38,7 +38,6 @@ const DynamicSelect = ({
         value={value}
         onChange={onChange}
         className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
-        required={required}
       >
         <option value="">Seleccione...</option>
         {options.map((option) => (
