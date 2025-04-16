@@ -16,19 +16,17 @@ const Negocios = ({ IdUser, Roles }) => {
   };
 
   const handleFormSubmit = async (formData) => {
-    const form = new FormData(); // Crear un nuevo FormData
-
-    // Recorremos el formData actual y agregamos cada campo al FormData
+    const form = new FormData();
     for (const key in formData) {
       if (formData[key]) {
-        form.append(key, formData[key]); // Si el campo tiene valor, lo agregamos
+        form.append(key, formData[key]);
       }
     }
 
     try {
       let response = await axios.post("/api/negocios/controller.php", form, {
         headers: {
-          "Content-Type": "multipart/form-data", // Indicamos que estamos enviando archivos
+          "Content-Type": "multipart/form-data",
         },
       });
       console.log(response.data);
@@ -83,6 +81,11 @@ const Negocios = ({ IdUser, Roles }) => {
         fields={fields}
         handleFormSubmit={handleFormSubmit}
         actions={[
+          {
+            icon: "CalendarDaysIcon",
+            className: "bg-blue-400 text-white",
+            onClick: (record) => abrirModal(record), // Llama a la función abrirModal con el registro
+          },
           {
             icon: "PencilSquareIcon",
             className: "bg-green-500 text-white",

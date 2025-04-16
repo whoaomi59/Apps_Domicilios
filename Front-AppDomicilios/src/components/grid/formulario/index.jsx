@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import DynamicSelect from "./DynamicSelect ";
 
 const Form = ({ isOpen, onClose, fields, onSubmit, title }) => {
   if (!isOpen) return null;
@@ -26,10 +27,9 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title }) => {
     );
     onClose();
   };
-
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-[#0000007a] bg-opacity-50 z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-120">
+    <div className="fixed inset-0 flex items-center justify-center bg-[#0000007a] bg-opacity-50 z-100 p-4">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl z-50 overflow-y-auto max-h-[90vh] mt-20">
         <h2 className="text-2xl font-semibold text-gray-700 mb-4">{title}</h2>
 
         <form onSubmit={handleSubmit}>
@@ -54,13 +54,22 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title }) => {
                     </option>
                   ))}
                 </select>
-              ) : field.type === "file" ? ( // Condición para tipo "file"
+              ) : field.type === "file" ? (
                 <input
                   type="file"
                   name={field.name}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
                   required
+                />
+              ) : field.type === "dinamiselect" ? (
+                <DynamicSelect
+                  url={field.url}
+                  name={field.name}
+                  value={formData[field.name]}
+                  onChange={handleChange}
+                  valueKey={field.value}
+                  labelKey={field.text}
                 />
               ) : (
                 <input

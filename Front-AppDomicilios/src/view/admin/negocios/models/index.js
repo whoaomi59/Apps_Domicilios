@@ -10,6 +10,14 @@ export const Columns = [
   { key: "created_at", label: "created_at" },
 ];
 export const fields = [
+  { 
+    name: "usuario_id", 
+    label: "usuarios",
+    type: "dinamiselect",
+    url:'/api/usuarios/controller.php',
+    value:'id', 
+    text:'nombre', 
+  },
   { name: "usuario_id", label: "usuario_id", type: "number" },
   { name: "categoria_id", label: "categoria_id", type: "text" },
   { name: "nombre", label: "nombre", type: "text" },
@@ -20,5 +28,3 @@ export const fields = [
   { name: "Horario_inicial", label: "Horario_inicial", type: "time" },
   { name: "Horario_final", label: "Horario_final", type: "time" },
 ];
-
-

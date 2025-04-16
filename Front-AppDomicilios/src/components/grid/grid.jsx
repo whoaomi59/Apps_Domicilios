@@ -36,7 +36,7 @@ const Grid = ({ columns, data, actions, module, fields, handleFormSubmit }) => {
           onClose={() => setIsModalOpen(false)}
           fields={fields}
           onSubmit={handleFormSubmit}
-          title="Registrar Usuario"
+          title={module}
         />
       </div>
       <table className="min-w-full bg-white border border-gray-200">
