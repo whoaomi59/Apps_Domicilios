@@ -23,6 +23,7 @@ import Detalle_Pedido from "./view/Shop/detalle_pedido";
 import Page_Fount from "./components/content/pague_fout";
 import Pedidos from "./view/admin/pedidos";
 import "./App.css";
+import RegistroUser from "./view/auth/reguister";
 
 function App() {
   const [Rol, setRol] = useState(null);
@@ -66,6 +67,10 @@ function App() {
         <Routes>
           {/* AUTENTICACIÓN */}
 
+          <Route
+            path="/registro"
+            element={<RegistroUser logo={empresa.logo} />}
+          />
           <Route path="/login" element={<Login logo={empresa.logo} />} />
           <Route path="/request-reset" element={<RequestReset />} />
           <Route path="/reset-password" element={<ResetPassword />} />

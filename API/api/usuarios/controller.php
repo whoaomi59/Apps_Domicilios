@@ -59,7 +59,7 @@ function createUsuario() {
     global $conn;
     try {
         $data = json_decode(file_get_contents("php://input"), true);
-        if (!isset($data["empresa_id"], $data["nombre"], $data["email"], $data["password"], $data["rol"])) {
+        if (!isset($data["nombre"], $data["email"], $data["password"])) {
             throw new Exception("Datos incompletos");
         }
         $empresa_id = $data["empresa_id"];
