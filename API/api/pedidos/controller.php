@@ -25,9 +25,31 @@ switch ($request_method) {
 //OK
 function get() {
     global $conn;
-    $result = $conn->query("SELECT pe.id AS id_pedido, u.nombre AS usuario_pedido, n.logo AS logo_pedido, n.nombre AS nombre_negocio,pe.estado, pe.total, n.usuario_id FROM pedidos pe LEFT JOIN usuarios u ON pe.cliente_id = u.id LEFT JOIN negocios n ON pe.negocio_id = n.id;");
-    $empresas = $result->fetch_all(MYSQLI_ASSOC);
-    echo json_encode($empresas);
+    try {
+        $result = $conn->query("SELECT pe.id AS id_pedido, u.nombre AS usuario_pedido, n.logo AS logo_pedido, n.nombre AS nombre_negocio,pe.estado, pe.total, n.usuario_id FROM pedidos pe LEFT JOIN usuarios u ON pe.cliente_id = u.id LEFT JOIN negocios n ON pe.negocio_id = n.id;");
+     
+        $data = [];
+        while ($row = $result->fetch_assoc()) {
+            // Convertir la imagen a Base64 si existe
+            if (!empty($row['logo_pedido'])) {
+                $row['logo_pedido'] = "data:image/jpeg;base64," . base64_encode($row['logo_pedido']);
+            } else {
+                $row['logo_pedido'] = null; // Si no hay imagen, devuelve null
+            }
+            $data[] = $row;
+        }
+    
+    
+        echo json_encode($data);
+    } catch (Exception $e) {
+        $error = [
+            "error" => $e->getMessage(),
+            "linea" => $e->getLine(),
+            "archivo" => $e->getFile()
+        ];
+        http_response_code(500);
+        echo json_encode($error);
+    }
 }
 //OK
 function post() {

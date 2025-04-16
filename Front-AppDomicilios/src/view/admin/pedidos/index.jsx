@@ -8,11 +8,13 @@ const Pedidos = ({ IdUser, Roles }) => {
 
   const abrirModal = () => {};
   const Verdetalle = () => {};
+
   const VerProductos = (record) => {
     const { id_pedido, usuario_pedido } = record;
     //console.log(record);
     window.location.href = `/shop/pedidos/detalle/${id_pedido}/${usuario_pedido}`;
   };
+
   const handleFormSubmit = (newData) => {
     setData([...data, { id: data.length + 1, ...newData }]);
   };
@@ -21,12 +23,9 @@ const Pedidos = ({ IdUser, Roles }) => {
     const Get = async () => {
       try {
         let response = await axios.get("/api/pedidos/controller.php");
-
-        // Si el usuario es admin, mostrar todas las rutas
         if (Roles.includes("admin")) {
           setUsuarios(response.data);
         } else {
-          // Filtrar las rutas basadas en los roles del usuario
           const rutasPermitidas = response.data.filter((item) =>
             item.usuario_id.includes(IdUser)
           );

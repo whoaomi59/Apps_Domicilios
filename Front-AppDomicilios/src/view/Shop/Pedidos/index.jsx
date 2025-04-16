@@ -28,11 +28,9 @@ export default function PedidosShop({ IdUser }) {
     <div className="p-4">
       <section class="container  mx-auto">
         <div class="flex items-center gap-x-3">
-          <h2 class="text-lg font-medium text-gray-800 dark:text-white">
-            Pedidos
-          </h2>
+          <h2 class="text-lg font-medium text-gray-800">Pedidos</h2>
 
-          <span class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">
+          <span class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full">
             Pedidos Activos
           </span>
         </div>
@@ -40,25 +38,25 @@ export default function PedidosShop({ IdUser }) {
         <div class="flex flex-col mt-6">
           <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-              <div class="overflow-hidden border border-green-200 dark:border-green-700 md:rounded-lg">
-                <table class="min-w-full divide-y divide-green-200 dark:divide-green-700">
+              <div class="overflow-hidden border border-green-200 ':border-green-700 md:rounded-lg">
+                <table class="min-w-full divide-y divide-green-200 ':divide-green-700">
                   <thead class="bg-green-50 ">
                     <tr>
                       <th
                         scope="col"
-                        class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 "
                       >
                         <div class="flex items-center gap-x-3">
                           <input
                             type="checkbox"
-                            class="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
+                            class="text-blue-500 border-gray-300 rounded"
                           />
                           <span>Negocio</span>
                         </div>
                       </th>{" "}
                       <th
                         scope="col"
-                        class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500"
                       >
                         <div class="flex items-center gap-x-3">
                           <span>Estado</span>
@@ -66,7 +64,7 @@ export default function PedidosShop({ IdUser }) {
                       </th>{" "}
                       <th
                         scope="col"
-                        class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500"
                       >
                         <div class="flex items-center gap-x-3">
                           <span>Usuario</span>
@@ -74,7 +72,7 @@ export default function PedidosShop({ IdUser }) {
                       </th>{" "}
                       <th
                         scope="col"
-                        class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500"
                       >
                         <div class="flex items-center gap-x-3">
                           <span>Total</span>
@@ -85,14 +83,14 @@ export default function PedidosShop({ IdUser }) {
                       </th>
                     </tr>
                   </thead>
-                  <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                  <tbody class="bg-white divide-y divide-gray-200 ':divide-gray-700 ':bg-gray-900">
                     {usuarios.map((item) => (
                       <tr>
                         <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                           <div class="inline-flex items-center gap-x-3">
                             <input
                               type="checkbox"
-                              class="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
+                              class="text-blue-500 border-gray-300 rounded ':bg-gray-900 ':ring-offset-gray-900"
                             />
 
                             <div class="flex items-center gap-x-2">
@@ -102,7 +100,7 @@ export default function PedidosShop({ IdUser }) {
                                 alt=""
                               />
                               <div>
-                                <h2 class="font-medium text-gray-800 dark:text-white ">
+                                <h2 class="font-medium text-gray-800 ':text-white ">
                                   {item.nombre_negocio}
                                 </h2>
                               </div>
@@ -110,7 +108,7 @@ export default function PedidosShop({ IdUser }) {
                           </div>
                         </td>
                         <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                          <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60">
                             <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
 
                             <h2 class="text-sm font-normal text-emerald-500">
@@ -118,10 +116,10 @@ export default function PedidosShop({ IdUser }) {
                             </h2>
                           </div>
                         </td>
-                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <td class="px-4 py-4 text-sm text-gray-500 ':text-gray-300 whitespace-nowrap">
                           {item.usuario_pedido}
                         </td>
-                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <td class="px-4 py-4 text-sm text-gray-500 ':text-gray-300 whitespace-nowrap">
                           ${item.total}
                         </td>
 
