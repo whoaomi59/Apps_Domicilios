@@ -8,24 +8,43 @@ const Usuarios = () => {
   const [refresh, setrefresh] = useState([]);
 
   const abrirModal = () => {};
-  const Verdetalle = () => {};
 
   const handleFormSubmit = async (newData) => {
+    console.log(newData);
     try {
-      let response = await axios.post(`/api/usuarios/controller.php`, {
-        email: newData.email,
+      if (newData.nombre) {
+        let response = await axios.put(
+          "/api/usuarios/controller.php",
+          {
+            id: newData.id,
+            nombre: newData.nombre,
+            telefono: newData.telefono,
+            rol: newData.rol,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-        empresa_id: 1,
+        console.log(response);
+      } else {
+        let response = await axios.post(`/api/usuarios/controller.php`, {
+          email: newData.email,
 
-        nombre: newData.nombre,
+          empresa_id: 1,
 
-        password: newData.password,
+          nombre: newData.nombre,
 
-        rol: newData.rol,
+          password: newData.password,
 
-        telefono: newData.telefono,
-      });
-      console.log(response);
+          rol: newData.rol,
+
+          telefono: newData.telefono,
+        });
+        console.log(response);
+      }
       setrefresh((prev) => !prev);
       return alert("Registrado!");
     } catch (error) {
@@ -52,11 +71,6 @@ const Usuarios = () => {
           {
             icon: "KeyIcon",
             className: "bg-gray-500 text-white",
-            onClick: (record) => abrirModal(record), // Llama a la función abrirModal con el registro
-          },
-          {
-            icon: "PencilSquareIcon",
-            className: "bg-green-500 text-white",
             onClick: (record) => abrirModal(record), // Llama a la función abrirModal con el registro
           },
           {

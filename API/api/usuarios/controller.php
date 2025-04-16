@@ -92,7 +92,7 @@ function updateUsuario() {
     global $conn;
     try {
         $data = json_decode(file_get_contents("php://input"), true);
-        if (!isset($data["id"], $data["nombre"], $data["telefono"], $data["rol"])) {
+        if (!isset($data["nombre"], $data["telefono"], $data["rol"])) {
             throw new Exception("Datos incompletos");
         }
         $id = $data["id"];

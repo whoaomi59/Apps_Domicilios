@@ -8,6 +8,7 @@ export const ModelsUsuarios = [
 ];
 
 export const fields = [
+  { name: "id", label: "ID", type: "number",disable:true },
   { name: "nombre", label: "Nombre", type: "text" },
   { name: "email", label: "Correo", type: "email" },
   { name: "telefono", label: "Telefono", type: "number" },
@@ -22,5 +23,5 @@ export const fields = [
       { value: "domiciliario", label: "domiciliario" },
     ],
   },
-  { name: "password", label: "Password", type: "text" },
+  { name: "password", label: "Password", type: "text",disable:true  },
 ];
