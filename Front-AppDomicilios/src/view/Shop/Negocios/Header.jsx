@@ -7,6 +7,7 @@ export default function Header({ setFilter }) {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState([]);
+  const [baner, setbaner] = useState([]);
 
   useEffect(() => {
     const Get = async () => {
@@ -48,6 +49,18 @@ export default function Header({ setFilter }) {
     }
   }, [searchTerm, data]);
 
+  useEffect(() => {
+    const Get = async () => {
+      try {
+        let response = await axios.get("/api/empresas/empresa_imagenes.php");
+        setbaner(response.data[0]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    Get();
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const found = data.find((neg) =>
@@ -60,7 +73,7 @@ export default function Header({ setFilter }) {
 
   return (
     <section>
-      <div className="mx-auto w-full max-w-7xl px-5 py-16 md:px-10">
+      <div className="mx-auto w-full max-w-7xl px-5 py-5 md:px-10">
         <div className="grid items-center gap-8 sm:gap-20 md:grid-cols-2">
           <div className="max-w-2xl">
             <h2 className="mb-4 text-3xl font-bold md:text-5xl md:leading-snug text-green-500">
@@ -115,9 +128,13 @@ export default function Header({ setFilter }) {
           </div>
           <div>
             <img
-              src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/burger-king-banner-design-template-a886c11d0e725b8a66d051fb64b63064_screen.jpg?ts=1733380826"
+              src={
+                baner
+                  ? baner.img
+                  : "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/burger-king-banner-design-template-a886c11d0e725b8a66d051fb64b63064_screen.jpg?ts=1733380826"
+              }
               alt=""
-              className="mx-auto inline-block h-full w-full max-w-xl"
+              className="mx-auto inline-block h-100 w-150 max-w-xl"
             />
           </div>
         </div>

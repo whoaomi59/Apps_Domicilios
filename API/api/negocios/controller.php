@@ -25,7 +25,7 @@ switch ($request_method) {
 //OK
 function get() {
     global $conn;
-    $result = $conn->query("SELECT n.id as idnegocio, n.nombre AS Negocio, c.nombre AS Categoria,direccion,n.telefono,n.email,n.created_at,u.nombre AS usuario, u.id AS iduser,n.logo AS logo_negocio FROM negocios n JOIN categorias_negocios c ON n.categoria_id = c.id JOIN usuarios u ON usuario_id=u.id;");
+    $result = $conn->query("SELECT n.id as idnegocio, n.nombre AS Negocio, c.nombre AS Categoria,direccion,n.telefono,n.email,n.created_at,u.nombre AS usuario, u.id AS iduser,n.logo AS logo_negocio,Horario_inicial,Horario_final FROM negocios n JOIN categorias_negocios c ON n.categoria_id = c.id JOIN usuarios u ON usuario_id=u.id;");
 
     $empresas = [];
 
@@ -101,25 +101,9 @@ function post() {
 
     $stmt->close();
 }
+ 
 
-
-
-
-
-//FALTA
-function update() {
-    global $conn;
-    $data = json_decode(file_get_contents("php://input"), true);
-    if (!isset($data["id"], $data["nombre"], $data["email"])) {
-        echo json_encode(["error" => "Faltan datos"]);
-        return;
-    }
-
-    $stmt = $conn->prepare("UPDATE empresa SET nombre = ?, direccion = ?, telefono = ?, email = ? WHERE id = ?");
-    $stmt->bind_param("ssssi", $data["nombre"], $data["direccion"], $data["telefono"], $data["email"], $data["id"]);
-    $stmt->execute();
-    echo json_encode(["message" => "Empresa actualizada"]);
-}
+function update() {}
 //FALTA
 function delete() {
     global $conn;

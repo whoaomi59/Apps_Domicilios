@@ -1,15 +1,18 @@
 export const Columns = [
-  { key: "idnegocio", label: "id" },
+  { key: "id", label: "id" },
   { key: "logo_negocio", label: "logo" },
-  { key: "Negocio", label: "Negocio" },
-  { key: "Categoria", label: "Categoria" },
-  { key: "usuario", label: "Usuario" },
+  { key: "nombre", label: "Negocio" },
+  { key: "categoria_id", label: "Categoria" },
+  { key: "usuario_id", label: "Usuario" },
   { key: "direccion", label: "direccion" },
   { key: "telefono", label: "telefono" },
   { key: "email", label: "email" },
+  { key: "Horario_inicial", label: "Horario_inicial" },
+  { key: "Horario_final", label: "Horario_final" },
   { key: "created_at", label: "created_at" },
 ];
 export const fields = [
+  { name: "id", label: "ID", type: "number" ,disable:true},
   { name: "nombre", label: "Nombre Negocio", type: "text" },
   { 
     name: "usuario_id", 

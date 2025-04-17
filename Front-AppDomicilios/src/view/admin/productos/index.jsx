@@ -13,22 +13,33 @@ const Productos = ({ Roles }) => {
   const Verdetalle = () => {};
 
   const handleFormSubmit = async (formData) => {
-    const form = new FormData(); // Crear un nuevo FormData
-
-    // Recorremos el formData actual y agregamos cada campo al FormData
+    const form = new FormData();
     for (const key in formData) {
       if (formData[key]) {
-        form.append(key, formData[key]); // Si el campo tiene valor, lo agregamos
+        form.append(key, formData[key]);
       }
     }
 
     try {
-      let response = await axios.post("/api/productos/controller.php", form, {
-        headers: {
-          "Content-Type": "multipart/form-data", // Indicamos que estamos enviando archivos
-        },
-      });
-      console.log(response.data);
+      if (formData.id) {
+        let response = await axios.post(
+          "/api/productos/controller.php?action=update",
+          form,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data", // Indicamos que estamos enviando archivos
+            },
+          }
+        );
+        console.log(response.data);
+      } else {
+        let response = await axios.post("/api/productos/controller.php", form, {
+          headers: {
+            "Content-Type": "multipart/form-data", // Indicamos que estamos enviando archivos
+          },
+        });
+        console.log(response.data);
+      }
       setrefresh((prev) => !prev);
       alert("Registrado!");
     } catch (error) {
@@ -42,7 +53,6 @@ const Productos = ({ Roles }) => {
       try {
         let response = await axios.get("/api/productos/controller.php");
 
-        // Si el usuario es admin, mostrar todas las rutas
         if (Roles.includes("admin")) {
           setUsuarios(response.data);
         } else {
@@ -58,16 +68,16 @@ const Productos = ({ Roles }) => {
       }
     };
     Get();
-  }, [Roles, refresh]); // Dependencias para actualizar si cambia el rol
+  }, [Roles, refresh]);
 
   const Formater = usuarios.map((item) => ({
-    id_producto: item.id_producto,
-    img: <img src={item.img} className="w-15" />,
-    nombre_producto: item.nombre_producto,
-    Negocio: item.Negocio,
-    descripcion_productos: item.descripcion_productos,
-    precio_producto: item.precio_producto,
-    stock_producto: item.stock_producto,
+    id: item.id_producto,
+    img: <img src={item.img} className="w-10" />,
+    nombre: item.nombre_producto,
+    negocio_id: item.Negocio,
+    descripcion: item.descripcion_productos,
+    precio: item.precio_producto,
+    stock: item.stock_producto,
     fecha_producto: item.fecha_producto,
   }));
 
@@ -80,11 +90,6 @@ const Productos = ({ Roles }) => {
         fields={fields}
         handleFormSubmit={handleFormSubmit}
         actions={[
-          {
-            icon: "PencilSquareIcon",
-            className: "bg-green-500 text-white",
-            onClick: (record) => abrirModal(record), // Llama a la función abrirModal con el registro
-          },
           {
             icon: "TrashIcon",
             className: "bg-red-500 text-white",

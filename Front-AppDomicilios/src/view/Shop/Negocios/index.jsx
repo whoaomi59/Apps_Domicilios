@@ -84,8 +84,8 @@ export default function NegociosShop() {
                     <div className="relative z-10">
                       <img
                         src={item.logo}
-                        alt=""
-                        className="inline-block h-16 w-16 object-cover rounded-full"
+                        alt="logo"
+                        className="inline-block h-16 w-16 object-cover rounded-full bg-white"
                       />
                       <h3 className="text-xl font-semibold text-white">
                         {item.nombre}
