@@ -5,12 +5,29 @@ import {
   SpeakerXMarkIcon,
 } from "@heroicons/react/16/solid";
 import Hora from "./Hora";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /* import Reloj from "./reloj"; */
 
-export default function Header({ usuarios }) {
-  const [Pitido, setPitido] = useState(false);
+export default function Header() {
+  const [Pitido, setPitido] = useState(sessionStorage.getItem("soung"));
+
+  useEffect(() => {
+    const yaSono = sessionStorage.getItem("beeped");
+
+    if (!yaSono) {
+      const audio = new Audio("/music/road-runner-beep-beep-mp3.mp3");
+      audio
+        .play()
+        .then(() => {
+          sessionStorage.setItem("beeped", "true"); // Guardamos que ya sonó
+        })
+        .catch((error) => {
+          console.error("Error al reproducir el sonido:", error);
+        });
+    }
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     window.location.href = "/"; // Redirigir a la página de login
@@ -23,29 +40,11 @@ export default function Header({ usuarios }) {
           <img src="/logo/logo.png" alt="logo" className="w-30 h-15" />
         </a>{" "}
         <div className="lg:hidden !ml-7 outline-none flex">
-          <div className="text-gray-500 mr-2">
-            <button onClick={() => setPitido((prev) => !prev)}>
-              {Pitido ? (
-                <SpeakerXMarkIcon className="w-5" />
-              ) : (
-                <SpeakerWaveIcon className="w-5" />
-              )}
-            </button>
-          </div>
           <Hora />
         </div>
         <div className="max-lg:hidden lg:!block max-lg:before:fixed max-lg:before:bg-black max-lg:before:opacity-50 max-lg:before:inset-0 max-lg:before:z-50">
           <div className="max-lg:fixed max-lg:bg-white max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50">
             <div className="flex items-center max-lg:flex-col-reverse max-lg:ml-auto gap-8">
-              <div className="text-gray-500">
-                <button onClick={() => setPitido((prev) => !prev)}>
-                  {Pitido ? (
-                    <SpeakerXMarkIcon className="w-5" />
-                  ) : (
-                    <SpeakerWaveIcon className="w-5" />
-                  )}
-                </button>
-              </div>
               <div className="flex items-center space-x-6 max-lg:flex-wrap">
                 <a href="/" className="flex">
                   <CalendarDaysIcon className="w-6 text-gray-400 mr-1" />
