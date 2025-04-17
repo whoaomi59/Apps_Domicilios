@@ -1,6 +1,29 @@
 import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import DynamicSelect from "../../../components/grid/formulario/DynamicSelect ";
 
-export default function FilterProduct({ children, name }) {
+export default function FilterProduct({ children, name, setidNegocio }) {
+  const [formData, setFormData] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (files && files.length > 0) {
+      setFormData({ ...formData, [name]: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const FilterButton = (e) => {
+    e.preventDefault();
+    try {
+      setidNegocio(formData.Negocio);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(formData);
   return (
     <section class="relative">
       <div class="w-full max-w-7xl mx-auto">
@@ -34,10 +57,8 @@ export default function FilterProduct({ children, name }) {
               class="h-12 border border-gray-300 text-gray-900 pl-11 text-base font-normal leading-7 rounded-full block w-full py-2.5 px-4 appearance-none relative focus:outline-none bg-white transition-all duration-500 hover:border-gray-400 hover:bg-gray-50 focus-within:bg-gray-50"
             >
               <option selected>Orden de productos</option>
-              <option value="option 1">option 1</option>
-              <option value="option 2">option 2</option>
-              <option value="option 3">option 3</option>
-              <option value="option 4">option 4</option>
+              <option value="option 1">DESC</option>
+              <option value="option 2">ASD</option>
             </select>
             <svg
               class="absolute top-1/2 -translate-y-1/2 right-4 z-50"
@@ -80,10 +101,10 @@ export default function FilterProduct({ children, name }) {
                     class="h-12 border border-gray-300 text-gray-900 text-xs font-medium rounded-full block w-full py-2.5 px-4 appearance-none relative focus:outline-none bg-white"
                   >
                     <option selected>Min</option>
-                    <option value="option 1">option 1</option>
-                    <option value="option 2">option 2</option>
-                    <option value="option 3">option 3</option>
-                    <option value="option 4">option 4</option>
+                    <option value="option 1">1.000</option>
+                    <option value="option 2">2.000</option>
+                    <option value="option 3">3.000</option>
+                    <option value="option 4">4.000</option>
                   </select>
                   <svg
                     class="absolute top-1/2 -translate-y-1/2 right-4 z-50"
@@ -111,10 +132,15 @@ export default function FilterProduct({ children, name }) {
                     class="h-12 border border-gray-300 text-gray-900 text-xs font-medium rounded-full block w-full py-2.5 px-4 appearance-none relative focus:outline-none bg-white"
                   >
                     <option selected>Max</option>
-                    <option value="option 1">option 1</option>
-                    <option value="option 2">option 2</option>
-                    <option value="option 3">option 3</option>
-                    <option value="option 4">option 4</option>
+                    <option value="option 1">10.000</option>
+                    <option value="option 2">20.000</option>
+                    <option value="option 3">30.000</option>
+                    <option value="option 4">60.000</option>
+                    <option value="option 4">70.000</option>
+                    <option value="option 4">80.000</option>
+                    <option value="option 4">300.000</option>
+                    <option value="option 4">600.000</option>
+                    <option value="option 4">1000.000</option>
                   </select>
                   <svg
                     class="absolute top-1/2 -translate-y-1/2 right-4 z-50"
@@ -142,34 +168,19 @@ export default function FilterProduct({ children, name }) {
                 Negocios
               </label>
               <div class="relative w-full mb-8">
-                <select
-                  id="FROM"
-                  class="h-12 border border-gray-300 text-gray-900 text-xs font-medium rounded-full block w-full py-2.5 px-4 appearance-none relative focus:outline-none bg-white"
-                >
-                  <option selected>Seleccione....</option>
-                  <option value="option 1">option 1</option>
-                  <option value="option 2">option 2</option>
-                  <option value="option 3">option 3</option>
-                  <option value="option 4">option 4</option>
-                </select>
-                <svg
-                  class="absolute top-1/2 -translate-y-1/2 right-4 z-50"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12.0002 5.99845L8.00008 9.99862L3.99756 5.99609"
-                    stroke="#111827"
-                    stroke-width="1.6"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
+                <DynamicSelect
+                  url="Shop/negocios/controller.php"
+                  name="Negocio"
+                  value={formData["Negocio"]}
+                  onChange={handleChange}
+                  valueKey="id"
+                  labelKey="nombre"
+                />
               </div>
-              <button class="w-full py-2.5 flex items-center justify-center gap-2 rounded-full bg-green-600 text-white font-semibold text-xs shadow-sm shadow-transparent transition-all duration-500 hover:bg-green-700 hover:shadow-green-200  ">
+              <button
+                onClick={FilterButton}
+                class="w-full py-2.5 flex items-center justify-center gap-2 rounded-full bg-green-600 text-white font-semibold text-xs shadow-sm shadow-transparent transition-all duration-500 hover:bg-green-700 hover:shadow-green-200  "
+              >
                 <svg
                   width="17"
                   height="16"

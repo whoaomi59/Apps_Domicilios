@@ -96,17 +96,17 @@ const Negocios = ({ IdUser, Roles }) => {
           {
             icon: "CalendarDaysIcon",
             className: "bg-blue-400 text-white",
-            onClick: (record) => abrirModal(record), // Llama a la función abrirModal con el registro
+            onClick: (record) => abrirModal(record),
           },
           {
             icon: "TrashIcon",
             className: "bg-red-500 text-white",
-            onClick: (record) => Verdetalle(record), // Llama a la función abrirModal con el registro
+            onClick: (record) => Verdetalle(record),
           },
           {
             icon: "ArrowRightCircleIcon",
             className: "bg-blue-500 text-white",
-            onClick: (record) => VerProductos(record), // Llama a la función abrirModal con el registro
+            onClick: (record) => VerProductos(record),
           },
         ]}
       />

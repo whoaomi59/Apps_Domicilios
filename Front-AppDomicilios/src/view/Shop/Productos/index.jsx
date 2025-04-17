@@ -2,10 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Alertas } from "../../../components/content/alert/Sweealert";
-import {
-  ArrowLeftCircleIcon,
-  ShoppingCartIcon,
-} from "@heroicons/react/24/outline";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Loader from "../../../components/content/loader";
 import FilterProduct from "./filter";
 import { formatearCOP } from "../../../components/content/formatoMoneda";
@@ -14,12 +11,13 @@ export default function ProductosShop() {
   const { id, name } = useParams();
   const [loader, setloader] = useState(false);
   const [data, setData] = useState([]);
+  const [idNegocio, setidNegocio] = useState(false);
+
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem("cart");
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
-  // Cargar carrito desde localStorage
   useEffect(() => {
     const savedCart = JSON.parse(localStorage.getItem("cart"));
     if (Array.isArray(savedCart)) {
@@ -29,13 +27,12 @@ export default function ProductosShop() {
     }
   }, []);
 
-  // Obtener productos de la API
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setloader(true);
         let response = await axios.get(
-          `/Shop/productos/controller.php?negocio_id=${id}`
+          `/Shop/productos/controller.php?negocio_id=${idNegocio || id}`
         );
         setData(response.data);
         return setloader(false);
@@ -46,7 +43,7 @@ export default function ProductosShop() {
       }
     };
     fetchProducts();
-  }, [id]);
+  }, [id, idNegocio]);
 
   const addToCart = (item) => {
     setCart((prevCart) => {
@@ -79,7 +76,7 @@ export default function ProductosShop() {
   }
 
   return (
-    <FilterProduct name={name}>
+    <FilterProduct name={name} setidNegocio={setidNegocio}>
       <section class="antialiased">
         <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
           <div class="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-3">
