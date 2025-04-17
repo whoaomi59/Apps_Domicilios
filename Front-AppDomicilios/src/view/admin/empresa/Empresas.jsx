@@ -8,7 +8,7 @@ const Empresas = () => {
 
   useEffect(() => {
     axios
-      .get("http://192.168.120.144/API/api/empresas_api.php")
+      .get("/api/empresas_api.php")
       .then((response) => setEmpresas(response.data))
       .catch((error) => console.error("Error al obtener empresas", error));
   }, []);
@@ -16,7 +16,7 @@ const Empresas = () => {
   const agregarEmpresa = (e) => {
     e.preventDefault();
     axios
-      .post("http://192.168.120.144/API/api/empresas_api.php", {
+      .post("/API/api/empresas_api.php", {
         nombre,
         email,
       })

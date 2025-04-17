@@ -135,10 +135,6 @@ function update() {
 
 }
 
-
-
-
-
 //FALTA
 function delete() {
     global $conn;

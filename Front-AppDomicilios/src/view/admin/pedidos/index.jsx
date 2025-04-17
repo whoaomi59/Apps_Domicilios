@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Grid from "../../../components/grid/grid";
 import { Columns, fields } from "./models";
+import { formatearCOP } from "../../../components/content/formatoMoneda";
 
 const Pedidos = ({ IdUser, Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
@@ -40,7 +41,7 @@ const Pedidos = ({ IdUser, Roles }) => {
 
   const Formater = usuarios.map((item) => ({
     id_pedido: item.id_pedido,
-    logo_pedido: <img src={item.logo_pedido} className="w-15" />,
+    logo_pedido: <img src={item.logo_pedido} className="w-10" />,
     nombre_negocio: item.nombre_negocio,
     usuario_pedido: item.usuario_pedido,
     estado: (
@@ -50,7 +51,7 @@ const Pedidos = ({ IdUser, Roles }) => {
         <h2 class="text-sm font-normal text-gray-500">{item.estado}</h2>
       </div>
     ),
-    total: item.total,
+    total: formatearCOP(item.total),
   }));
 
   return (
@@ -62,11 +63,6 @@ const Pedidos = ({ IdUser, Roles }) => {
         fields={fields}
         handleFormSubmit={handleFormSubmit}
         actions={[
-          {
-            icon: "PencilSquareIcon",
-            className: "bg-green-500 text-white",
-            onClick: (record) => abrirModal(record), // Llama a la función abrirModal con el registro
-          },
           {
             icon: "TrashIcon",
             className: "bg-red-500 text-white",
