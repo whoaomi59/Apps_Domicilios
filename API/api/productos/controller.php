@@ -83,58 +83,56 @@ function post() {
     }
 }
 
-
-//FALTA
-
 function update() {
     global $conn;
 
-    if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-        echo json_encode(["error" => "Método no permitido"]);
-        return;
-    }
-
-    // Verificar que los campos obligatorios están presentes
-    if (!isset($_POST['id'], $_POST['nombre'], $_POST['descripcion'], $_POST['precio'], $_POST['stock'])) {
-        echo json_encode(["error" => "Faltan datos"]);
-        return;
-    }
-
-    // Convertir datos a los tipos correctos
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    
     $id = intval($_POST['id']);
     $nombre = $_POST['nombre'];
     $descripcion = $_POST['descripcion'];
     $precio = floatval($_POST['precio']);
     $stock = intval($_POST['stock']);
 
-    // Verificar si el producto existe antes de actualizar
-    $stmt = $conn->prepare("SELECT * FROM productos WHERE id = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $producto = $result->fetch_assoc();
+        $hayLogo = isset($_FILES["img"]) && $_FILES["img"]["error"] === UPLOAD_ERR_OK;
 
-    if (!$producto) {
-        echo json_encode(["error" => "El producto con ID $id no existe"]);
-        return;
-    }
+        if ($hayLogo) {
+            $logo = file_get_contents($_FILES["img"]["tmp_name"]);
+            $sql = "UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, stock = ?, img = ? WHERE id = ?";
+        
+            $stmt = $conn->prepare($sql);
+        
+            if (!$stmt) {
+                echo json_encode(["error" => "Error preparando consulta con logo", "mysqli_error" => $conn->error]);
+                return;
+            }
+        
+            $null = NULL;
+            $stmt->bind_param("ssdibi", $nombre, $descripcion, $precio, $stock, $null, $id);
+            $stmt->send_long_data(4, $logo); // índice 4 para img
+        }else {
+            $sql = "UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, stock = ? WHERE id = ?";
+    
+            $stmt = $conn->prepare($sql);
+    
+            if (!$stmt) {
+                echo json_encode(["error" => "Error preparando consulta sin logo", "mysqli_error" => $conn->error]);
+                return;
+            }
+    
+            $stmt->bind_param("ssdii",$nombre, $descripcion, $precio, $stock, $id);
+        }
+    
+        if ($stmt->execute()) {
+            echo json_encode(["message" => "Registro actualizado correctamente"]);
+        } else {
+            echo json_encode(["error" => "Error al actualizar", "mysqli_error" => $stmt->error]);
+        }
+    
+        $stmt->close();
 
-    // Comenzar actualización de datos
-    if (isset($_FILES['img']) && $_FILES['img']['error'] === UPLOAD_ERR_OK) {
-        $img = file_get_contents($_FILES['img']['tmp_name']);
 
-        $stmt = $conn->prepare("UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, stock = ?, img = ? WHERE id = ?");
-        $stmt->bind_param("ssdibi", $nombre, $descripcion, $precio, $stock, $img, $id);
-    } else {
-        $stmt = $conn->prepare("UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, stock = ? WHERE id = ?");
-        $stmt->bind_param("ssdii", $nombre, $descripcion, $precio, $stock, $id);
-    }
-
-    if ($stmt->execute() && $stmt->affected_rows > 0) {
-        echo json_encode(["message" => "Producto actualizado correctamente"]);
-    } else {
-        echo json_encode(["warning" => "No se realizaron cambios"]);
-    }
 }
 
 

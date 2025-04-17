@@ -6,7 +6,6 @@ const DynamicSelect = ({
   name,
   value,
   onChange,
-  label,
   valueKey,
   labelKey,
   required = true,
@@ -27,26 +26,20 @@ const DynamicSelect = ({
   }, [url]);
 
   return (
-    <div className="mb-4">
-      {label && (
-        <label className="block text-gray-600 text-sm font-medium mb-1">
-          {label}
-        </label>
-      )}
-      <select
-        name={name}
-        value={value}
-        onChange={onChange}
-        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
-      >
-        <option value="">Seleccione...</option>
-        {options.map((option) => (
-          <option key={option[valueKey]} value={option[valueKey]}>
-            {option[labelKey]}
-          </option>
-        ))}
-      </select>
-    </div>
+    <select
+      name={name}
+      value={value ?? ""}
+      onChange={onChange}
+      required={required}
+      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
+    >
+      <option value="">Seleccione...</option>
+      {options.map((option) => (
+        <option key={option[valueKey]} value={String(option[valueKey])}>
+          {option[labelKey]}
+        </option>
+      ))}
+    </select>
   );
 };
 

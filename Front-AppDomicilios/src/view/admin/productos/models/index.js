@@ -1,16 +1,17 @@
 export const Columns = [
-  { key: "id_producto", label: "id" },
+  { key: "id", label: "id" },
   { key: "img", label: "img" },
-  { key: "nombre_producto", label: "Nombre" },
-  { key: "Negocio", label: "Negocio" },
-  { key: "descripcion_productos", label: "Descripcion" },
-  { key: "precio_producto", label: "Precio" },
-  { key: "stock_producto", label: "Stock" },
+  { key: "nombre", label: "Nombre" },
+  { key: "negocio_id", label: "Negocio" },
+  { key: "descripcion", label: "Descripcion" },
+  { key: "precio", label: "Precio" },
+  { key: "stock", label: "Stock" },
   { key: "fecha_producto", label: "Fecha" },
 ];
 
 
 export const fields = [
+  { name: "id", label: "ID", type: "number",disable:true },
   { name: "nombre", label: "nombre", type: "text" },
   { 
     name: "negocio_id", 
