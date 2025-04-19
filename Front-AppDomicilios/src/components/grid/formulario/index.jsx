@@ -45,7 +45,7 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title, initialValues }) => {
                   name={field.name}
                   value={formData[field.name]}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
+                  className="w-full px-4 py-2 border rounded-lg border-gray-300"
                 >
                   <option value="">Seleccione...</option>
                   {field.options.map((option) => (
@@ -59,7 +59,7 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title, initialValues }) => {
                   type="file"
                   name={field.name}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
+                  className="w-full px-4 py-2 border rounded-lg border-gray-300"
                   required={field.required}
                 />
               ) : field.type === "dinamiselect" ? (
@@ -77,8 +77,8 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title, initialValues }) => {
                   name={field.name}
                   value={formData[field.name]}
                   onChange={handleChange}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 ${
-                    field.disable && "bg-gray-300"
+                  className={`w-full px-4 py-2 border rounded-lg border-gray-300 ${
+                    field.disable && "bg-gray-200"
                   }`}
                   disabled={field.disable}
                 />

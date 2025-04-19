@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Grid from "../../../components/grid/grid";
 import { Columns, fields } from "./models";
+import { Alertas } from "../../../components/content/alert/Sweealert";
 
 const Negocios = ({ IdUser, Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
@@ -11,7 +12,6 @@ const Negocios = ({ IdUser, Roles }) => {
   const Verdetalle = () => {};
 
   const VerProductos = (record) => {
-    console.log(record.idnegocio);
     window.location.href = `/productos/${record.idnegocio}`;
   };
 
@@ -43,10 +43,15 @@ const Negocios = ({ IdUser, Roles }) => {
         console.log(response.data);
       }
       setrefresh((prev) => !prev);
-      return alert("Registrado!");
+      return Alertas({
+        icon: "success",
+        message: "Registrado!!",
+      });
     } catch (error) {
-      alert("Error al registrar");
-      console.error(error);
+      return Alertas({
+        icon: "error",
+        message: "Error al registrar!!",
+      });
     }
   };
 

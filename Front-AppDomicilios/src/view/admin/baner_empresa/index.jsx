@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Grid from "../../../components/grid/grid";
 import { Columns, fields } from "./models";
+import { Alertas } from "../../../components/content/alert/Sweealert";
 
 export default function Baner_Empresa() {
   const [usuarios, setUsuarios] = useState([]);
@@ -19,11 +20,16 @@ export default function Baner_Empresa() {
         "/api/empresas/empresa_imagenes.php",
         form
       );
-      console.log(response);
       setrefresh((prev) => !prev);
-      return alert("Registro creado!!");
+      return Alertas({
+        icon: "success",
+        message: "Registrado!!",
+      });
     } catch (error) {
-      alert(error);
+      return Alertas({
+        icon: "error",
+        message: error,
+      });
     }
   };
 

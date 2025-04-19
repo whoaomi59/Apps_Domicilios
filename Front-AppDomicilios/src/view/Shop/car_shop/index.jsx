@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { enviarWhatsApp } from "../../../API/CallmeBot";
+import { formatearCOP } from "../../../components/content/formatoMoneda";
+import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 
 export default function Car_Shop({ usuarios }) {
   const [products, setProducts] = useState([]);
@@ -134,7 +136,11 @@ export default function Car_Shop({ usuarios }) {
 
   return (
     <div className="max-w-5xl max-md:max-w-xl mx-auto p-4">
-      <h1 className="text-2xl font-bold text-green-700">Mis Carrito</h1>
+      <div className="flex">
+        <h1 className="text-2xl font-bold text-green-700">Mis Carrito</h1>
+        <ShoppingBagIcon className="w-7 ml-2 text-gray-500" />
+      </div>
+
       <div className="grid md:grid-cols-3 gap-10 mt-8">
         <div className="md:col-span-2 space-y-4">
           {products.length > 0 ? (
@@ -211,12 +217,12 @@ export default function Car_Shop({ usuarios }) {
                   </div>
                   {/* Precio unitario */}
                   <h3 className="text-sm sm:text-base font-semibold text-gray-500">
-                    ${product.precio}
+                    {formatearCOP(product.precio)}
                   </h3>
 
                   {/* Precio total por cantidad */}
                   <h3 className="text-sm sm:text-base font-semibold text-green-900">
-                    Total: ${product.precio * product.cantidad}
+                    Total:{formatearCOP(product.precio * product.cantidad)}
                   </h3>
                 </div>
               </div>
@@ -233,24 +239,24 @@ export default function Car_Shop({ usuarios }) {
             <li className="flex flex-wrap gap-4 text-sm">
               Subtotal{" "}
               <span className="ml-auto font-semibold">
-                ${subtotal.toFixed(2)}
+                {formatearCOP(subtotal)}
               </span>
             </li>
             <li className="flex flex-wrap gap-4 text-sm">
               Shipping{" "}
               <span className="ml-auto font-semibold">
-                ${shippingCost.toFixed(2)}
+                {formatearCOP(shippingCost)}
               </span>
             </li>
             <li className="flex flex-wrap gap-4 text-sm">
               Tax{" "}
               <span className="ml-auto font-semibold">
-                ${taxAmount.toFixed(2)}
+                {formatearCOP(taxAmount)}
               </span>
             </li>
             <hr className="border-green-300" />
             <li className="flex flex-wrap gap-4 text-sm font-semibold">
-              Total <span className="ml-auto">${total.toFixed(2)}</span>
+              Total <span className="ml-auto">{formatearCOP(total)}</span>
             </li>
           </ul>
 

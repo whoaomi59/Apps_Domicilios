@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Grid from "../../../components/grid/grid";
 import { fields, ModelsUsuarios } from "./models";
+import { Alertas } from "../../../components/content/alert/Sweealert";
 
 const Usuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -46,9 +47,15 @@ const Usuarios = () => {
         console.log(response);
       }
       setrefresh((prev) => !prev);
-      return alert("Registrado!");
+      return Alertas({
+        icon: "success",
+        message: "Registrado!!",
+      });
     } catch (error) {
-      alert(error);
+      return Alertas({
+        icon: "error",
+        message: error,
+      });
     }
   };
 
