@@ -8,11 +8,8 @@ const Negocios = ({ IdUser, Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
   const [refresh, setrefresh] = useState([]);
 
-  const abrirModal = () => {};
-  const Verdetalle = () => {};
-
   const VerProductos = (record) => {
-    window.location.href = `/productos/${record.idnegocio}`;
+    window.location.href = `/productos/${record.id}`;
   };
 
   const handleFormSubmit = async (formData) => {
@@ -98,16 +95,6 @@ const Negocios = ({ IdUser, Roles }) => {
         fields={fields}
         handleFormSubmit={handleFormSubmit}
         actions={[
-          {
-            icon: "CalendarDaysIcon",
-            className: "bg-blue-400 text-white",
-            onClick: (record) => abrirModal(record),
-          },
-          {
-            icon: "TrashIcon",
-            className: "bg-red-500 text-white",
-            onClick: (record) => Verdetalle(record),
-          },
           {
             icon: "ArrowRightCircleIcon",
             className: "bg-blue-500 text-white",

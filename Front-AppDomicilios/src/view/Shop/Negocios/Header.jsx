@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import Loader from "../../../components/content/loader";
 
 export default function Header({ setFilter }) {
   const [empresa, setEmpresa] = useState({});
@@ -8,14 +9,18 @@ export default function Header({ setFilter }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [baner, setbaner] = useState([]);
+  const [loader, setloader] = useState(false);
 
   useEffect(() => {
     const Get = async () => {
       try {
+        setloader(true);
         const response = await axios.get("/api/empresas/controller.php");
+        setloader(false);
         return setEmpresa(response.data[0]);
       } catch (error) {
         console.log(error);
+        return setloader(false);
       }
     };
     Get();
@@ -70,6 +75,10 @@ export default function Header({ setFilter }) {
       setFilter(found.id);
     }
   };
+
+  if (loader) {
+    return <Loader />;
+  }
 
   return (
     <section>
