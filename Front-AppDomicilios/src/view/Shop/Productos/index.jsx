@@ -12,7 +12,9 @@ export default function ProductosShop() {
   const [loader, setloader] = useState(false);
   const [data, setData] = useState([]);
   const [idNegocio, setidNegocio] = useState(false);
+  const [idProductos, setidproductos] = useState(false);
   const [quantityByProduct, setQuantityByProduct] = useState({});
+
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem("cart");
     return savedCart ? JSON.parse(savedCart) : [];
@@ -35,8 +37,6 @@ export default function ProductosShop() {
           `/Shop/productos/controller.php?negocio_id=${idNegocio || id}`
         );
         setData(response.data);
-
-        // Inicializa las cantidades por producto en 1
         const initialQuantities = {};
         response.data.forEach((item) => {
           initialQuantities[item.Producto] = 1;
@@ -90,7 +90,11 @@ export default function ProductosShop() {
   if (loader) return <Loader />;
 
   return (
-    <FilterProduct name={name} setidNegocio={setidNegocio}>
+    <FilterProduct
+      name={name}
+      setidNegocio={setidNegocio}
+      setidproductos={setidproductos}
+    >
       <section class="antialiased">
         <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
           <div class="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-3">

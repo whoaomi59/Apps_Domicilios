@@ -9,6 +9,8 @@ const DynamicSelect = ({
   valueKey,
   labelKey,
   required,
+  placeholder,
+  style,
 }) => {
   const [options, setOptions] = useState([]);
 
@@ -31,9 +33,11 @@ const DynamicSelect = ({
       value={value ?? ""}
       onChange={onChange}
       required={required}
-      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
+      className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 ${style}`}
     >
-      <option value="">Seleccione...</option>
+      <option value="" className="text-gray-400">
+        {placeholder || "Seleccionar..."}
+      </option>
       {options.map((option) => (
         <option key={option[valueKey]} value={String(option[valueKey])}>
           {option[labelKey]}
