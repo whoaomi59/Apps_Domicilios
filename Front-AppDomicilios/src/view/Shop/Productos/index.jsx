@@ -68,7 +68,18 @@ export default function ProductosShop() {
 
   const addToCart = (item) => {
     const cantidad = quantityByProduct[item.Producto] || 1;
-
+    if (item.stock <= 0) {
+      return Alertas({
+        icon: "error",
+        message: "Producto no disponible!",
+      });
+    }
+    if (item.stock < cantidad) {
+      return Alertas({
+        icon: "error",
+        message: "Cantidad no disponible!",
+      });
+    }
     setCart((prevCart) => {
       const updatedCart = [...prevCart];
       const existingIndex = updatedCart.findIndex(
@@ -169,7 +180,7 @@ export default function ProductosShop() {
                       5.0
                     </p>
                     <p class="text-sm font-medium text-gray-500 .:text-gray-400">
-                      (455)
+                      ({item.stock})
                     </p>
                   </div>
 

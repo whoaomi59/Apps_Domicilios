@@ -29,7 +29,7 @@ function get() {
     $negocio_id = isset($_GET['negocio_id']) ? intval($_GET['negocio_id']) : 0;
 
     if ($negocio_id > 0) {
-        $query = "SELECT p.id AS id_producto, p.nombre AS Producto, p.precio, p.img, n.nombre AS Negocio, t.nombre AS Tipo, P.negocio_id AS negocio_id
+        $query = "SELECT p.id AS id_producto, p.nombre AS Producto, p.precio, p.img, n.nombre AS Negocio, t.nombre AS Tipo, P.negocio_id AS negocio_id,P.stock
                   FROM productos p
                   JOIN negocios n ON p.negocio_id = n.id
                   JOIN tipos_productos t ON p.tipo_id = t.id 
