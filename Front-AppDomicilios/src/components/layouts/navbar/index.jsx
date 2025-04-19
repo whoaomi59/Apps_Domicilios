@@ -14,7 +14,6 @@ export default function Navbar({ toggle, Roles }) {
     const Get = async () => {
       try {
         let response = await axios.get("/api/rutas/controller.php");
-        // Filtrar las rutas basadas en los roles del usuario
         const rutasPermitidas = response.data.filter((item) =>
           item.rol.includes(Roles)
         );

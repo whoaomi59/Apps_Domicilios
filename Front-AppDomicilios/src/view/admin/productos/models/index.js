@@ -2,6 +2,7 @@ export const Columns = [
   { key: "id", label: "id" },
   { key: "img", label: "img" },
   { key: "nombre", label: "Nombre" },
+  { key: "Tipo", label: "Tipo Producto" },
   { key: "negocio_id", label: "Negocio" },
   { key: "descripcion", label: "Descripcion" },
   { key: "precio", label: "Precio" },

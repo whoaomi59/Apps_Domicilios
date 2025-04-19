@@ -74,6 +74,7 @@ const Productos = ({ Roles }) => {
     id: item.id_producto,
     img: <img src={item.img} className="w-10" />,
     nombre: item.nombre_producto,
+    Tipo: item.Tipo,
     negocio_id: item.Negocio,
     descripcion: item.descripcion_productos,
     precio: item.precio_producto,
