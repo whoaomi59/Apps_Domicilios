@@ -1,12 +1,16 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Grid from "../../../components/grid/grid";
-import { Columns, fields } from "./models";
+import { Columns, fields, fieldsEstado } from "./models";
 import { Alertas } from "../../../components/content/alert/Sweealert";
+import Form from "../../../components/grid/formulario";
+import { ClockIcon, DocumentPlusIcon } from "@heroicons/react/24/outline";
 
 const Negocios = ({ IdUser, Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
   const [refresh, setrefresh] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingItem, setEditingItem] = useState(null);
 
   const VerProductos = (record) => {
     window.location.href = `/productos/${record.id}`;
@@ -20,6 +24,13 @@ const Negocios = ({ IdUser, Roles }) => {
       }
     }
     try {
+      if (formData.estado) {
+        let response = await axios.put("/api/negocios/controller.php", form, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      }
       if (formData.id) {
         let response = await axios.post(
           "/api/negocios/update_negocios.php",
@@ -30,7 +41,6 @@ const Negocios = ({ IdUser, Roles }) => {
             },
           }
         );
-        console.log(response.data);
       } else {
         let response = await axios.post("/api/negocios/controller.php", form, {
           headers: {
@@ -81,13 +91,41 @@ const Negocios = ({ IdUser, Roles }) => {
     direccion: item.direccion,
     telefono: item.telefono,
     email: item.email,
+    estado:
+      item.estadoNegocio === "1" ? (
+        <p className="flex">
+          <ClockIcon className="w-5 mr-2 text-red-500" />
+          Inactivo
+        </p>
+      ) : (
+        <p className="flex">
+          <ClockIcon className="w-5 mr-2 text-green-500" />
+          Activo
+        </p>
+      ),
     Horario_inicial: item.Horario_inicial,
     Horario_final: item.Horario_final,
     created_at: item.created_at,
   }));
 
+  const CambiarEstado = async (record) => {
+    setEditingItem(record);
+    setIsModalOpen(true);
+  };
+
   return (
     <div className="p-4">
+      <Form
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setEditingItem(null);
+        }}
+        fields={fieldsEstado}
+        onSubmit={handleFormSubmit}
+        title={"Estado"}
+        initialValues={editingItem}
+      />
       <Grid
         module={"Negocios"}
         columns={Columns}
@@ -95,6 +133,11 @@ const Negocios = ({ IdUser, Roles }) => {
         fields={fields}
         handleFormSubmit={handleFormSubmit}
         actions={[
+          {
+            icon: "CogIcon",
+            className: "bg-orange-500 text-white",
+            onClick: (record) => CambiarEstado(record),
+          },
           {
             icon: "ArrowRightCircleIcon",
             className: "bg-blue-500 text-white",
