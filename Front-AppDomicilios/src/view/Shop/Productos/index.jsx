@@ -12,7 +12,7 @@ export default function ProductosShop() {
   const [loader, setloader] = useState(false);
   const [data, setData] = useState([]);
   const [idNegocio, setidNegocio] = useState(false);
-
+  const [quantityByProduct, setQuantityByProduct] = useState({});
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem("cart");
     return savedCart ? JSON.parse(savedCart) : [];
@@ -23,7 +23,7 @@ export default function ProductosShop() {
     if (Array.isArray(savedCart)) {
       setCart(savedCart);
     } else {
-      setCart([]); // Si no es un array válido, iniciar con un array vacío
+      setCart([]);
     }
   }, []);
 
@@ -35,45 +35,59 @@ export default function ProductosShop() {
           `/Shop/productos/controller.php?negocio_id=${idNegocio || id}`
         );
         setData(response.data);
-        return setloader(false);
+
+        // Inicializa las cantidades por producto en 1
+        const initialQuantities = {};
+        response.data.forEach((item) => {
+          initialQuantities[item.Producto] = 1;
+        });
+        setQuantityByProduct(initialQuantities);
+
+        setloader(false);
       } catch (error) {
         console.error("Error al obtener productos:", error);
         alert("Error al obtener productos");
-        return setloader(false);
+        setloader(false);
       }
     };
     fetchProducts();
   }, [id, idNegocio]);
 
-  const addToCart = (item) => {
-    setCart((prevCart) => {
-      // Clonar el carrito actual para no modificar el estado directamente
-      let updatedCart = [...prevCart];
+  const handleQuantityChange = (productName, change) => {
+    setQuantityByProduct((prevQuantities) => {
+      const newQuantity = Math.max(
+        1,
+        (prevQuantities[productName] || 1) + change
+      );
+      return {
+        ...prevQuantities,
+        [productName]: newQuantity,
+      };
+    });
+  };
 
-      // Verificar si el producto ya está en el carrito
-      const existingProductIndex = updatedCart.findIndex(
-        (product) => product.Producto === item.Producto
+  const addToCart = (item) => {
+    const cantidad = quantityByProduct[item.Producto] || 1;
+
+    setCart((prevCart) => {
+      const updatedCart = [...prevCart];
+      const existingIndex = updatedCart.findIndex(
+        (p) => p.Producto === item.Producto
       );
 
-      if (existingProductIndex !== -1) {
-        // Si ya está en el carrito, aumentar la cantidad
-        updatedCart[existingProductIndex].cantidad += 1;
+      if (existingIndex !== -1) {
+        updatedCart[existingIndex].cantidad = cantidad; // Reemplaza la cantidad en vez de sumar
       } else {
-        // Agregar el nuevo producto con cantidad 1
-        updatedCart.push({ ...item, cantidad: 1 });
+        updatedCart.push({ ...item, cantidad });
       }
 
-      // Guardar en localStorage
       localStorage.setItem("cart", JSON.stringify(updatedCart));
-
-      Alertas({ icon: "success", message: "Producto En El Carrito!!" });
+      Alertas({ icon: "success", message: "Producto agregado al carrito!" });
       return updatedCart;
     });
   };
 
-  if (loader) {
-    return <Loader />;
-  }
+  if (loader) return <Loader />;
 
   return (
     <FilterProduct name={name} setidNegocio={setidNegocio}>
@@ -201,31 +215,19 @@ export default function ProductosShop() {
                     {formatearCOP(item.precio)}
                   </p>
                   <div class="mt-2 flex items-center justify-between gap-4">
-                    <div className="mt-auto flex items-center gap-2">
+                    <div className="flex items-center gap-2 mb-3">
                       <button
-                        type="button"
-                        className="flex items-center justify-center w-5 h-5 bg-green-400 outline-none rounded-full"
+                        onClick={() => handleQuantityChange(item.Producto, -1)}
+                        className="bg-gray-200 px-2 py-1 rounded"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="w-2 fill-white"
-                          viewBox="0 0 124 124"
-                        >
-                          <path d="M112 50H12C5.4 50 0 55.4 0 62s5.4 12 12 12h100c6.6 0 12-5.4 12-12s-5.4-12-12-12z"></path>
-                        </svg>
+                        -
                       </button>
-                      <span className="font-semibold text-sm">9</span>
+                      <span>{quantityByProduct[item.Producto] || 1}</span>
                       <button
-                        type="button"
-                        className="flex items-center justify-center w-5 h-5 bg-green-800 outline-none rounded-full"
+                        onClick={() => handleQuantityChange(item.Producto, 1)}
+                        className="bg-gray-200 px-2 py-1 rounded"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="w-2 fill-white"
-                          viewBox="0 0 42 42"
-                        >
-                          <path d="M37.059 16H26V4.941C26 2.224 23.718 0 21 0s-5 2.224-5 4.941V16H4.941C2.224 16 0 18.282 0 21s2.224 5 4.941 5H16v11.059C16 39.776 18.282 42 21 42s5-2.224 5-4.941V26h11.059C39.776 26 42 23.718 42 21s-2.224-5-4.941-5z"></path>
-                        </svg>
+                        +
                       </button>
                     </div>
                     <button

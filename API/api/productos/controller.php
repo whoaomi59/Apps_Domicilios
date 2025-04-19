@@ -82,7 +82,7 @@ function post() {
         echo json_encode(["error" => "Error al subir la imagen", "file_error" => $_FILES['img']['error']]);
     }
 }
-
+//OK
 function update() {
     global $conn;
 

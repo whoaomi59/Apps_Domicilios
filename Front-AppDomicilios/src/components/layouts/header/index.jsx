@@ -36,7 +36,7 @@ export default function Header() {
   return (
     <header className="flex shadow-md py-1 px-4 sm:px-7 bg-white min-h-[70px] tracking-wide z-[110] fixed top-0 w-full">
       <div className="flex flex-wrap items-center justify-between gap-4 w-full relative">
-        <a href="/">
+        <a href="/shop/negocios">
           <img src="/logo/logo.png" alt="logo" className="w-30 h-15" />
         </a>{" "}
         <div className="lg:hidden !ml-7 outline-none flex">

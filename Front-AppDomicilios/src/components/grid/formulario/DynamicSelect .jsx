@@ -8,7 +8,7 @@ const DynamicSelect = ({
   onChange,
   valueKey,
   labelKey,
-  required = true,
+  required,
 }) => {
   const [options, setOptions] = useState([]);
 

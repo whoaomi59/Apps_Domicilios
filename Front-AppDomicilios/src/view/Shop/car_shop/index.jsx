@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import PrivateRoute from "../../../midelware/PrivateRoute";
-import { Navigate } from "react-router-dom";
+import { enviarWhatsApp } from "../../../API/CallmeBot";
 
 export default function Car_Shop({ usuarios }) {
   const [products, setProducts] = useState([]);
@@ -89,16 +88,25 @@ export default function Car_Shop({ usuarios }) {
           negocio_id: negocioId,
           total: totalPedido.toFixed(2),
           estado: "pendiente",
-          productos: productos,
+          productos: products,
         });
-
+        enviarWhatsApp({
+          mensaje: {
+            cliente_id: 101,
+            negocio_id: 12,
+            total: 65400,
+            estado: "pendiente",
+            productos: products,
+          },
+        });
         console.log(`Pedido para negocio ${negocioId}:`, response);
       }
 
       // 🟢 BORRAR EL LOCAL STORAGE DESPUÉS DE GUARDAR EL PEDIDO
-      localStorage.removeItem("cart"); // Asegúrate de que la clave sea la misma que usaste al guardar
-      setProducts([]); // Limpiar el estado del carrito
-      alert("Pedidos enviados correctamente.");
+      localStorage.removeItem("cart");
+      setProducts([]);
+
+      return alert("Pedidos enviados correctamente.");
     } catch (error) {
       alert("Error al enviar los pedidos");
       console.error(error);
