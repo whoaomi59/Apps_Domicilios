@@ -6,7 +6,7 @@ export const AuthProvider = ({ children }) => {
   const user = localStorage.getItem("token");
 
   const logout = () => {
-    sessionStorage.removeItem("token");
+    localStorage.removeItem("token");
     return (window.location.href = "/");
   };
 

@@ -10,8 +10,6 @@ import { useEffect, useState } from "react";
 /* import Reloj from "./reloj"; */
 
 export default function Header() {
-  const [Pitido, setPitido] = useState(sessionStorage.getItem("soung"));
-
   useEffect(() => {
     const yaSono = sessionStorage.getItem("beeped");
 

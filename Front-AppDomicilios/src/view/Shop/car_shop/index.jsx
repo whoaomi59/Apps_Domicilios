@@ -139,7 +139,7 @@ export default function Car_Shop({ usuarios }) {
   };
 
   const handleBuyClick = () => {
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
     if (!token) {
       // No autenticado, redirigir al login o mostrar mensaje

@@ -37,7 +37,7 @@ function App() {
   axios.defaults.baseURL = " https://domicilios.fundacionhuellas.com.co/API/";
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token"); // Obtiene el token
+    const token = localStorage.getItem("token"); // Obtiene el token
     if (token) {
       try {
         const decoded = jwtDecode(token);
