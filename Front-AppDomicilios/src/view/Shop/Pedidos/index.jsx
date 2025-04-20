@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ArrowRightCircleIcon } from "@heroicons/react/24/outline";
+import { formatearCOP } from "../../../components/content/formatoMoneda";
 
 export default function PedidosShop({ IdUser }) {
   const [usuarios, setUsuarios] = useState([]);
@@ -120,7 +121,7 @@ export default function PedidosShop({ IdUser }) {
                           {item.usuario_pedido}
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-500 ':text-gray-300 whitespace-nowrap">
-                          ${item.total}
+                          {formatearCOP(item.total)}
                         </td>
 
                         <td class="px-4 py-4 text-sm whitespace-nowrap">

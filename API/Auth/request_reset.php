@@ -5,7 +5,7 @@ header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 
-include($_SERVER['DOCUMENT_ROOT'] . '/API/config/db.php');
+require __DIR__ . '/../config/db.php'; // Ajustar si es necesario
 require __DIR__ . '/../vendor/autoload.php'; // Ajustar si es necesario
 
 header("Content-Type: application/json");
@@ -38,7 +38,7 @@ if ($row = $result->fetch_assoc()) {
     $stmt->execute();
 
     // Enviar el email con el enlace de recuperación (simulado)
-    $reset_link = "http://localhost/API/Auth/reset_password.php?token=$token";
+    $reset_link = "$token";
     
     // Simulamos el envío del email
     echo json_encode([

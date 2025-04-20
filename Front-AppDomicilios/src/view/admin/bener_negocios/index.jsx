@@ -4,7 +4,7 @@ import Grid from "../../../components/grid/grid";
 import { Columns, fields } from "./models";
 import { Alertas } from "../../../components/content/alert/Sweealert";
 
-export default function Baner_Empresa() {
+export default function Baner_Negocios() {
   const [usuarios, setUsuarios] = useState([]);
   const [refresh, setrefresh] = useState([]);
 
@@ -16,10 +16,7 @@ export default function Baner_Empresa() {
       }
     }
     try {
-      let response = await axios.post(
-        "/api/empresas/empresa_imagenes.php",
-        form
-      );
+      let response = await axios.post("/api/negocios/img_negocio.php", form);
       setrefresh((prev) => !prev);
       return Alertas({
         icon: "success",
@@ -36,7 +33,7 @@ export default function Baner_Empresa() {
   useEffect(() => {
     const Get = async () => {
       try {
-        let response = await axios.get("/api/empresas/empresa_imagenes.php");
+        let response = await axios.get("/api/negocios/img_negocio.php");
 
         return setUsuarios(response.data);
       } catch (error) {
@@ -49,7 +46,7 @@ export default function Baner_Empresa() {
   const Formater = usuarios.map((item) => ({
     id: item.id,
     img: <img src={item.img} className="w-10" />,
-    empresa_id: item.empresa_id,
+    negocios_id: item.negocios_id,
   }));
 
   return (

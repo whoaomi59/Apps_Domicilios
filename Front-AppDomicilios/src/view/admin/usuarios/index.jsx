@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Grid from "../../../components/grid/grid";
 import { fields, ModelsUsuarios } from "./models";
+import { Alertas } from "../../../components/content/alert/Sweealert";
 
 const Usuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -10,7 +11,6 @@ const Usuarios = () => {
   const abrirModal = () => {};
 
   const handleFormSubmit = async (newData) => {
-    console.log(newData);
     try {
       if (newData.nombre) {
         let response = await axios.put(
@@ -20,6 +20,7 @@ const Usuarios = () => {
             nombre: newData.nombre,
             telefono: newData.telefono,
             rol: newData.rol,
+            ApiKey: newData.ApiKey,
           },
           {
             headers: {
@@ -32,23 +33,24 @@ const Usuarios = () => {
       } else {
         let response = await axios.post(`/api/usuarios/controller.php`, {
           email: newData.email,
-
           empresa_id: 1,
-
           nombre: newData.nombre,
-
           password: newData.password,
-
           rol: newData.rol,
-
           telefono: newData.telefono,
         });
         console.log(response);
       }
       setrefresh((prev) => !prev);
-      return alert("Registrado!");
+      return Alertas({
+        icon: "success",
+        message: "Registrado!!",
+      });
     } catch (error) {
-      alert(error);
+      return Alertas({
+        icon: "error",
+        message: error,
+      });
     }
   };
 

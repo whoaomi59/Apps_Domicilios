@@ -1,14 +1,26 @@
 import axios from "axios";
 
-export const enviarWhatsApp = async (mensaje) => {
-  const numero = "573144160224";
+export const enviarWhatsApp = async ({
+  mensaje,
+  numeroNegocio,
+  keyNegocios,
+}) => {
+  console.log("numero del api" + numeroNegocio);
+  const numero = "573184141985"; //Numero Admin
+  const numero2 = numeroNegocio; //Numeros de los negocios
+  const KeyNegocios = keyNegocios;
   const texto = construirMensaje(mensaje);
   const url = `https://api.callmebot.com/whatsapp.php?phone=${numero}&text=${encodeURIComponent(
     texto
-  )}&apikey=7774438`;
+  )}&apikey=9181021`;
+  //URL Negocios
+  const url2 = `https://api.callmebot.com/whatsapp.php?phone=57${numero2}&text=${encodeURIComponent(
+    texto
+  )}&apikey=${KeyNegocios}`;
 
   try {
-    await axios.get(url);
+    axios.get(url);
+    axios.get(url2);
     console.log("Mensaje enviado con CallMeBot");
   } catch (error) {
     console.error("Error al enviar mensaje:", error);
@@ -16,11 +28,21 @@ export const enviarWhatsApp = async (mensaje) => {
 };
 
 const construirMensaje = (pedido) => {
-  const { cliente_id, negocio_id, total, estado, productos } = pedido.mensaje;
+  const {
+    cliente_id,
+    negocio_id,
+    total,
+    estado,
+    productos,
+    ubicacion,
+    tipoUbicacion,
+  } = pedido;
 
   let mensaje = `🛍️ *Nueva Compra Realizada*\n\n`;
   mensaje += `🧑 Cliente ID: ${cliente_id}\n`;
   mensaje += `🏪 Negocio ID: ${negocio_id}\n`;
+  mensaje += `🏪 Ubicacion: ${ubicacion}\n`;
+  mensaje += `🏪 tipoUbicacion: ${tipoUbicacion}\n`;
   mensaje += `💵 Total: $${total}\n`;
   mensaje += `📦 Estado: ${estado}\n\n`;
   mensaje += `🛒 *Productos comprados:*\n`;

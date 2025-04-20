@@ -7,6 +7,7 @@ export const Columns = [
   { key: "direccion", label: "direccion" },
   { key: "telefono", label: "telefono" },
   { key: "email", label: "email" },
+  { key: "estado", label: "estado" },
   { key: "Horario_inicial", label: "Horario_inicial" },
   { key: "Horario_final", label: "Horario_final" },
   { key: "created_at", label: "created_at" },
@@ -37,3 +38,11 @@ export const fields = [
   { name: "Horario_inicial", label: "Horario_inicial", type: "time" },
   { name: "Horario_final", label: "Horario_final", type: "time" },
 ];
+
+
+export const fieldsEstado = [
+   { name: "id", label: "ID", type: "number" ,disable:true},
+  { name: "estado", label: "Cambiar Estado", type: "select",options:[{value:0,label:'Activo'},{value:1,label:'Inactivo'}] },
+ 
+];
+

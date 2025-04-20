@@ -25,7 +25,7 @@ switch ($request_method) {
 //OK
 function get() {
     global $conn;
-    $result = $conn->query("SELECT n.id as idnegocio, n.nombre AS Negocio, c.nombre AS Categoria,direccion,n.telefono,n.email,n.created_at,u.nombre AS usuario, u.id AS iduser,n.logo AS logo_negocio,Horario_inicial,Horario_final FROM negocios n JOIN categorias_negocios c ON n.categoria_id = c.id JOIN usuarios u ON usuario_id=u.id;");
+    $result = $conn->query("SELECT n.id as idnegocio, n.nombre AS Negocio, c.nombre AS Categoria,direccion,n.telefono,n.email,n.created_at,u.nombre AS usuario, u.id AS iduser,n.logo AS logo_negocio,Horario_inicial,Horario_final,n.estado AS estadoNegocio FROM negocios n JOIN categorias_negocios c ON n.categoria_id = c.id JOIN usuarios u ON usuario_id=u.id;");
 
     $empresas = [];
 
@@ -42,68 +42,46 @@ function get() {
     echo json_encode($empresas);
 }
 //OK
-function post() {
+function update() {
     global $conn;
 
-    // 📌 Verificar si se enviaron todos los datos necesarios
-    $usuario_id = $_POST["usuario_id"] ?? null;
-    $categoria_id = $_POST["categoria_id"] ?? null;
-    $nombre = $_POST["nombre"] ?? null;
-    $direccion = $_POST["direccion"] ?? null;
-    $telefono = $_POST["telefono"] ?? null;
-    $email = $_POST["email"] ?? null;
-    $horario_inicial = $_POST["Horario_inicial"] ?? null;
-    $horario_final = $_POST["Horario_final"] ?? null;
+    // Leer el contenido crudo del body
+    $rawData = file_get_contents("php://input");
 
-    // Validación de datos obligatorios
-    if (!$usuario_id || !$categoria_id || !$nombre || !$direccion || !$telefono || !$email || !$horario_inicial || !$horario_final) {
-        echo json_encode(["error" => "Faltan datos obligatorios"]);
+    // Decodificar JSON
+    $data = json_decode($rawData, true);
+
+    // TEMPORAL: guardar para debug
+    file_put_contents("debug.txt", "RAW:\n" . $rawData . "\n\nPARSED:\n" . print_r($data, true));
+
+    // Verificar si llegaron los datos correctos
+    if (!isset($data['id']) || !isset($data['estado'])) {
+        echo json_encode(["error" => "Faltan parámetros requeridos (id o estado)", "debug" => $data]);
         return;
     }
 
-    // 📂 Validar si se envió una imagen
-    if (isset($_FILES["logo"]) && $_FILES["logo"]["error"] === UPLOAD_ERR_OK) {
-        $logo = file_get_contents($_FILES["logo"]["tmp_name"]); // Leer imagen binaria
-    } else {
-        echo json_encode(["error" => "Error al subir la imagen", "file_error" => $_FILES["logo"]["error"] ?? "Archivo no enviado"]);
-        return;
-    }
+    $id = $data['id'];
+    $estado = $data['estado'];
 
-    // 🔥 Preparar la consulta SQL
-    $stmt = $conn->prepare("INSERT INTO negocios (usuario_id, categoria_id, nombre, direccion, telefono, email, Horario_inicial, Horario_final, logo) 
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
+    $stmt = $conn->prepare("UPDATE negocios SET estado = ? WHERE id = ?");
     if (!$stmt) {
-        echo json_encode(["error" => "Error en la consulta", "mysqli_error" => $conn->error]);
+        echo json_encode(["error" => "Error al preparar la consulta", "mysqli_error" => $conn->error]);
         return;
     }
 
-    // 🔗 Vincular parámetros correctamente
-    // 'i' para integer (usuario_id, categoria_id), 's' para string (resto de los campos), 'b' para binario (logo)
-    $stmt->bind_param("iisssssss", 
-        $usuario_id, 
-        $categoria_id, 
-        $nombre, 
-        $direccion, 
-        $telefono, 
-        $email, 
-        $horario_inicial, 
-        $horario_final, 
-        $logo
-    );
+    $stmt->bind_param("ii", $estado, $id);
 
-    // 📌 Ejecutar la consulta
     if ($stmt->execute()) {
-        echo json_encode(["message" => "Registro creado con imagen"]);
+        echo json_encode(["message" => "Estado actualizado correctamente"]);
     } else {
-        echo json_encode(["error" => "Error al insertar datos", "mysqli_error" => $stmt->error]);
+        echo json_encode(["error" => "Error al actualizar estado", "mysqli_error" => $stmt->error]);
     }
 
     $stmt->close();
 }
+
  
 
-function update() {}
 //FALTA
 function delete() {
     global $conn;

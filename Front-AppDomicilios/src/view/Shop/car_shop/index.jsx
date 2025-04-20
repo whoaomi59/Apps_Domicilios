@@ -1,12 +1,18 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { enviarWhatsApp } from "../../../API/CallmeBot";
+import { formatearCOP } from "../../../components/content/formatoMoneda";
+import { ShoppingBagIcon } from "@heroicons/react/24/outline";
+import { Alertas } from "../../../components/content/alert/Sweealert";
 
 export default function Car_Shop({ usuarios }) {
   const [products, setProducts] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
-  const shippingCost = 2.0;
-  const taxRate = 0.05; // 5% de impuestos
+  const [ubicacionEnvio, setUbicacionEnvio] = useState("");
+  const [tipoUbicacion, setTipoUbicacion] = useState("");
+  const [shippingCost, setShippingCost] = useState(0);
+
+  const taxRate = 0.0; // 5% de impuestos
 
   // Cargar productos desde localStorage al montar el componente
   useEffect(() => {
@@ -79,6 +85,9 @@ export default function Car_Shop({ usuarios }) {
     }, {});
 
     try {
+      if (!tipoUbicacion || !shippingCost) {
+        return alert("Ubicacion requerida!!");
+      }
       for (const negocioId in pedidosPorNegocio) {
         const productos = pedidosPorNegocio[negocioId];
         const totalPedido = productos.reduce((sum, p) => sum + p.subtotal, 0);
@@ -88,28 +97,44 @@ export default function Car_Shop({ usuarios }) {
           negocio_id: negocioId,
           total: totalPedido.toFixed(2),
           estado: "pendiente",
-          productos: products,
+          productos: productos,
         });
-        enviarWhatsApp({
-          mensaje: {
-            cliente_id: 101,
-            negocio_id: 12,
-            total: 65400,
-            estado: "pendiente",
-            productos: products,
-          },
-        });
-        console.log(`Pedido para negocio ${negocioId}:`, response);
+
+        let number = response.data.telefono;
+        let key = response.data.ApiKey;
+
+        if (number) {
+          enviarWhatsApp({
+            numeroNegocio: number,
+            keyNegocios: key,
+            mensaje: {
+              cliente_id: usuarios.id,
+              negocio_id: negocioId,
+              total: total,
+              estado: "pendiente",
+              productos: products,
+              ubicacion: ubicacionEnvio,
+              tipoUbicacion: tipoUbicacion,
+              costoEnvio: shippingCost,
+            },
+          });
+        }
       }
 
       // 🟢 BORRAR EL LOCAL STORAGE DESPUÉS DE GUARDAR EL PEDIDO
-      localStorage.removeItem("cart");
-      setProducts([]);
-
-      return alert("Pedidos enviados correctamente.");
+      /*   localStorage.removeItem("cart");
+      setProducts([]); */
+      Alertas({ icon: "success", message: "Pedido enviado!!" });
+      /*  return setTimeout(() => {
+        Comprar();
+      }, 1000); */
     } catch (error) {
       alert("Error al enviar los pedidos");
       console.error(error);
+      return Alertas({
+        icon: "error",
+        message: "Error al enviar los pedidos!!",
+      });
     }
   };
 
@@ -134,7 +159,11 @@ export default function Car_Shop({ usuarios }) {
 
   return (
     <div className="max-w-5xl max-md:max-w-xl mx-auto p-4">
-      <h1 className="text-2xl font-bold text-green-700">Mis Carrito</h1>
+      <div className="flex">
+        <h1 className="text-2xl font-bold text-green-700">Mis Carrito</h1>
+        <ShoppingBagIcon className="w-7 ml-2 text-gray-500" />
+      </div>
+
       <div className="grid md:grid-cols-3 gap-10 mt-8">
         <div className="md:col-span-2 space-y-4">
           {products.length > 0 ? (
@@ -211,12 +240,12 @@ export default function Car_Shop({ usuarios }) {
                   </div>
                   {/* Precio unitario */}
                   <h3 className="text-sm sm:text-base font-semibold text-gray-500">
-                    ${product.precio}
+                    {formatearCOP(product.precio)}
                   </h3>
 
                   {/* Precio total por cantidad */}
                   <h3 className="text-sm sm:text-base font-semibold text-green-900">
-                    Total: ${product.precio * product.cantidad}
+                    Total:{formatearCOP(product.precio * product.cantidad)}
                   </h3>
                 </div>
               </div>
@@ -231,26 +260,56 @@ export default function Car_Shop({ usuarios }) {
         <div className="bg-white rounded-md px-4 py-6 h-max shadow-[0_2px_12px_-3px_rgba(61,63,68,0.3)]">
           <ul className="text-green-900 font-medium space-y-4">
             <li className="flex flex-wrap gap-4 text-sm">
+              Ubicación de envío
+              <input
+                type="text"
+                className="w-full px-4 py-2 border rounded-lg border-gray-300"
+                value={ubicacionEnvio}
+                onChange={(e) => setUbicacionEnvio(e.target.value)}
+              />
+            </li>
+            <li className="flex flex-wrap gap-4 text-sm">
+              Elije ubicación
+              <select
+                className="w-full px-4 py-2 border rounded-lg border-gray-300"
+                value={tipoUbicacion}
+                onChange={(e) => {
+                  const tipo = e.target.value;
+                  setTipoUbicacion(tipo);
+                  setShippingCost(tipo === "Rural" ? 10000 : 5000); // Ejemplo: rural cuesta más
+                }}
+              >
+                <option value="">Seleccionar...</option>
+                <option value="Urbano">Urbano</option>
+                <option value="Rural">Rural</option>
+              </select>
+            </li>
+
+            <hr className="border-green-300" />
+          </ul>
+
+          <ul className="text-green-900 font-medium space-y-4">
+            <li className="flex flex-wrap gap-4 text-sm">
               Subtotal{" "}
               <span className="ml-auto font-semibold">
-                ${subtotal.toFixed(2)}
+                {formatearCOP(subtotal)}
               </span>
             </li>
             <li className="flex flex-wrap gap-4 text-sm">
-              Shipping{" "}
+              Envío{" "}
               <span className="ml-auto font-semibold">
-                ${shippingCost.toFixed(2)}
+                {formatearCOP(shippingCost)}
               </span>
             </li>
             <li className="flex flex-wrap gap-4 text-sm">
-              Tax{" "}
+              Impuesto{" "}
               <span className="ml-auto font-semibold">
-                ${taxAmount.toFixed(2)}
+                {formatearCOP(taxAmount)}
               </span>
             </li>
             <hr className="border-green-300" />
             <li className="flex flex-wrap gap-4 text-sm font-semibold">
-              Total <span className="ml-auto">${total.toFixed(2)}</span>
+              Total <span className="ml-auto">{formatearCOP(total)}</span>
             </li>
           </ul>
 

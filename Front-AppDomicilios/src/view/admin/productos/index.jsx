@@ -3,6 +3,7 @@ import axios from "axios";
 import Grid from "../../../components/grid/grid";
 import { Columns, fields } from "./models";
 import { useParams } from "react-router-dom";
+import { Alertas } from "../../../components/content/alert/Sweealert";
 
 const Productos = ({ Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
@@ -41,10 +42,15 @@ const Productos = ({ Roles }) => {
         console.log(response.data);
       }
       setrefresh((prev) => !prev);
-      alert("Registrado!");
+      return Alertas({
+        icon: "success",
+        message: "Registrado!!",
+      });
     } catch (error) {
-      alert("Error al registrar");
-      console.error(error);
+      return Alertas({
+        icon: "error",
+        message: "Error sl Registrar!!",
+      });
     }
   };
 
