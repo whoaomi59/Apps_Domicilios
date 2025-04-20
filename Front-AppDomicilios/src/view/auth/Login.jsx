@@ -41,7 +41,7 @@ const Login = ({ logo }) => {
           return;
         } else {
           setTimeout(() => {
-            window.location.href = rutas[decoded.rol] || rutas.default;
+            window.location.replace(rutas[decoded.rol] || rutas.default);
           }, 1000);
         }
       } else {
