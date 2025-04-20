@@ -33,9 +33,9 @@ export default function Home() {
       <div class="grid md:grid-cols-2 gap-4 md:gap-8 xl:gap-20 md:items-center mt-20">
         <div>
           <h1 class="block text-3xl font-bold text-gray-800 sm:text-4xl lg:text-6xl lg:leading-tight">
-            {empresa.nombre ? empresa.nombre : "Domicilios "}
+            {empresa.nombre ? empresa.nombre : "Pagina Web"}
             <span class="text-green-500 ml-2">
-              {empresa.descripcion ? empresa.descripcion : "Online"}
+              {empresa.descripcion ? empresa.descripcion : "Domicilios"}
             </span>
           </h1>
           <p class="mt-3 text-lg text-gray-800">
@@ -116,10 +116,11 @@ export default function Home() {
         <div class="relative ms-4">
           <img
             class="w-full rounded-md h-100"
+            /*  src="/SVG PAGINA/undraw_pair-programming_9jyg.svg" */
             src={
               empresa.logo
                 ? empresa.logo
-                : "Baners/undraw_real-time-sync_ro77.svg"
+                : "/SVG PAGINA/undraw_pair-programming_9jyg.svg"
             }
             alt="Hero Image"
           />

@@ -15,7 +15,7 @@ export default function NavbarShop({ logo, Roles }) {
               class="w-28 h-auto"
               width="116"
               height="32"
-              src={logo}
+              src={logo ? logo : "/SVG PAGINA/undraw_pair-programming_9jyg.svg"}
               alt="Logo"
             />
           </a>
