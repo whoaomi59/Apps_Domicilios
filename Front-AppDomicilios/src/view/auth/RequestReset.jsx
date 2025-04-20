@@ -1,23 +1,25 @@
+import axios from "axios";
 import { useState } from "react";
 
 const RequestReset = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [tokensend, settokensend] = useState(null);
+  const [password, setpassword] = useState("");
 
   const handleRequestReset = async (e) => {
     e.preventDefault();
     setMessage(""); // Limpiar mensajes anteriores
 
     try {
-      const response = await fetch(
-        "http://192.168.120.144/API/Auth/request_reset.php",
+      const response = await axios.post(
+        "/Auth/request_reset.php",
+        JSON.stringify({ email }),
         {
-          method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
         }
       );
-
+      settokensend(response.data.reset_link);
       const data = await response.json();
       setMessage(data.message || data.error);
     } catch (error) {
@@ -25,8 +27,26 @@ const RequestReset = () => {
     }
   };
 
+  const NewPassword = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "/Auth/reset_password.php",
+        JSON.stringify({ token: tokensend, new_password: password }),
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 1000);
+    } catch (error) {
+      setMessage("Error en la solicitud");
+    }
+  };
+
   return (
-    <div className="max-w-md mx-auto p-4 border rounded-lg shadow-md">
+    <div className="max-w-md mx-auto p-4 border rounded-lg shadow-md mt-20">
       <h2 className="text-xl font-bold mb-4">Recuperar Contraseña</h2>
       <form onSubmit={handleRequestReset}>
         <input
@@ -39,12 +59,30 @@ const RequestReset = () => {
         />
         <button
           type="submit"
-          className="w-full mt-3 bg-blue-500 text-white p-2 rounded"
+          className="w-full mt-3 bg-green-600 text-white p-2 rounded"
         >
           Enviar Enlace
         </button>
       </form>
-      {message && <p className="mt-3 text-center">{message}</p>}
+      <h2 className="text-xl font-bold mb-4">Ingrese la contraseña</h2>
+      {tokensend && (
+        <form onSubmit={NewPassword}>
+          <input
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setpassword(e.target.value)}
+            className="w-full p-2 border rounded"
+            required
+          />
+          <button
+            type="submit"
+            className="w-full mt-3 bg-green-500 text-white p-2 rounded"
+          >
+            Recuperar
+          </button>
+        </form>
+      )}
     </div>
   );
 };

@@ -88,7 +88,7 @@ function post() {
             }
 
             // Descontar stock del producto
-            $stmt_stock->bind_param("iii", $producto["cantidad"], $producto["producto_id"], $data["negocio_id"], $producto["cantidad"]);
+            $stmt_stock->bind_param("iiii", $producto["cantidad"], $producto["producto_id"], $data["negocio_id"], $producto["cantidad"]);
 
             if (!$stmt_stock->execute()) {
                 throw new Exception("Error al actualizar el stock: " . $stmt_stock->error);
