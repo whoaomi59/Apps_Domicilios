@@ -3,10 +3,10 @@ import { createContext, useState, useEffect } from "react";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const user = localStorage.getItem("token");
+  const user = sessionStorage.getItem("token");
 
   const logout = () => {
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
     return (window.location.href = "/");
   };
 
