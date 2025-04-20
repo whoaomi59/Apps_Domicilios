@@ -73,7 +73,7 @@ export default function NegociosShop() {
                     className="grid gap-6 rounded-md border border-solid border-gray-300 p-8 md:p-10 relative"
                     style={{
                       backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)), 
-                      url("https://turbologo.com/articles/wp-content/uploads/2020/09/logos-2.png.webp")`,
+                      url(${item.img ? item.img : img.logo})`,
                       backgroundSize: "cover",
                       backgroundPosition: "center",
                       backgroundRepeat: "no-repeat",

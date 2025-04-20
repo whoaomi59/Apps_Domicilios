@@ -25,6 +25,7 @@ import Pedidos from "./view/admin/pedidos";
 import "./App.css";
 import RegistroUser from "./view/auth/reguister";
 import Baner_Empresa from "./view/admin/baner_empresa";
+import Baner_Negocios from "./view/admin/bener_negocios";
 
 function App() {
   const [Rol, setRol] = useState(null);
@@ -88,6 +89,10 @@ function App() {
                     <Route path="/usuarios" element={<Usuarios />} />
                     <Route path="/empresas" element={<Empresas />} />
                     <Route path="/baner" element={<Baner_Empresa />} />
+                    <Route
+                      path="/baner_negocios"
+                      element={<Baner_Negocios />}
+                    />
                     <Route
                       path="/pedidos"
                       element={<Pedidos IdUser={IdUser} Roles={Rol} />}
