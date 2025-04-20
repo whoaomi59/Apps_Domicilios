@@ -33,11 +33,11 @@ function App() {
   const [empresa, setEmpresa] = useState({});
   const [usuarios, setusuarios] = useState(null);
 
-  //axios.defaults.baseURL = " http://localhost/Apps_Domicilios/API/";
-  axios.defaults.baseURL = " https://domicilios.fundacionhuellas.com.co/API/";
+  axios.defaults.baseURL = " http://localhost/Apps_Domicilios/API/";
+  //axios.defaults.baseURL = " https://domicilios.fundacionhuellas.com.co/API/";
 
   useEffect(() => {
-    const token = localStorage.getItem("token"); // Obtiene el token
+    const token = sessionStorage.getItem("token"); // Obtiene el token
     if (token) {
       try {
         const decoded = jwtDecode(token);

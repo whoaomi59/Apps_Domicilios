@@ -122,12 +122,12 @@ export default function Car_Shop({ usuarios }) {
       }
 
       // 🟢 BORRAR EL LOCAL STORAGE DESPUÉS DE GUARDAR EL PEDIDO
-      /*   localStorage.removeItem("cart");
-      setProducts([]); */
+      localStorage.removeItem("cart");
+      setProducts([]);
       Alertas({ icon: "success", message: "Pedido enviado!!" });
-      /*  return setTimeout(() => {
+      return setTimeout(() => {
         Comprar();
-      }, 1000); */
+      }, 1000);
     } catch (error) {
       alert("Error al enviar los pedidos");
       console.error(error);
@@ -139,7 +139,7 @@ export default function Car_Shop({ usuarios }) {
   };
 
   const handleBuyClick = () => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
 
     if (!token) {
       // No autenticado, redirigir al login o mostrar mensaje
