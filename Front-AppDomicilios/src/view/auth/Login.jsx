@@ -1,3 +1,4 @@
+import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
@@ -56,18 +57,28 @@ const Login = ({ logo }) => {
   return (
     <div class="w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md mt-20">
       <div class="px-6 py-4">
+        <div
+          className=""
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <a href="/shop/negocios" className="mr-2 lg:hidden">
+            <ArrowLeftCircleIcon className="w-9 text-green-500 hover:text-green-700 flex" />
+          </a>
+          <label className="lg:hidden">Inicio</label>
+        </div>
+
         <div class="flex justify-center mx-auto">
           <img class="w-auto h-30" src={logo} alt="" />
         </div>
-
         <h3 class="mt-3 text-xl font-medium text-center text-green-600">
           Bienvenido de nuevo
         </h3>
-
         <p class="mt-1 text-center text-gray-500   :text-gray-400">
           Iniciar sesión o crear una cuenta
         </p>
-
         <form onSubmit={handleLogin}>
           <div class="w-full mt-4">
             <input
