@@ -11,7 +11,6 @@ const Usuarios = () => {
   const abrirModal = () => {};
 
   const handleFormSubmit = async (newData) => {
-    console.log(newData);
     try {
       if (newData.nombre) {
         let response = await axios.put(
@@ -21,6 +20,7 @@ const Usuarios = () => {
             nombre: newData.nombre,
             telefono: newData.telefono,
             rol: newData.rol,
+            ApiKey: newData.ApiKey,
           },
           {
             headers: {
@@ -33,15 +33,10 @@ const Usuarios = () => {
       } else {
         let response = await axios.post(`/api/usuarios/controller.php`, {
           email: newData.email,
-
           empresa_id: 1,
-
           nombre: newData.nombre,
-
           password: newData.password,
-
           rol: newData.rol,
-
           telefono: newData.telefono,
         });
         console.log(response);

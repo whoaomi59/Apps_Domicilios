@@ -92,20 +92,24 @@ function updateUsuario() {
     global $conn;
     try {
         $data = json_decode(file_get_contents("php://input"), true);
-        if (!isset($data["nombre"], $data["telefono"], $data["rol"])) {
+        if (!isset($data["nombre"], $data["telefono"], $data["rol"], $data["id"])) {
             throw new Exception("Datos incompletos");
         }
+
         $id = $data["id"];
         $nombre = $data["nombre"];
         $telefono = $data["telefono"];
         $rol = $data["rol"];
-        
-        $sql = "UPDATE usuarios SET nombre = ?, telefono = ?, rol = ? WHERE id = ?";
+        $ApiKey = isset($data["ApiKey"]) ? $data["ApiKey"] : null;
+
+        $sql = "UPDATE usuarios SET nombre = ?, telefono = ?, rol = ?, ApiKey = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssi", $nombre, $telefono, $rol, $id);
+        $stmt->bind_param("ssssi", $nombre, $telefono, $rol, $ApiKey, $id);
+
         if (!$stmt->execute()) {
             throw new Exception("Error al actualizar usuario: " . $stmt->error);
         }
+
         echo json_encode(["message" => "Usuario actualizado"]);
     } catch (Exception $e) {
         $error = [
@@ -117,6 +121,7 @@ function updateUsuario() {
         echo json_encode($error);
     }
 }
+
 
 function deleteUsuario() {
     global $conn;
