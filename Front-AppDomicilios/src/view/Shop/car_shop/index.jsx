@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { enviarWhatsApp } from "../../../API/CallmeBot";
 import { formatearCOP } from "../../../components/content/formatoMoneda";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
+import { Alertas } from "../../../components/content/alert/Sweealert";
 
 export default function Car_Shop({ usuarios }) {
   const [products, setProducts] = useState([]);
@@ -90,28 +91,42 @@ export default function Car_Shop({ usuarios }) {
           negocio_id: negocioId,
           total: totalPedido.toFixed(2),
           estado: "pendiente",
-          productos: products,
+          productos: productos,
         });
-        enviarWhatsApp({
-          mensaje: {
-            cliente_id: 101,
-            negocio_id: 12,
-            total: 65400,
-            estado: "pendiente",
-            productos: products,
-          },
-        });
-        console.log(`Pedido para negocio ${negocioId}:`, response);
+
+        let number = response.data.telefono;
+        let key = response.data.ApiKey;
+
+        if (number) {
+          enviarWhatsApp({
+            numeroNegocio: number,
+            keyNegocios: key,
+            mensaje: {
+              cliente_id: 101,
+              negocio_id: 12,
+              total: 65400,
+              estado: "pendiente",
+              productos: products,
+            },
+          });
+        }
       }
 
       // 🟢 BORRAR EL LOCAL STORAGE DESPUÉS DE GUARDAR EL PEDIDO
-      localStorage.removeItem("cart");
-      setProducts([]);
+      /*    localStorage.removeItem("cart");
+      setProducts([]); */
+      Alertas({ icon: "success", message: "Pedido enviado!!" });
 
-      return alert("Pedidos enviados correctamente.");
+      /*    return setTimeout(() => {
+        Comprar();
+      }, 1000); */
     } catch (error) {
       alert("Error al enviar los pedidos");
       console.error(error);
+      return Alertas({
+        icon: "error",
+        message: "Error al enviar los pedidos!!",
+      });
     }
   };
 
