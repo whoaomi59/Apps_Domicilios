@@ -24,7 +24,7 @@ const Login = ({ logo }) => {
       const token = await response.data.token;
 
       if (token) {
-        sessionStorage.setItem("token", token);
+        localStorage.setItem("token", token);
         setMessage("Login exitoso. Redirigiendo...");
 
         const decoded = jwtDecode(token);
@@ -41,7 +41,7 @@ const Login = ({ logo }) => {
           return;
         } else {
           setTimeout(() => {
-            window.location.href = rutas[decoded.rol] || rutas.default;
+            window.location.replace(rutas[decoded.rol] || rutas.default);
           }, 1000);
         }
       } else {
