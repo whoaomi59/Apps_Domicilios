@@ -1,8 +1,13 @@
 <?php
-$host = "localhost";
-$user = "root"; // Cambiar si es necesario
-$pass = ""; // Cambiar si hay contraseña
-$dbname = "empresa_domicilios"; // Cambiar por el nombre real de tu base de datos
+ $host = "localhost";
+$user = "root";
+$pass = "";
+$dbname = "empresa_domicilios";  
+
+/* $host = "localhost";
+$user = "fundac77_whoaomi";
+$pass = "4gD-*KZxhxp4";
+$dbname = "fundac77_empresa_domicilios"; */
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); // Muestra errores de MySQL
 

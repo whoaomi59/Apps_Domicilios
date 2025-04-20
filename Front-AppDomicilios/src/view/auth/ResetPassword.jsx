@@ -12,12 +12,11 @@ const ResetPassword = () => {
     setMessage("");
 
     try {
-      const response = await fetch(
-        "http://192.168.120.144/Auth/reset_password.php",
+      const response = await exios.post(
+        "/Auth/reset_password.php",
+        JSON.stringify({ token, new_password: password }),
         {
-          method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ token, new_password: password }),
         }
       );
 

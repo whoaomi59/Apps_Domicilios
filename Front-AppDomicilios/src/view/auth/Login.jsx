@@ -24,7 +24,7 @@ const Login = ({ logo }) => {
       const token = await response.data.token;
 
       if (token) {
-        localStorage.setItem("token", token);
+        sessionStorage.setItem("token", token);
         setMessage("Login exitoso. Redirigiendo...");
 
         const decoded = jwtDecode(token);
