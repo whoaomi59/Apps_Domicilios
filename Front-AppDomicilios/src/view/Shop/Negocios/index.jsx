@@ -30,7 +30,7 @@ export default function NegociosShop() {
         setData(response.data);
         return setloader(false);
       } catch (error) {
-        alert("Error al obtener negocios: " + error);
+        console.log(error);
         return setloader(false);
       }
     };

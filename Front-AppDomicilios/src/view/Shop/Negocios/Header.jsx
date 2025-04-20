@@ -34,7 +34,7 @@ export default function Header({ setFilter }) {
         );
         setData(response.data);
       } catch (error) {
-        alert("Error al obtener negocios: " + error);
+        console.log(error);
       } finally {
         return console.log("errors");
       }
