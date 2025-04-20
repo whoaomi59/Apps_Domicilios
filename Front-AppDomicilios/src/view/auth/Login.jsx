@@ -24,7 +24,7 @@ const Login = ({ logo }) => {
       const token = await response.data.token;
 
       if (token) {
-        localStorage.setItem("token", token);
+        sessionStorage.setItem("token", token);
         setMessage("Login exitoso. Redirigiendo...");
 
         const decoded = jwtDecode(token);
@@ -36,7 +36,7 @@ const Login = ({ logo }) => {
         };
         const redirectPath = localStorage.getItem("redirectAfterLogin") || "/"; //REDIRIJE ALCARRITO SI LA POCISION DEL USUARIO LO REQUIERE
         if (redirectPath === "/shop/car_shop") {
-          localStorage.removeItem("redirectAfterLogin");
+          sessionStorage.removeItem("redirectAfterLogin");
           window.location.href = redirectPath;
           return;
         } else {

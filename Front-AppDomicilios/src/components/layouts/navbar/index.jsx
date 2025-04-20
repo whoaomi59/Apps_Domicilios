@@ -6,7 +6,7 @@ export default function Navbar({ toggle, Roles }) {
   const [rutas, setRutas] = useState([]);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
     window.location.href = "/login"; // Redirigir a la página de login
   };
 

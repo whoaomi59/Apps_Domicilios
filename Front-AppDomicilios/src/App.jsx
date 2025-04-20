@@ -37,13 +37,13 @@ function App() {
   axios.defaults.baseURL = " https://domicilios.fundacionhuellas.com.co/API/";
 
   useEffect(() => {
-    const token = localStorage.getItem("token"); // Obtiene el token
+    const token = sessionStorage.getItem("token"); // Obtiene el token
     if (token) {
       try {
         const decoded = jwtDecode(token);
         setIdUser(decoded.id);
         setRol(decoded.rol); // ✅ Se actualiza solo una vez
-        localStorage.setItem("id", decoded.id);
+        sessionStorage.setItem("id", decoded.id);
         return setusuarios(decoded);
       } catch (error) {
         console.error("Error decodificando el token:", error);
