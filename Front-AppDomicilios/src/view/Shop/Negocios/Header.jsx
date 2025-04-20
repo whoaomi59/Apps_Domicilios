@@ -143,7 +143,7 @@ export default function Header({ setFilter }) {
                   : "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/burger-king-banner-design-template-a886c11d0e725b8a66d051fb64b63064_screen.jpg?ts=1733380826"
               }
               alt=""
-              className="mx-auto inline-block h-100 w-150 max-w-xl"
+              className="mx-auto inline-block h-100 w-full max-w-xl"
             />
           </div>
         </div>
