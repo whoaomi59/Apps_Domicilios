@@ -35,18 +35,7 @@ function utf8_encode_array($array) {
 
 function get() {
     global $conn;
-    $result = $conn->query("SELECT *
-                                    FROM negocios n
-                                    LEFT JOIN (
-                                        SELECT *
-                                        FROM negocios_imagenes
-                                        WHERE id IN (
-                                            SELECT MAX(id)
-                                            FROM negocios_imagenes
-                                            GROUP BY negocios_id
-                                        )
-                                    ) i ON i.negocios_id = n.id
-                                    ORDER BY n.id DESC;");
+    $result = $conn->query("SELECT * FROM negocios n LEFT JOIN ( SELECT * FROM negocios_imagenes WHERE id_Negocios IN ( SELECT MAX(id_Negocios) FROM negocios_imagenes GROUP BY negocios_id ) ) i ON i.negocios_id = n.id ORDER BY n.id DESC;");
 
     $empresas = [];
 

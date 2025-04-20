@@ -49,7 +49,7 @@ function get() {
 
 function post() {
     global $conn;
-    
+
     $data = json_decode(file_get_contents("php://input"), true);
 
     if (!isset($data["cliente_id"], $data["negocio_id"], $data["total"], $data["estado"], $data["productos"]) || !is_array($data["productos"])) {
@@ -71,23 +71,36 @@ function post() {
 
         $pedido_id = $conn->insert_id;
 
-        // Insertar productos
+        // Insertar productos y descontar stock
         $stmt_detalle = $conn->prepare("INSERT INTO detalle_pedidos (pedido_id, producto_id, cantidad, precio_unitario, subtotal) VALUES (?, ?, ?, ?, ?)");
+        $stmt_stock = $conn->prepare("UPDATE productos SET stock = stock - ? WHERE id = ? AND negocio_id = ? AND stock >= ?");
 
         foreach ($data["productos"] as $producto) {
             if (!isset($producto["producto_id"], $producto["cantidad"], $producto["precio_unitario"], $producto["subtotal"])) {
                 throw new Exception("Datos incompletos en productos: " . json_encode($producto));
             }
 
+            // Insertar en detalle_pedidos
             $stmt_detalle->bind_param("iiidd", $pedido_id, $producto["producto_id"], $producto["cantidad"], $producto["precio_unitario"], $producto["subtotal"]);
 
             if (!$stmt_detalle->execute()) {
                 throw new Exception("Error al insertar detalle del pedido: " . $stmt_detalle->error);
             }
+
+            // Descontar stock del producto
+            $stmt_stock->bind_param("iii", $producto["cantidad"], $producto["producto_id"], $data["negocio_id"], $producto["cantidad"]);
+
+            if (!$stmt_stock->execute()) {
+                throw new Exception("Error al actualizar el stock: " . $stmt_stock->error);
+            }
+
+            if ($stmt_stock->affected_rows === 0) {
+                throw new Exception("Stock insuficiente para el producto ID: " . $producto["producto_id"]);
+            }
         }
 
         // Obtener teléfono del usuario asociado al negocio
-        $stmt_telefono = $conn->prepare("SELECT u.telefono,u.ApiKey FROM negocios n LEFT JOIN usuarios u ON n.usuario_id = u.id WHERE n.id = ?");
+        $stmt_telefono = $conn->prepare("SELECT u.telefono, u.ApiKey FROM negocios n LEFT JOIN usuarios u ON n.usuario_id = u.id WHERE n.id = ?");
         $stmt_telefono->bind_param("i", $data["negocio_id"]);
         $stmt_telefono->execute();
         $result_telefono = $stmt_telefono->get_result();
@@ -99,6 +112,7 @@ function post() {
             $ApiKey = $row["ApiKey"];
         }
 
+        // Confirmar todo
         $conn->commit();
 
         echo json_encode([
@@ -113,6 +127,7 @@ function post() {
         echo json_encode(["error" => $e->getMessage()]);
     }
 }
+
 
 /* function post() {
     global $conn;
