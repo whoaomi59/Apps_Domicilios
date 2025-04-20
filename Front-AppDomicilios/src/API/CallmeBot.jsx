@@ -28,11 +28,21 @@ export const enviarWhatsApp = async ({
 };
 
 const construirMensaje = (pedido) => {
-  const { cliente_id, negocio_id, total, estado, productos } = pedido;
+  const {
+    cliente_id,
+    negocio_id,
+    total,
+    estado,
+    productos,
+    ubicacion,
+    tipoUbicacion,
+  } = pedido;
 
   let mensaje = `🛍️ *Nueva Compra Realizada*\n\n`;
   mensaje += `🧑 Cliente ID: ${cliente_id}\n`;
   mensaje += `🏪 Negocio ID: ${negocio_id}\n`;
+  mensaje += `🏪 Ubicacion: ${ubicacion}\n`;
+  mensaje += `🏪 tipoUbicacion: ${tipoUbicacion}\n`;
   mensaje += `💵 Total: $${total}\n`;
   mensaje += `📦 Estado: ${estado}\n\n`;
   mensaje += `🛒 *Productos comprados:*\n`;

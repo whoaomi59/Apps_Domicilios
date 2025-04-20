@@ -8,8 +8,11 @@ import { Alertas } from "../../../components/content/alert/Sweealert";
 export default function Car_Shop({ usuarios }) {
   const [products, setProducts] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
-  const shippingCost = 2.0;
-  const taxRate = 0.05; // 5% de impuestos
+  const [ubicacionEnvio, setUbicacionEnvio] = useState("");
+  const [tipoUbicacion, setTipoUbicacion] = useState("");
+  const [shippingCost, setShippingCost] = useState(0);
+
+  const taxRate = 0.0; // 5% de impuestos
 
   // Cargar productos desde localStorage al montar el componente
   useEffect(() => {
@@ -82,6 +85,9 @@ export default function Car_Shop({ usuarios }) {
     }, {});
 
     try {
+      if (!tipoUbicacion || !shippingCost) {
+        return alert("Ubicacion requerida!!");
+      }
       for (const negocioId in pedidosPorNegocio) {
         const productos = pedidosPorNegocio[negocioId];
         const totalPedido = productos.reduce((sum, p) => sum + p.subtotal, 0);
@@ -102,23 +108,26 @@ export default function Car_Shop({ usuarios }) {
             numeroNegocio: number,
             keyNegocios: key,
             mensaje: {
-              cliente_id: 101,
-              negocio_id: 12,
-              total: 65400,
+              cliente_id: usuarios.id,
+              negocio_id: negocioId,
+              total: total,
               estado: "pendiente",
               productos: products,
+              ubicacion: ubicacionEnvio,
+              tipoUbicacion: tipoUbicacion,
+              costoEnvio: shippingCost,
             },
           });
         }
       }
 
       // 🟢 BORRAR EL LOCAL STORAGE DESPUÉS DE GUARDAR EL PEDIDO
-      localStorage.removeItem("cart");
-      setProducts([]);
+      /*   localStorage.removeItem("cart");
+      setProducts([]); */
       Alertas({ icon: "success", message: "Pedido enviado!!" });
-      return setTimeout(() => {
+      /*  return setTimeout(() => {
         Comprar();
-      }, 1000);
+      }, 1000); */
     } catch (error) {
       alert("Error al enviar los pedidos");
       console.error(error);
@@ -251,19 +260,49 @@ export default function Car_Shop({ usuarios }) {
         <div className="bg-white rounded-md px-4 py-6 h-max shadow-[0_2px_12px_-3px_rgba(61,63,68,0.3)]">
           <ul className="text-green-900 font-medium space-y-4">
             <li className="flex flex-wrap gap-4 text-sm">
+              Ubicación de envío
+              <input
+                type="text"
+                className="w-full px-4 py-2 border rounded-lg border-gray-300"
+                value={ubicacionEnvio}
+                onChange={(e) => setUbicacionEnvio(e.target.value)}
+              />
+            </li>
+            <li className="flex flex-wrap gap-4 text-sm">
+              Elije ubicación
+              <select
+                className="w-full px-4 py-2 border rounded-lg border-gray-300"
+                value={tipoUbicacion}
+                onChange={(e) => {
+                  const tipo = e.target.value;
+                  setTipoUbicacion(tipo);
+                  setShippingCost(tipo === "Rural" ? 10000 : 5000); // Ejemplo: rural cuesta más
+                }}
+              >
+                <option value="">Seleccionar...</option>
+                <option value="Urbano">Urbano</option>
+                <option value="Rural">Rural</option>
+              </select>
+            </li>
+
+            <hr className="border-green-300" />
+          </ul>
+
+          <ul className="text-green-900 font-medium space-y-4">
+            <li className="flex flex-wrap gap-4 text-sm">
               Subtotal{" "}
               <span className="ml-auto font-semibold">
                 {formatearCOP(subtotal)}
               </span>
             </li>
             <li className="flex flex-wrap gap-4 text-sm">
-              Shipping{" "}
+              Envío{" "}
               <span className="ml-auto font-semibold">
                 {formatearCOP(shippingCost)}
               </span>
             </li>
             <li className="flex flex-wrap gap-4 text-sm">
-              Tax{" "}
+              Impuesto{" "}
               <span className="ml-auto font-semibold">
                 {formatearCOP(taxAmount)}
               </span>
