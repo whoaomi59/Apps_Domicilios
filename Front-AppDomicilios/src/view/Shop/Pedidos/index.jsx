@@ -49,7 +49,7 @@ export default function PedidosShop({ IdUser }) {
                     className="grid gap-6 rounded-md border border-solid border-gray-300 p-8 md:p-10 relative"
                     style={{
                       backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)), 
-                   url(/public/logo/logo.png)`,
+                   url(/logo/logo.png)`,
                       backgroundSize: "cover",
                       backgroundRepeat: "no-repeat",
                     }}
