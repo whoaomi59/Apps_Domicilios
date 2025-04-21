@@ -1,4 +1,7 @@
-import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowLeftCircleIcon,
+  CheckCircleIcon,
+} from "@heroicons/react/24/outline";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
@@ -7,6 +10,7 @@ const Login = ({ logo }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [error, seterror] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -27,7 +31,7 @@ const Login = ({ logo }) => {
       if (token) {
         sessionStorage.setItem("token", token);
         setMessage("Login exitoso. Redirigiendo...");
-
+        seterror(false);
         const decoded = jwtDecode(token);
 
         const rutas = {
@@ -47,10 +51,12 @@ const Login = ({ logo }) => {
         }
       } else {
         setMessage(data.error);
+        return seterror(true);
       }
     } catch (error) {
       console.log(error);
       setMessage("Error en el login");
+      return seterror(true);
     }
   };
 
@@ -101,7 +107,19 @@ const Login = ({ logo }) => {
               required
             />
           </div>
-          {message && <p className="mt-3 text-center">{message}</p>}
+
+          {message && (
+            <div class={`w-full text-white bg-${error ? "red" : "green"}-500`}>
+              <div
+                class={`container flex items-center justify-between px-2 py-2 mx-auto mt-2`}
+              >
+                <div class="flex">
+                  <CheckCircleIcon class="w-6 h-6" />
+                  <p class="mx-3">{message}</p>
+                </div>
+              </div>
+            </div>
+          )}
           <div class="flex items-center justify-between mt-4">
             <a
               href="/request-reset"
