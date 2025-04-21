@@ -33,7 +33,11 @@ export default function NavbarShop({ logo, Roles, nombre }) {
 
         <div class="flex items-center gap-x-1 lg:gap-x-2 ms-auto py-1 lg:ps-6 lg:order-3 lg:col-span-3">
           <div className="flex items-center mr-2">
-            {nombre} <CircleStackIcon className="w-5 ml-2 text-gray-500" />
+            {nombre && (
+              <>
+                {nombre} <CircleStackIcon className="w-5 ml-2 text-gray-500" />
+              </>
+            )}
           </div>
 
           {Roles ? (
@@ -125,7 +129,7 @@ export default function NavbarShop({ logo, Roles, nombre }) {
                   href="/shop/pedidos"
                 >
                   Mis pedidos
-                </a>{" "}
+                </a>
                 <ShoppingBagIcon className="w-5 ml-2 text-gray-500" />
               </div>
             )}
