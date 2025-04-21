@@ -30,8 +30,8 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title, initialValues }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-[#0000007a] bg-opacity-50 z-100 p-4">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl z-50 overflow-y-auto max-h-[90vh] mt-20">
+    <div className="fixed inset-0 flex items-center justify-center bg-[#0000007a] bg-opacity-50 z-200 p-4">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl z-50 overflow-y-auto max-h-[90vh]">
         <h2 className="text-2xl font-semibold text-gray-700 mb-4">{title}</h2>
         <form onSubmit={handleSubmit}>
           {fields.map((field) => (

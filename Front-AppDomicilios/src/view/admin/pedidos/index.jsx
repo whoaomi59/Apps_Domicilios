@@ -7,7 +7,6 @@ import { formatearCOP } from "../../../components/content/formatoMoneda";
 const Pedidos = ({ IdUser, Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
 
-  const abrirModal = () => {};
   const Verdetalle = () => {};
 
   const VerProductos = (record) => {
@@ -37,8 +36,7 @@ const Pedidos = ({ IdUser, Roles }) => {
       }
     };
     Get();
-  }, [IdUser, Roles]); // Dependencias para actualizar si cambia el rol
-
+  }, [IdUser, Roles]);
   const Formater = usuarios.map((item) => ({
     id_pedido: item.id_pedido,
     logo_pedido: <img src={item.logo_pedido} className="w-10" />,
@@ -47,7 +45,6 @@ const Pedidos = ({ IdUser, Roles }) => {
     estado: (
       <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-gray-100/60">
         <span class="h-1.5 w-1.5 rounded-full bg-gray-500"></span>
-
         <h2 class="text-sm font-normal text-gray-500">{item.estado}</h2>
       </div>
     ),
