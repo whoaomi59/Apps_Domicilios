@@ -61,11 +61,6 @@ const Pedidos = ({ IdUser, Roles }) => {
         handleFormSubmit={handleFormSubmit}
         actions={[
           {
-            icon: "TrashIcon",
-            className: "bg-red-500 text-white",
-            onClick: (record) => Verdetalle(record), // Llama a la función abrirModal con el registro
-          },
-          {
             icon: "ArrowRightCircleIcon",
             className: "bg-blue-500 text-white",
             onClick: (record) => VerProductos(record), // Llama a la función abrirModal con el registro
