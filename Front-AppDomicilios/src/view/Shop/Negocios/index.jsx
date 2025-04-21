@@ -57,7 +57,6 @@ export default function NegociosShop() {
     <section>
       <Header setFilter={setFilter} />
       <div className="mx-auto w-full max-w-7xl px-5">
-        {/* Grid de negocios */}
         <div className="grid gap-5 sm:grid-cols-2 md:grid-cols-3 md:gap-4">
           {negociosFiltrados.map((item, index) => {
             const negocioAbierto = estaAbierto(
