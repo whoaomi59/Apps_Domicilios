@@ -32,6 +32,7 @@ function App() {
   const [IdUser, setIdUser] = useState(null);
   const [empresa, setEmpresa] = useState({});
   const [usuarios, setusuarios] = useState(null);
+  const [nombre, setnombre] = useState(null);
 
   //axios.defaults.baseURL = " http://localhost/Apps_Domicilios/API/";
   axios.defaults.baseURL = " https://domicilios.fundacionhuellas.com.co/API/";
@@ -44,6 +45,7 @@ function App() {
         setIdUser(decoded.id);
         setRol(decoded.rol); // ✅ Se actualiza solo una vez
         localStorage.setItem("id", decoded.id);
+        setnombre(decoded.nombre);
         return setusuarios(decoded);
       } catch (error) {
         console.error("Error decodificando el token:", error);
@@ -114,7 +116,7 @@ function App() {
             path="/shop/*"
             element={
               <>
-                <NavbarShop logo={empresa.logo} Roles={Rol} />
+                <NavbarShop logo={empresa.logo} Roles={Rol} nombre={nombre} />
                 <Routes>
                   <Route path="/negocios" element={<NegociosShop />} />
                   <Route
