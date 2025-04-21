@@ -1,6 +1,14 @@
+import {
+  BuildingStorefrontIcon,
+  CircleStackIcon,
+  HomeIcon,
+  ShoppingBagIcon,
+  ShoppingCartIcon,
+  WrenchScrewdriverIcon,
+} from "@heroicons/react/24/outline";
 import { useState } from "react";
 
-export default function NavbarShop({ logo, Roles }) {
+export default function NavbarShop({ logo, Roles, nombre }) {
   const [Toggle, setToggle] = useState(false);
   return (
     <header class="flex flex-wrap lg:justify-start lg:flex-nowrap z-50 w-full py-7">
@@ -24,6 +32,10 @@ export default function NavbarShop({ logo, Roles }) {
         </div>
 
         <div class="flex items-center gap-x-1 lg:gap-x-2 ms-auto py-1 lg:ps-6 lg:order-3 lg:col-span-3">
+          <div className="flex items-center mr-2">
+            {nombre} <CircleStackIcon className="w-5 ml-2 text-gray-500" />
+          </div>
+
           {Roles ? (
             ""
           ) : (
@@ -34,7 +46,6 @@ export default function NavbarShop({ logo, Roles }) {
               Ingresar
             </a>
           )}
-
           <div class="lg:hidden">
             <button
               onClick={() => setToggle((prev) => !prev)}
@@ -88,60 +99,65 @@ export default function NavbarShop({ logo, Roles }) {
           aria-labelledby="hs-navbar-hcail-collapse"
         >
           <div class="flex flex-col gap-y-4 gap-x-0 mt-5 lg:flex-row lg:justify-center lg:items-center lg:gap-y-0 lg:gap-x-7 lg:mt-0">
-            <div>
+            <div className="flex items-center">
               <a
-                class="relative inline-block text-black focus:outline-hidden before:absolute before:bottom-0.5 before:start-0 before:-z-1 before:w-full before:h-1 before:bg-green-500 .:text-white"
+                class="relative inline-block text-black focus:outline-hidden before:absolute before:bottom-0.5 before:start-0 before:-z-1 before:w-full before:h-1 before:bg-green-500 hover:text-green-600"
                 href="/"
                 aria-current="page"
               >
                 Inicio
               </a>
+              <HomeIcon className="w-5 ml-2 text-gray-500" />
             </div>
-            <div>
+            <div className="flex items-center">
               <a
-                class="inline-block text-black hover:text-gray-600 focus:outline-hidden focus:text-gray-600 .:text-white .:hover:text-neutral-300 .:focus:text-neutral-300"
+                className="inline-block text-black hover:text-green-600"
                 href="/shop/negocios"
               >
                 Negocios
               </a>
-            </div>
-            <div>
+              <BuildingStorefrontIcon className="w-5 ml-2 text-gray-500" />
+            </div>{" "}
+            {Roles && (
+              <div className="flex items-center">
+                <a
+                  className="inline-block text-black hover:text-green-600"
+                  href="/shop/pedidos"
+                >
+                  Mis pedidos
+                </a>{" "}
+                <ShoppingBagIcon className="w-5 ml-2 text-gray-500" />
+              </div>
+            )}
+            <div className="flex items-center">
               <a
-                class="inline-block text-black hover:text-gray-600 focus:outline-hidden focus:text-gray-600 .:text-white .:hover:text-neutral-300 .:focus:text-neutral-300"
+                className="inline-block text-black hover:text-green-600"
                 href="/shop/car_shop"
               >
                 Carrito
               </a>
+              <ShoppingCartIcon className="w-5 ml-2 text-gray-500" />
             </div>
-            {Roles && (
-              <div>
-                <a
-                  class="inline-block text-black hover:text-gray-600 focus:outline-hidden focus:text-gray-600 .:text-white .:hover:text-neutral-300 .:focus:text-neutral-300"
-                  href="/shop/pedidos"
-                >
-                  Mis pedidos
-                </a>
-              </div>
-            )}
-
             {Roles === "admin" && (
-              <div>
+              <div className="flex items-center">
                 <a
-                  class="inline-block text-black hover:text-gray-600 focus:outline-hidden focus:text-gray-600 .:text-white .:hover:text-neutral-300 .:focus:text-neutral-300"
+                  className="inline-block text-black hover:text-green-600"
                   href="/dashboard"
                 >
                   Admin
                 </a>
+                <WrenchScrewdriverIcon className="w-5 ml-2 text-gray-500" />
               </div>
             )}
             {Roles === "negocio" && (
-              <div>
+              <div className="flex items-center">
                 <a
-                  class="inline-block text-black hover:text-gray-600 focus:outline-hidden focus:text-gray-600 .:text-white .:hover:text-neutral-300 .:focus:text-neutral-300"
+                  className="inline-block text-black hover:text-green-600"
                   href="/dashboard"
                 >
                   Admin
                 </a>
+                <WrenchScrewdriverIcon className="w-5 ml-2 text-gray-500" />
               </div>
             )}
           </div>
