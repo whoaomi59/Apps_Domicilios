@@ -92,8 +92,8 @@ export default function Header({ setFilter }) {
               <p>
                 {empresa.descripcion}, {empresa.direccion}
               </p>
-              <p>{empresa.email}</p>
-              <p>{empresa.telefono}</p>
+              <label>{empresa.email}</label>
+              <label>{empresa.telefono}</label>
             </div>
             <form
               onSubmit={handleSubmit}
