@@ -113,7 +113,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div class="relative ms-4">
+        <div class="relative">
           <img
             class="w-full rounded-md h-100"
             /*  src="/SVG PAGINA/undraw_pair-programming_9jyg.svg" */
