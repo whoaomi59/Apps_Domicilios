@@ -32,7 +32,7 @@ export default function FilterProduct({
   return (
     <section class="relative">
       <div class="w-full max-w-7xl mx-auto">
-        <div class="flex flex-col lg:flex-row lg:items-center max-lg:gap-4 justify-between w-full">
+        <div class="flex flex-col lg:flex-row lg:items-center max-lg:gap-2 justify-between w-full">
           <div className="flex">
             <a href="/shop/negocios" className="mr-3">
               <ArrowLeftCircleIcon className="w-10 text-green-500 hover:text-green-700" />
