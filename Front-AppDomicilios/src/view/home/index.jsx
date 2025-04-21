@@ -38,11 +38,11 @@ export default function Home() {
               {empresa.descripcion ? empresa.descripcion : "Domicilios"}
             </span>
           </h1>
-          <p class="mt-3 text-lg text-gray-800">
+          <label class="mt-3 text-lg text-gray-800">
             {empresa.email}
             <br />
             {empresa.direccion}
-          </p>
+          </label>
 
           <div class="mt-7 grid gap-3 w-full sm:inline-flex">
             <button
