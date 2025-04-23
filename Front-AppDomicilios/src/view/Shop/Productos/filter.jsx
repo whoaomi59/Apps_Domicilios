@@ -150,7 +150,7 @@ export default function FilterProduct({
               <h6 class="font-medium text-base leading-7 text-black mb-5">
                 Filtros
               </h6>
-              <label className="text-gray-600">Categorias</label>
+              <label className="text-gray-600">Categorias:</label>
               <div class="relative w-full mb-8 mt-2">
                 <DynamicSelect
                   url="/api/productos/categorias_productos.php"
@@ -164,7 +164,7 @@ export default function FilterProduct({
                 />
               </div>
 
-              <label className="text-gray-600">Negocios</label>
+              <label className="text-gray-600">Negocios:</label>
               <div class="relative w-full mb-8 mt-2">
                 <DynamicSelect
                   url="Shop/negocios/controller.php"
