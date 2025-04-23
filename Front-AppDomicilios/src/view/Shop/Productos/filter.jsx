@@ -1,4 +1,8 @@
-import { ArrowLeftCircleIcon, FunnelIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowLeftCircleIcon,
+  FunnelIcon,
+  MagnifyingGlassIcon,
+} from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import DynamicSelect from "../../../components/grid/formulario/DynamicSelect ";
 
@@ -42,17 +46,22 @@ export default function FilterProduct({
             </h2>
           </div>
           <div class="relative w-full max-w-sm">
-            <DynamicSelect
-              url="/api/productos/categorias_productos.php"
-              name="productos"
-              value={formData["productos"]}
-              onChange={handleChange}
-              valueKey="id"
-              labelKey="nombre"
-              placeholder="Filtrar categorias"
-              style="text-gray-500"
-            />
-            <FunnelIcon className="absolute top-1/2 -translate-y-1/2 right-4 z-50 w-5 text-gray-600" />
+            <form class="flex items-center">
+              <label for="simple-search" class="sr-only">
+                Search
+              </label>
+              <div class="relative w-full">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <MagnifyingGlassIcon className="w-5 h-5 text-gray-500" />
+                </div>
+                <input
+                  type="text"
+                  id="simple-search"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2                                 "
+                  placeholder="Buscar productos..."
+                />
+              </div>
+            </form>
           </div>
         </div>
 
@@ -139,10 +148,24 @@ export default function FilterProduct({
                 </div>
               </div> */}
               <h6 class="font-medium text-base leading-7 text-black mb-5">
-                Negocios
+                Filtros
               </h6>
+              <label className="text-gray-600">Categorias</label>
+              <div class="relative w-full mb-8 mt-2">
+                <DynamicSelect
+                  url="/api/productos/categorias_productos.php"
+                  name="productos"
+                  value={formData["productos"]}
+                  onChange={handleChange}
+                  valueKey="id"
+                  labelKey="nombre"
+                  placeholder="Filtrar categorias"
+                  style="text-gray-500"
+                />
+              </div>
 
-              <div class="relative w-full mb-8">
+              <label className="text-gray-600">Negocios</label>
+              <div class="relative w-full mb-8 mt-2">
                 <DynamicSelect
                   url="Shop/negocios/controller.php"
                   name="Negocio"
@@ -158,21 +181,7 @@ export default function FilterProduct({
                 onClick={FilterButton}
                 class="w-full py-2.5 flex items-center justify-center gap-2 rounded-full bg-green-600 text-white font-semibold text-xs shadow-sm shadow-transparent transition-all duration-500 hover:bg-green-700 hover:shadow-green-200  "
               >
-                <svg
-                  width="17"
-                  height="16"
-                  viewBox="0 0 17 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M14.4987 13.9997L13.1654 12.6663M13.832 7.33301C13.832 10.6467 11.1457 13.333 7.83203 13.333C4.51832 13.333 1.83203 10.6467 1.83203 7.33301C1.83203 4.0193 4.51832 1.33301 7.83203 1.33301C11.1457 1.33301 13.832 4.0193 13.832 7.33301Z"
-                    stroke="white"
-                    stroke-width="1.6"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
+                <MagnifyingGlassIcon className="w-4" />
                 Buscar
               </button>
             </div>
