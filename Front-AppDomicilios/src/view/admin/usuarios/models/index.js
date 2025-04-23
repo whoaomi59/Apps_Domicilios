@@ -25,5 +25,5 @@ export const fields = [
       { value: "domiciliario", label: "domiciliario" },
     ],
   },
-  { name: "password", label: "Password", type: "text",disable:true  },
+  { name: "password", label: "Password", type: "text", },
 ];

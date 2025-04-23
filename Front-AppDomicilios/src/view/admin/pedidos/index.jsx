@@ -7,11 +7,8 @@ import { formatearCOP } from "../../../components/content/formatoMoneda";
 const Pedidos = ({ IdUser, Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
 
-  const Verdetalle = () => {};
-
   const VerProductos = (record) => {
     const { id_pedido, usuario_pedido } = record;
-    //console.log(record);
     window.location.href = `/shop/pedidos/detalle/${id_pedido}/${usuario_pedido}`;
   };
 

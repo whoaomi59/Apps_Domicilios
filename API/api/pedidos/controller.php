@@ -13,6 +13,9 @@ switch ($request_method) {
     case 'POST':
         post();
         break;
+    case 'PUT':
+        Update();
+        break;
     default:
         echo json_encode(["error" => "Método no permitido"]);
 }
@@ -125,6 +128,36 @@ function post() {
     } catch (Exception $e) {
         $conn->rollback();
         echo json_encode(["error" => $e->getMessage()]);
+    }
+}
+
+function Update(){
+    global $conn;
+    try {
+        $data = json_decode(file_get_contents("php://input"), true);
+        if (!isset($data["estado"], $data["id"])) {
+            throw new Exception("Datos incompletos");
+        }
+
+        $id = $data["id"];
+        $estado = $data["estado"];
+        $sql = "UPDATE pedidos SET estado = ? WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $estado,$id);
+
+        if (!$stmt->execute()) {
+            throw new Exception("Error al actualizar estado: " . $stmt->error);
+        }
+
+        echo json_encode(["message" => "Estado No actualizado"]);
+    } catch (Exception $e) {
+        $error = [
+            "error" => $e->getMessage(),
+            "linea" => $e->getLine(),
+            "archivo" => $e->getFile()
+        ];
+        http_response_code(500);
+        echo json_encode($error);
     }
 }
 

@@ -12,7 +12,7 @@ const Usuarios = () => {
 
   const handleFormSubmit = async (newData) => {
     try {
-      if (newData.nombre) {
+      if (newData.id) {
         let response = await axios.put(
           "/api/usuarios/controller.php",
           {

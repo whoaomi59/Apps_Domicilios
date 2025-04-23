@@ -69,7 +69,7 @@ export default function FilterProduct({
         <div class="grid grid-cols-12">
           <div class="col-span-12 md:col-span-3 w-full max-md:max-w-md max-md:mx-auto">
             <div class="box rounded-xl border border-gray-300 bg-white p-6 w-full md:max-w-sm">
-              <h6 class="font-medium text-base leading-7 text-black mb-5">
+              {/*   <h6 class="font-medium text-base leading-7 text-black mb-5">
                 Precios
               </h6>
               <div class="flex items-center mb-5 gap-1">
@@ -137,14 +137,11 @@ export default function FilterProduct({
                     />
                   </svg>
                 </div>
-              </div>
-
-              <label
-                for="countries"
-                class="block mb-2 text-sm font-medium text-gray-600 w-full"
-              >
+              </div> */}
+              <h6 class="font-medium text-base leading-7 text-black mb-5">
                 Negocios
-              </label>
+              </h6>
+
               <div class="relative w-full mb-8">
                 <DynamicSelect
                   url="Shop/negocios/controller.php"
