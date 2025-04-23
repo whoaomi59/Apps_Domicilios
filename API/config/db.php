@@ -1,8 +1,8 @@
 <?php
- $host = "localhost";
+$host = "localhost";
 $user = "root";
 $pass = "";
-$dbname = "empresa_domicilios";  
+$dbname = "empresa_domicilios"; 
 
 /* $host = "localhost";
 $user = "fundac77_whoaomi";
