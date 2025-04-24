@@ -6,6 +6,7 @@ import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Loader from "../../../components/content/loader";
 import FilterProduct from "./filter";
 import { formatearCOP } from "../../../components/content/formatoMoneda";
+import Swal from "sweetalert2";
 
 export default function ProductosShop() {
   const { id, name } = useParams();
@@ -68,19 +69,35 @@ export default function ProductosShop() {
 
   const addToCart = (item) => {
     const cantidad = quantityByProduct[item.Producto] || 1;
+
     if (item.stock <= 0) {
       return Alertas({
         icon: "error",
-        message: "Producto no disponible!",
+        message: "¡Producto no disponible!",
       });
     }
+
     if (item.stock < cantidad) {
       return Alertas({
         icon: "error",
-        message: "Cantidad no disponible!",
+        message: "¡Cantidad no disponible!",
       });
     }
+
     setCart((prevCart) => {
+      // Si el carrito no está vacío, verificamos el negocio
+      if (prevCart.length > 0) {
+        const negocioActual = prevCart[0].Negocio;
+        if (item.Negocio !== negocioActual) {
+          Swal.fire({
+            title: "Error",
+            text: `No puedes agregar productos de otro negocio. Ya tienes productos de ${negocioActual}.`,
+            icon: "warning",
+          });
+          return prevCart; // No actualiza el carrito
+        }
+      }
+
       const updatedCart = [...prevCart];
       const existingIndex = updatedCart.findIndex(
         (p) => p.Producto === item.Producto
@@ -93,7 +110,8 @@ export default function ProductosShop() {
       }
 
       localStorage.setItem("cart", JSON.stringify(updatedCart));
-      Alertas({ icon: "success", message: "Producto agregado al carrito!" });
+      Alertas({ icon: "success", message: "¡Producto agregado al carrito!" });
+
       return updatedCart;
     });
   };
