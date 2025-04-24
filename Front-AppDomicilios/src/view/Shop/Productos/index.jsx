@@ -6,14 +6,16 @@ import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Loader from "../../../components/content/loader";
 import FilterProduct from "./filter";
 import { formatearCOP } from "../../../components/content/formatoMoneda";
+import Swal from "sweetalert2";
 
 export default function ProductosShop() {
   const { id, name } = useParams();
   const [loader, setloader] = useState(false);
   const [data, setData] = useState([]);
   const [idNegocio, setidNegocio] = useState(false);
-  const [idProductos, setidproductos] = useState(false);
+  const [idProductos, setidproductos] = useState("");
   const [quantityByProduct, setQuantityByProduct] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem("cart");
@@ -36,13 +38,16 @@ export default function ProductosShop() {
         let response = await axios.get(
           `/Shop/productos/controller.php?negocio_id=${idNegocio || id}`
         );
-        setData(response.data);
+        const productosFiltrados = idProductos
+          ? response.data.filter((item) => item.Tipo === idProductos)
+          : response.data;
+
+        setData(productosFiltrados);
         const initialQuantities = {};
         response.data.forEach((item) => {
           initialQuantities[item.Producto] = 1;
         });
         setQuantityByProduct(initialQuantities);
-
         setloader(false);
       } catch (error) {
         console.error("Error al obtener productos:", error);
@@ -51,7 +56,7 @@ export default function ProductosShop() {
       }
     };
     fetchProducts();
-  }, [id, idNegocio]);
+  }, [id, idNegocio, idProductos]);
 
   const handleQuantityChange = (productName, change) => {
     setQuantityByProduct((prevQuantities) => {
@@ -68,19 +73,35 @@ export default function ProductosShop() {
 
   const addToCart = (item) => {
     const cantidad = quantityByProduct[item.Producto] || 1;
+
     if (item.stock <= 0) {
       return Alertas({
         icon: "error",
-        message: "Producto no disponible!",
+        message: "¡Producto no disponible!",
       });
     }
+
     if (item.stock < cantidad) {
       return Alertas({
         icon: "error",
-        message: "Cantidad no disponible!",
+        message: "¡Cantidad no disponible!",
       });
     }
+
     setCart((prevCart) => {
+      // Si el carrito no está vacío, verificamos el negocio
+      if (prevCart.length > 0) {
+        const negocioActual = prevCart[0].Negocio;
+        if (item.Negocio !== negocioActual) {
+          Swal.fire({
+            title: "Error",
+            text: `No puedes agregar productos de otro negocio. Ya tienes productos de ${negocioActual}.`,
+            icon: "warning",
+          });
+          return prevCart; // No actualiza el carrito
+        }
+      }
+
       const updatedCart = [...prevCart];
       const existingIndex = updatedCart.findIndex(
         (p) => p.Producto === item.Producto
@@ -93,10 +114,15 @@ export default function ProductosShop() {
       }
 
       localStorage.setItem("cart", JSON.stringify(updatedCart));
-      Alertas({ icon: "success", message: "Producto agregado al carrito!" });
+      Alertas({ icon: "success", message: "¡Producto agregado al carrito!" });
+
       return updatedCart;
     });
   };
+
+  const productosFiltrados = data.filter((item) =>
+    item.Producto.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   if (loader) return <Loader />;
 
@@ -105,11 +131,13 @@ export default function ProductosShop() {
       name={name}
       setidNegocio={setidNegocio}
       setidproductos={setidproductos}
+      searchTerm={searchTerm}
+      setSearchTerm={setSearchTerm}
     >
       <section class="antialiased">
         <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
           <div class="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-3">
-            {data.map((item) => (
+            {productosFiltrados.map((item) => (
               <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
                 <div class="h-56 w-full">
                   <img
