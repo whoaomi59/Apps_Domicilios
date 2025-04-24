@@ -125,10 +125,7 @@ function App() {
                 <NavbarShop logo={empresa.logo} Roles={Rol} nombre={nombre} />
                 <Routes>
                   <Route path="/negocios" element={<NegociosShop />} />
-                  <Route
-                    path="/productos/:id/:name"
-                    element={<ProductosShop />}
-                  />
+                  <Route path="/productos/:id" element={<ProductosShop />} />
                   <Route
                     path="/car_shop"
                     element={<Car_Shop usuarios={usuarios} />}

@@ -26,7 +26,9 @@ export default function NegociosShop() {
     const fetchNegocios = async () => {
       try {
         setloader(true);
-        const response = await axios.get("/Shop/negocios/controller.php");
+        const response = await axios.get(
+          "/Shop/negocios/controller.php?Get=Get"
+        );
         setData(response.data);
         return setloader(false);
       } catch (error) {
@@ -68,7 +70,7 @@ export default function NegociosShop() {
               <div key={index} className="relative">
                 {item.estado === "0" && negocioAbierto ? (
                   <a
-                    href={`/shop/productos/${item.id}/${item.nombre}`}
+                    href={`/shop/productos/${item.id}`}
                     className="grid gap-6 rounded-md border border-solid border-gray-300 p-8 md:p-10 relative"
                     style={{
                       backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)), 

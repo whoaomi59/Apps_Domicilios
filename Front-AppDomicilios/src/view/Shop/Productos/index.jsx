@@ -9,7 +9,7 @@ import { formatearCOP } from "../../../components/content/formatoMoneda";
 import Swal from "sweetalert2";
 
 export default function ProductosShop() {
-  const { id, name } = useParams();
+  const { id } = useParams();
   const [loader, setloader] = useState(false);
   const [data, setData] = useState([]);
   const [idNegocio, setidNegocio] = useState(false);
@@ -128,7 +128,8 @@ export default function ProductosShop() {
 
   return (
     <FilterProduct
-      name={name}
+      id={id}
+      idNegocio={idNegocio}
       setidNegocio={setidNegocio}
       setidproductos={setidproductos}
       searchTerm={searchTerm}

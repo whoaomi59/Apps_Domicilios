@@ -113,7 +113,7 @@ const Grid = ({
                     </td>
                   ))}
                   {actions && actions.length > 0 && (
-                    <td className="p-4 space-x-2 hidden sm:table-cell">
+                    <td className="p-4 space-x-2 ">
                       <button
                         className="p-2 rounded bg-green-500 text-white hover:bg-gray-400 m-0.5"
                         title="Editar"
