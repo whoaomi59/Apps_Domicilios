@@ -13,8 +13,9 @@ export default function ProductosShop() {
   const [loader, setloader] = useState(false);
   const [data, setData] = useState([]);
   const [idNegocio, setidNegocio] = useState(false);
-  const [idProductos, setidproductos] = useState(false);
+  const [idProductos, setidproductos] = useState("");
   const [quantityByProduct, setQuantityByProduct] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem("cart");
@@ -37,13 +38,16 @@ export default function ProductosShop() {
         let response = await axios.get(
           `/Shop/productos/controller.php?negocio_id=${idNegocio || id}`
         );
-        setData(response.data);
+        const productosFiltrados = idProductos
+          ? response.data.filter((item) => item.Tipo === idProductos)
+          : response.data;
+
+        setData(productosFiltrados);
         const initialQuantities = {};
         response.data.forEach((item) => {
           initialQuantities[item.Producto] = 1;
         });
         setQuantityByProduct(initialQuantities);
-
         setloader(false);
       } catch (error) {
         console.error("Error al obtener productos:", error);
@@ -52,7 +56,7 @@ export default function ProductosShop() {
       }
     };
     fetchProducts();
-  }, [id, idNegocio]);
+  }, [id, idNegocio, idProductos]);
 
   const handleQuantityChange = (productName, change) => {
     setQuantityByProduct((prevQuantities) => {
@@ -116,6 +120,10 @@ export default function ProductosShop() {
     });
   };
 
+  const productosFiltrados = data.filter((item) =>
+    item.Producto.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   if (loader) return <Loader />;
 
   return (
@@ -123,11 +131,13 @@ export default function ProductosShop() {
       name={name}
       setidNegocio={setidNegocio}
       setidproductos={setidproductos}
+      searchTerm={searchTerm}
+      setSearchTerm={setSearchTerm}
     >
       <section class="antialiased">
         <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
           <div class="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-3">
-            {data.map((item) => (
+            {productosFiltrados.map((item) => (
               <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
                 <div class="h-56 w-full">
                   <img

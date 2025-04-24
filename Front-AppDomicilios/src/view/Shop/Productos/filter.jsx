@@ -5,14 +5,19 @@ import {
 } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import DynamicSelect from "../../../components/grid/formulario/DynamicSelect ";
+import axios from "axios";
 
 export default function FilterProduct({
   children,
   name,
   setidNegocio,
   setidproductos,
+  searchTerm,
+  setSearchTerm,
 }) {
   const [formData, setFormData] = useState({});
+  const [filtCategorias, setfiltCategorias] = useState("");
+  const [categorias, setCategorias] = useState([]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -27,12 +32,25 @@ export default function FilterProduct({
     e.preventDefault();
     try {
       setidNegocio(formData.Negocio);
-      setidproductos(formData.productos);
+      setidproductos(filtCategorias);
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(formData);
+
+  useEffect(() => {
+    const GetCategorias = async () => {
+      try {
+        let response = await axios.get(
+          "/api/productos/categorias_productos.php"
+        );
+        setCategorias(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    GetCategorias();
+  }, []);
   return (
     <section class="relative">
       <div class="w-full max-w-7xl mx-auto">
@@ -59,6 +77,8 @@ export default function FilterProduct({
                   id="simple-search"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2                                 "
                   placeholder="Buscar productos..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
             </form>
@@ -152,18 +172,15 @@ export default function FilterProduct({
               </h6>
               <label className="text-gray-600">Categorias:</label>
               <div class="relative w-full mb-8 mt-2">
-                <DynamicSelect
-                  url="/api/productos/categorias_productos.php"
-                  name="productos"
-                  value={formData["productos"]}
-                  onChange={handleChange}
-                  valueKey="id"
-                  labelKey="nombre"
-                  placeholder="Filtrar categorias"
-                  style="text-gray-500"
-                />
+                {categorias.map((item) => (
+                  <button
+                    onClick={() => setfiltCategorias(item.nombre)}
+                    className="p-2 m-1 rounded-full bg-gray-400 text-white font-semibold text-xs shadow-sm shadow-transparent transition-all duration-500 hover:bg-green-500"
+                  >
+                    {item.nombre}
+                  </button>
+                ))}
               </div>
-
               <label className="text-gray-600">Negocios:</label>
               <div class="relative w-full mb-8 mt-2">
                 <DynamicSelect
@@ -179,7 +196,7 @@ export default function FilterProduct({
               </div>
               <button
                 onClick={FilterButton}
-                class="w-full py-2.5 flex items-center justify-center gap-2 rounded-full bg-green-600 text-white font-semibold text-xs shadow-sm shadow-transparent transition-all duration-500 hover:bg-green-700 hover:shadow-green-200  "
+                className="w-full py-2.5 flex items-center justify-center gap-2 rounded-full bg-green-600 text-white font-semibold text-xs shadow-sm shadow-transparent transition-all duration-500 hover:bg-green-700 hover:shadow-green-200"
               >
                 <MagnifyingGlassIcon className="w-4" />
                 Buscar
