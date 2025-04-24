@@ -26,6 +26,7 @@ import "./App.css";
 import RegistroUser from "./view/auth/reguister";
 import Baner_Empresa from "./view/admin/baner_empresa";
 import Baner_Negocios from "./view/admin/bener_negocios";
+import RegisterClient from "./view/client/Register";
 
 function App() {
   const [Rol, setRol] = useState(null);
@@ -34,8 +35,8 @@ function App() {
   const [usuarios, setusuarios] = useState(null);
   const [nombre, setnombre] = useState(null);
 
-  //axios.defaults.baseURL = " http://localhost/Apps_Domicilios/API/";
-  axios.defaults.baseURL = " https://domicilios.fundacionhuellas.com.co/API/";
+  axios.defaults.baseURL = " http://localhost/Apps_Domicilios/API/";
+  //axios.defaults.baseURL = " https://domicilios.fundacionhuellas.com.co/API/";
 
   useEffect(() => {
     const token = sessionStorage.getItem("token"); // Obtiene el token
@@ -75,6 +76,11 @@ function App() {
             path="/registro"
             element={<RegistroUser logo={empresa.logo} />}
           />
+          <Route
+            path="/abV4vjNRhtLWl2TzF1ZANqKDXbZLHarXF2OSpuNMHNlgza6tJwP+x8m14RnuNbwJ"
+            element={<RegisterClient logo={empresa.logo} />}
+          />
+
           <Route path="/login" element={<Login logo={empresa.logo} />} />
           <Route path="/request-reset" element={<RequestReset />} />
           <Route path="/reset-password" element={<ResetPassword />} />
