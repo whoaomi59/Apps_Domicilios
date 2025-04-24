@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Form from "../../components/grid/formulario";
 import { fields } from "./models";
 import axios from "axios";
@@ -13,7 +12,6 @@ export default function RegistroUser({ logo }) {
         rol: "cliente",
         telefono: newData.telefono,
       });
-      console.log(response);
       alert("Registrado!");
       setTimeout(() => {
         window.location.href = "/login";
