@@ -5,18 +5,22 @@ import {
 import { useEffect, useState } from "react";
 import DynamicSelect from "../../../components/grid/formulario/DynamicSelect ";
 import axios from "axios";
+import Loader from "../../../components/content/loader";
 
 export default function FilterProduct({
   children,
-  name,
   setidNegocio,
   setidproductos,
   searchTerm,
   setSearchTerm,
+  id,
+  idNegocio,
 }) {
   const [formData, setFormData] = useState({});
   const [filtCategorias, setfiltCategorias] = useState("");
   const [categorias, setCategorias] = useState([]);
+  const [Negocios, setNegocios] = useState([]);
+  const [loader, setLoader] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -48,18 +52,43 @@ export default function FilterProduct({
         console.log(error);
       }
     };
+    const GetNegocios = async () => {
+      try {
+        setLoader(true);
+        let response = await axios.get(
+          `/Shop/negocios/controller.php?Get=GetOne&id=${idNegocio || id}`
+        );
+        setNegocios(response.data[0]);
+        setLoader(false);
+      } catch (error) {
+        setLoader(false);
+        console.log(error);
+      }
+    };
+    GetNegocios();
     GetCategorias();
-  }, []);
+  }, [idNegocio]);
+
+  if (loader) {
+    <Loader />;
+  }
+
   return (
     <section class="relative">
-      <div class="w-full max-w-7xl mx-auto">
-        <div class="flex flex-col lg:flex-row lg:items-center max-lg:gap-2 justify-between w-full">
+      <div class="w-full max-w-7xl mx-auto ">
+        <div
+          class="flex flex-col lg:flex-row lg:items-center max-lg:gap-2 justify-between w-full py-15 px-10"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)), 
+                      url(${Negocios.img})`,
+          }}
+        >
           <div className="flex">
             <a href="/shop/negocios" className="mr-3">
-              <ArrowLeftCircleIcon className="w-10 text-green-500 hover:text-green-700" />
+              <ArrowLeftCircleIcon className="w-10 text-green-400 hover:text-green-500" />
             </a>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
-              Productos, {name}
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 text-white">
+              Productos, {Negocios.nombre}
             </h2>
           </div>
           <div class="relative w-full max-w-sm">
@@ -85,7 +114,7 @@ export default function FilterProduct({
         </div>
 
         <svg
-          class="my-7 w-full"
+          class="my-5 w-full"
           xmlns="http://www.w3.org/2000/svg"
           width="1216"
           height="2"
@@ -183,7 +212,7 @@ export default function FilterProduct({
               <label className="text-gray-600">Negocios:</label>
               <div class="relative w-full mb-8 mt-2">
                 <DynamicSelect
-                  url="Shop/negocios/controller.php"
+                  url="Shop/negocios/controller.php?Get=Get"
                   name="Negocio"
                   value={formData["Negocio"]}
                   onChange={handleChange}
