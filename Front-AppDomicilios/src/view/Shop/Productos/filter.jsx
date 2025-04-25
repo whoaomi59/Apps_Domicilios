@@ -226,13 +226,6 @@ export default function FilterProduct({
                   style="text-gray-500"
                 />
               </div>
-              <a
-                href="/shop/car_shop"
-                className="w-full py-2.5 flex items-center justify-center gap-2 rounded-full bg-green-600 text-white font-semibold text-xs shadow-sm shadow-transparent transition-all duration-500 hover:bg-green-700 hover:shadow-green-200 mb-2"
-              >
-                <ShoppingCartIcon className="w-4" />
-                Ir al carrito
-              </a>
               <button
                 onClick={FilterButton}
                 className="w-full py-2.5 flex items-center justify-center gap-2 rounded-full bg-green-600 text-white font-semibold text-xs shadow-sm shadow-transparent transition-all duration-500 hover:bg-green-700 hover:shadow-green-200"
