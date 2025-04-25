@@ -6,7 +6,11 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title, initialValues }) => {
 
   useEffect(() => {
     const initial = fields.reduce((acc, field) => {
-      acc[field.name] = initialValues?.[field.name] || "";
+      let value = initialValues?.[field.name] || "";
+      if (field.type === "dinamiselect") {
+        value = String(value); // Aseguramos que sea string
+      }
+      acc[field.name] = value;
       return acc;
     }, {});
     setFormData(initial);
@@ -23,7 +27,7 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title, initialValues }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData); // quien lo use decide si insertar o actualizar
+    onSubmit(formData);
     onClose();
   };
 
@@ -70,6 +74,9 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title, initialValues }) => {
                   onChange={handleChange}
                   valueKey={field.value}
                   labelKey={field.text}
+                  required={field.required}
+                  placeholder={field.placeholder}
+                  style={field.style}
                 />
               ) : (
                 <input

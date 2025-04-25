@@ -14,33 +14,37 @@ const DynamicSelect = ({
 }) => {
   const [options, setOptions] = useState([]);
 
+  console.log(value);
+
   useEffect(() => {
     const fetchOptions = async () => {
       try {
-        const response = await axios.get(url);
-        setOptions(response.data);
-      } catch (error) {
-        console.error("Error al cargar opciones:", error);
+        const res = await axios.get(url);
+        setOptions(res.data);
+      } catch (err) {
+        console.error("Error al cargar opciones:", err);
+        setOptions([]);
       }
     };
 
     fetchOptions();
   }, [url]);
 
+  const currentValue =
+    value !== undefined && value !== null ? String(value) : "";
+
   return (
     <select
       name={name}
-      value={value ?? ""}
+      value={currentValue}
       onChange={onChange}
       required={required}
       className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 ${style}`}
     >
-      <option value="" className="text-gray-400">
-        {placeholder || "Seleccionar..."}
-      </option>
-      {options.map((option) => (
-        <option key={option[valueKey]} value={String(option[valueKey])}>
-          {option[labelKey]}
+      <option value="">{placeholder || "Seleccionar..."}</option>
+      {options.map((opt) => (
+        <option key={opt[valueKey]} value={String(opt[valueKey])}>
+          {opt[labelKey]}
         </option>
       ))}
     </select>
