@@ -1,10 +1,10 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Grid from "../../../components/grid/grid";
-import { Columns, fields, fieldsEstado } from "./models";
+import { Columns, fields, FielsEstado } from "./models";
 import { Alertas } from "../../../components/content/alert/Sweealert";
 import Form from "../../../components/grid/formulario";
-import { ClockIcon, DocumentPlusIcon } from "@heroicons/react/24/outline";
+import { ClockIcon } from "@heroicons/react/24/outline";
 
 const Negocios = ({ IdUser, Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
@@ -62,19 +62,15 @@ const Negocios = ({ IdUser, Roles }) => {
       });
     }
   };
-  const Estate = async (formData) => {
+
+  const ActiveNegocio = async (formData) => {
     try {
-      if (formData.update) {
-        let response = await axios.put(
-          "/api/negocios/controller.php",
-          formData,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-      }
+      let response = await axios.put("/api/negocios/controller.php", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
       setrefresh((prev) => !prev);
       return Alertas({
         icon: "success",
@@ -83,7 +79,7 @@ const Negocios = ({ IdUser, Roles }) => {
     } catch (error) {
       return Alertas({
         icon: "error",
-        message: "Error al registrar!!",
+        message: "Error sl Registrar!!",
       });
     }
   };
@@ -134,11 +130,6 @@ const Negocios = ({ IdUser, Roles }) => {
     created_at: item.created_at,
   }));
 
-  const CambiarEstado = async (record) => {
-    setEditingItem(record);
-    setIsModalOpen(true);
-  };
-
   return (
     <div className="p-4">
       <Form
@@ -147,8 +138,8 @@ const Negocios = ({ IdUser, Roles }) => {
           setIsModalOpen(false);
           setEditingItem(null);
         }}
-        fields={fieldsEstado}
-        onSubmit={handleFormSubmit}
+        fields={FielsEstado}
+        onSubmit={ActiveNegocio}
         title={"Estado"}
         initialValues={editingItem}
       />
@@ -160,9 +151,12 @@ const Negocios = ({ IdUser, Roles }) => {
         handleFormSubmit={handleFormSubmit}
         actions={[
           {
-            icon: "CogIcon",
+            icon: "NoSymbolIcon",
             className: "bg-orange-500 text-white",
-            onClick: (record) => CambiarEstado(record),
+            onClick: (record) => {
+              setIsModalOpen(true);
+              setEditingItem(record);
+            },
           },
           {
             icon: "ArrowRightCircleIcon",

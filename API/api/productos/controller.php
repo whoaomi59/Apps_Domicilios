@@ -33,7 +33,7 @@ function get() {
                     p.id AS id_producto,
                     p.negocio_id AS id_negocio,
                     p.precio AS precio_producto,
-                    p.stock AS stock_producto,
+                    p.estado AS estado_producto,
                     p.created_at AS fecha_producto,p.img,n.usuario_id
                     FROM productos p
                     JOIN negocios n ON p.negocio_id = n.id
@@ -62,13 +62,13 @@ function post() {
     $nombre = $_POST['nombre'];
     $descripcion = $_POST['descripcion'];
     $precio = floatval($_POST['precio']);
-    $stock = intval($_POST['stock']);
+    $estado = intval($_POST['estado']);
 
     if (isset($_FILES['img']) && $_FILES['img']['error'] === UPLOAD_ERR_OK) {
         $img = file_get_contents($_FILES['img']['tmp_name']); // Leer imagen binaria
         
-        $stmt = $conn->prepare("INSERT INTO productos (negocio_id, tipo_id, nombre, descripcion, precio, stock, img) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("iissdib", $negocio_id, $tipo_id, $nombre, $descripcion, $precio, $stock, $null);
+        $stmt = $conn->prepare("INSERT INTO productos (negocio_id, tipo_id, nombre, descripcion, precio, estado, img) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("iissdib", $negocio_id, $tipo_id, $nombre, $descripcion, $precio, $estado, $null);
         $stmt->send_long_data(6, $img); // Enviar datos binarios de la imagen
 
         if ($stmt->execute()) {
@@ -93,13 +93,13 @@ function update() {
     $nombre = $_POST['nombre'];
     $descripcion = $_POST['descripcion'];
     $precio = floatval($_POST['precio']);
-    $stock = intval($_POST['stock']);
+    $estado = intval($_POST['estado']);
 
         $hayLogo = isset($_FILES["img"]) && $_FILES["img"]["error"] === UPLOAD_ERR_OK;
 
         if ($hayLogo) {
             $logo = file_get_contents($_FILES["img"]["tmp_name"]);
-            $sql = "UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, stock = ?, img = ? WHERE id = ?";
+            $sql = "UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, estado = ?, img = ? WHERE id = ?";
         
             $stmt = $conn->prepare($sql);
         
@@ -109,10 +109,10 @@ function update() {
             }
         
             $null = NULL;
-            $stmt->bind_param("ssdibi", $nombre, $descripcion, $precio, $stock, $null, $id);
+            $stmt->bind_param("ssdibi", $nombre, $descripcion, $precio, $estado, $null, $id);
             $stmt->send_long_data(4, $logo); // índice 4 para img
         }else {
-            $sql = "UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, stock = ? WHERE id = ?";
+            $sql = "UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, estado = ? WHERE id = ?";
     
             $stmt = $conn->prepare($sql);
     
@@ -121,7 +121,7 @@ function update() {
                 return;
             }
     
-            $stmt->bind_param("ssdii",$nombre, $descripcion, $precio, $stock, $id);
+            $stmt->bind_param("ssdii",$nombre, $descripcion, $precio, $estado, $id);
         }
     
         if ($stmt->execute()) {
@@ -135,13 +135,29 @@ function update() {
 
 }
 
-//FALTA
+//Ok
 function delete() {
     global $conn;
-    $data = json_decode(file_get_contents("php://input"), true);
-    $stmt = $conn->prepare("DELETE FROM empresa WHERE id = ?");
-    $stmt->bind_param("i", $data["id"]);
-    $stmt->execute();
-    echo json_encode(["message" => "Empresa eliminada"]);
+    $rawData = file_get_contents("php://input");
+    $data = json_decode($rawData, true);
+    if (!isset($data['id']) || !isset($data['estado'])) {
+        echo json_encode(["error" => "Faltan parámetros requeridos (id o estado)", "debug" => $data]);
+        return;
+    }
+    $id = $data['id'];
+    $estado = $data['estado'];
+    $stmt = $conn->prepare("UPDATE productos SET estado = ? WHERE id = ?");
+    if (!$stmt) {
+        echo json_encode(["error" => "Error al preparar la consulta", "mysqli_error" => $conn->error]);
+        return;
+    }
+
+    $stmt->bind_param("ii", $estado, $id);
+    if ($stmt->execute()) {
+        echo json_encode(["message" => "Estado actualizado correctamente"]);
+    } else {
+        echo json_encode(["error" => "Error al actualizar estado", "mysqli_error" => $stmt->error]);
+    }
+    $stmt->close();
 }
 ?>

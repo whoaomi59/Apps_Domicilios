@@ -40,9 +40,16 @@ export const fields = [
 ];
 
 
-export const fieldsEstado = [
-   { name: "update", label: "ID", type: "number" ,disable:true},
-  { name: "estado", label: "Cambiar Estado", type: "select",options:[{value:0,label:'Activo'},{value:1,label:'Inactivo'}] },
- 
-];
-
+export const FielsEstado =[
+  { name: "id", label: "ID", type: "number",disable:true },
+  { name: "estado", label: "estado", type: "select",options:[
+    {
+      value:0,
+      label:'Activo'
+    },
+    {
+      value:1,
+      label:'Inactivo'
+    }
+  ] },
+]

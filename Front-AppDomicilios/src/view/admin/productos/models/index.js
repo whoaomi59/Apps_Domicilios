@@ -5,6 +5,7 @@ export const Columns = [
   { key: "Tipo", label: "Tipo Producto" },
   { key: "negocio_id", label: "Negocio" },
   { key: "descripcion", label: "Descripcion" },
+  { key: "estado", label: "estado" },
   { key: "precio", label: "Precio" },
   { key: "fecha_producto", label: "Fecha" },
 ];
@@ -34,3 +35,16 @@ export const fields = [
   { name: "img", label: "img", type: "file" },
 ];
 
+export const FielsEstado =[
+  { name: "id", label: "ID", type: "number",disable:true },
+  { name: "estado", label: "estado", type: "select",options:[
+    {
+      value:0,
+      label:'Activo'
+    },
+    {
+      value:1,
+      label:'Inactivo'
+    }
+  ] },
+]
