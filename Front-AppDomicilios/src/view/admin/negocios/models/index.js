@@ -19,7 +19,7 @@ export const fields = [
     name: "usuario_id", 
     label: "Administrador del negocio",
     type: "dinamiselect",
-    url:'/api/usuarios/controller.php',
+    url:'/api/usuarios/user_negocios.php',
     value:'id', 
     text:'nombre', 
   },

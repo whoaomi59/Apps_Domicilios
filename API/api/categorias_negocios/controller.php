@@ -43,27 +43,5 @@ function post() {
     $stmt->execute();
     echo json_encode(["message" => "registro creada"]);
 }
-//FALTA
-function update() {
-    global $conn;
-    $data = json_decode(file_get_contents("php://input"), true);
-    if (!isset($data["id"], $data["nombre"], $data["email"])) {
-        echo json_encode(["error" => "Faltan datos"]);
-        return;
-    }
 
-    $stmt = $conn->prepare("UPDATE empresa SET nombre = ?, direccion = ?, telefono = ?, email = ? WHERE id = ?");
-    $stmt->bind_param("ssssi", $data["nombre"], $data["direccion"], $data["telefono"], $data["email"], $data["id"]);
-    $stmt->execute();
-    echo json_encode(["message" => "Empresa actualizada"]);
-}
-//FALTA
-function delete() {
-    global $conn;
-    $data = json_decode(file_get_contents("php://input"), true);
-    $stmt = $conn->prepare("DELETE FROM empresa WHERE id = ?");
-    $stmt->bind_param("i", $data["id"]);
-    $stmt->execute();
-    echo json_encode(["message" => "Empresa eliminada"]);
-}
 ?>

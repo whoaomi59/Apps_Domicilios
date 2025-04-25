@@ -27,6 +27,7 @@ import RegistroUser from "./view/auth/reguister";
 import Baner_Empresa from "./view/admin/baner_empresa";
 import Baner_Negocios from "./view/admin/bener_negocios";
 import RegisterClient from "./view/client/Register";
+import Categorias_Negocios from "./view/admin/Categoria_Negocio";
 
 function App() {
   const [Rol, setRol] = useState(null);
@@ -35,8 +36,8 @@ function App() {
   const [usuarios, setusuarios] = useState(null);
   const [nombre, setnombre] = useState(null);
 
-  //axios.defaults.baseURL = " http://localhost/Apps_Domicilios/API/";
-  axios.defaults.baseURL = " https://domicilios.fundacionhuellas.com.co/API/";
+  axios.defaults.baseURL = " http://localhost/Apps_Domicilios/API/";
+  //axios.defaults.baseURL = " https://domicilios.fundacionhuellas.com.co/API/";
 
   useEffect(() => {
     const token = sessionStorage.getItem("token"); // Obtiene el token
@@ -108,6 +109,10 @@ function App() {
                     <Route
                       path="/negocios"
                       element={<Negocios IdUser={IdUser} Roles={Rol} />}
+                    />
+                    <Route
+                      path="/categoriasnegocios"
+                      element={<Categorias_Negocios />}
                     />
                     <Route
                       path="/productos/:id/:name"
