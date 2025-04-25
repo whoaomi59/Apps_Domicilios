@@ -23,8 +23,9 @@ const Negocios = ({ IdUser, Roles }) => {
         form.append(key, formData[key]);
       }
     }
+    console.log(formData);
     try {
-      if (formData.estado) {
+      if (formData.update) {
         let response = await axios.put("/api/negocios/controller.php", form, {
           headers: {
             "Content-Type": "application/json",
@@ -48,6 +49,31 @@ const Negocios = ({ IdUser, Roles }) => {
           },
         });
         console.log(response.data);
+      }
+      setrefresh((prev) => !prev);
+      return Alertas({
+        icon: "success",
+        message: "Registrado!!",
+      });
+    } catch (error) {
+      return Alertas({
+        icon: "error",
+        message: "Error al registrar!!",
+      });
+    }
+  };
+  const Estate = async (formData) => {
+    try {
+      if (formData.update) {
+        let response = await axios.put(
+          "/api/negocios/controller.php",
+          formData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
       }
       setrefresh((prev) => !prev);
       return Alertas({

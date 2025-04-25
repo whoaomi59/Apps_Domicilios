@@ -6,7 +6,6 @@ export const Columns = [
   { key: "negocio_id", label: "Negocio" },
   { key: "descripcion", label: "Descripcion" },
   { key: "precio", label: "Precio" },
-  { key: "stock", label: "Stock" },
   { key: "fecha_producto", label: "Fecha" },
 ];
 
@@ -32,7 +31,6 @@ export const fields = [
   },
   { name: "descripcion", label: "descripcion", type: "text" },
   { name: "precio", label: "precio", type: "number" },
-  { name: "stock", label: "stock", type: "number" },
   { name: "img", label: "img", type: "file" },
 ];
 

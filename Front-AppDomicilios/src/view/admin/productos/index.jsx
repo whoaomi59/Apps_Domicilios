@@ -10,7 +10,6 @@ const Productos = ({ Roles }) => {
   const [refresh, setrefresh] = useState([]);
   const { id } = useParams();
 
-  const abrirModal = () => {};
   const Verdetalle = () => {};
 
   const handleFormSubmit = async (formData) => {
@@ -58,17 +57,10 @@ const Productos = ({ Roles }) => {
     const Get = async () => {
       try {
         let response = await axios.get("/api/productos/controller.php");
-
-        if (Roles.includes("admin")) {
-          setUsuarios(response.data);
-        } else {
-          // Filtrar las rutas basadas en los roles del usuario
-          const rutasPermitidas = response.data.filter((item) =>
-            item.id_negocio.includes(id)
-          );
-          console.log(rutasPermitidas);
-          setUsuarios(rutasPermitidas);
-        }
+        const rutasPermitidas = response.data.filter((item) =>
+          item.id_negocio.includes(id)
+        );
+        setUsuarios(rutasPermitidas);
       } catch (error) {
         console.log(error);
       }
@@ -84,7 +76,6 @@ const Productos = ({ Roles }) => {
     negocio_id: item.Negocio,
     descripcion: item.descripcion_productos,
     precio: item.precio_producto,
-    stock: item.stock_producto,
     fecha_producto: item.fecha_producto,
   }));
 
@@ -98,8 +89,8 @@ const Productos = ({ Roles }) => {
         handleFormSubmit={handleFormSubmit}
         actions={[
           {
-            icon: "TrashIcon",
-            className: "bg-red-500 text-white",
+            icon: "NoSymbolIcon",
+            className: "bg-blue-500 text-white",
             onClick: (record) => Verdetalle(record), // Llama a la función abrirModal con el registro
           },
         ]}

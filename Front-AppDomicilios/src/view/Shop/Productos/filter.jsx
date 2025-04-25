@@ -1,6 +1,7 @@
 import {
   ArrowLeftCircleIcon,
   MagnifyingGlassIcon,
+  ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import DynamicSelect from "../../../components/grid/formulario/DynamicSelect ";
@@ -203,7 +204,10 @@ export default function FilterProduct({
                 {categorias.map((item) => (
                   <button
                     onClick={() => setfiltCategorias(item.nombre)}
-                    className="p-2 m-1 rounded-full bg-gray-400 text-white font-semibold text-xs shadow-sm shadow-transparent transition-all duration-500 hover:bg-green-500"
+                    className="p-2 m-1 rounded-full bg-green-500 text-white font-semibold  shadow-sm shadow-transparent transition-all duration-500 hover:bg-green-400"
+                    style={{
+                      fontSize: 13,
+                    }}
                   >
                     {item.nombre}
                   </button>
@@ -222,6 +226,13 @@ export default function FilterProduct({
                   style="text-gray-500"
                 />
               </div>
+              <a
+                href="/shop/car_shop"
+                className="w-full py-2.5 flex items-center justify-center gap-2 rounded-full bg-green-600 text-white font-semibold text-xs shadow-sm shadow-transparent transition-all duration-500 hover:bg-green-700 hover:shadow-green-200 mb-2"
+              >
+                <ShoppingCartIcon className="w-4" />
+                Ir al carrito
+              </a>
               <button
                 onClick={FilterButton}
                 className="w-full py-2.5 flex items-center justify-center gap-2 rounded-full bg-green-600 text-white font-semibold text-xs shadow-sm shadow-transparent transition-all duration-500 hover:bg-green-700 hover:shadow-green-200"

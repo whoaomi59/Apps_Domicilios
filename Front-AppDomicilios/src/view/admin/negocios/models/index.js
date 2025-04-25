@@ -41,7 +41,7 @@ export const fields = [
 
 
 export const fieldsEstado = [
-   { name: "id", label: "ID", type: "number" ,disable:true},
+   { name: "update", label: "ID", type: "number" ,disable:true},
   { name: "estado", label: "Cambiar Estado", type: "select",options:[{value:0,label:'Activo'},{value:1,label:'Inactivo'}] },
  
 ];
