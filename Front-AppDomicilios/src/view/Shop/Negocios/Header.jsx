@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import {
+  BuildingOffice2Icon,
+  MagnifyingGlassIcon,
+} from "@heroicons/react/24/outline";
 import Loader from "../../../components/content/loader";
 
 export default function Header({ setFilter }) {
@@ -81,8 +84,63 @@ export default function Header({ setFilter }) {
   }
 
   return (
-    <section>
-      <div className="mx-auto w-full max-w-7xl px-5 py-5 md:px-10">
+    <div className="bg-[#00C951] flex flex-col items-center justify-center py-10 px-4 sm:px-6 text-white font-sans mb-5">
+      {/* Título */}
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-center leading-tight">
+        Si tienes <span className="font-bold">{empresa.nombre},</span> tienes
+        Todo.
+      </h1>
+
+      {/* Buscador */}
+      <div className="mt-8 w-full max-w-xl">
+        <div className="relative w-full">
+          <div className="flex items-center bg-white rounded-lg shadow-md overflow-hidden focus-within:ring-2 ring-green-300">
+            <span className="pl-4 text-gray-500">
+              <MagnifyingGlassIcon className="w-5" />
+            </span>
+            <input
+              type="text"
+              placeholder="Buscar por categorías..."
+              className="w-full px-3 py-3 text-sm sm:text-base text-gray-700 focus:outline-none"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+
+          {/* Lista de sugerencias */}
+          {filteredData.length > 0 && (
+            <ul className="absolute top-full mt-1 z-10 w-full bg-white border border-gray-300 max-h-40 overflow-y-auto rounded-md shadow-lg text-black text-sm">
+              {filteredData.map((negocio, index) => (
+                <li
+                  key={index}
+                  className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  onClick={() => {
+                    setSearchTerm(negocio.nombre);
+                    setFilter(negocio.id);
+                    setFilteredData([]);
+                  }}
+                >
+                  {negocio.nombre}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        {/* Info y link de login */}
+        <div className="mt-6 flex flex-col sm:flex-row sm:justify-between items-center gap-3 text-center text-sm px-2">
+          <button className="flex items-center text-white font-bold hover:underline">
+            <BuildingOffice2Icon className="w-5 mr-2" />
+            {empresa.descripcion}, {empresa.direccion}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+{
+  /*   <div className="mx-auto w-full max-w-7xl px-5 py-5 md:px-10">
         <div className="grid items-center gap-8 sm:gap-20 md:grid-cols-2">
           <div className="max-w-2xl">
             <h2 className="mb-4 text-3xl font-bold md:text-5xl md:leading-snug text-green-500">
@@ -105,8 +163,6 @@ export default function Header({ setFilter }) {
                   className="flex-1 h-9 w-full bg-white px-3 py-2 text-sm text-black focus:outline-none"
                   placeholder="Buscar Por Categorias...."
                   autoComplete="off"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 {filteredData.length > 0 && (
                   <ul className="absolute top-full mt-1 z-10 w-full bg-white border border-gray-300 max-h-40 overflow-y-auto rounded-md shadow-md">
@@ -147,7 +203,5 @@ export default function Header({ setFilter }) {
             />
           </div>
         </div>
-      </div>
-    </section>
-  );
+      </div> */
 }
