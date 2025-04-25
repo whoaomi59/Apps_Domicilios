@@ -43,27 +43,34 @@ function post() {
     $stmt->execute();
     echo json_encode(["message" => "registro creada"]);
 }
-//FALTA
+
 function update() {
     global $conn;
-    $data = json_decode(file_get_contents("php://input"), true);
-    if (!isset($data["id"], $data["nombre"], $data["email"])) {
-        echo json_encode(["error" => "Faltan datos"]);
+    $rawData = file_get_contents("php://input");
+
+    $data = json_decode($rawData, true);
+
+    file_put_contents("debug.txt", "RAW:\n" . $rawData . "\n\nPARSED:\n" . print_r($data, true));
+    if (!isset($data['id']) || !isset($data['nombre'])) {
+        echo json_encode(["error" => "Faltan parámetros requeridos (id o nombre)", "debug" => $data]);
+        return;
+    }
+    $id = $data['id'];
+    $nombre = $data['nombre'];
+    $stmt = $conn->prepare("UPDATE categorias_negocios SET nombre = ? WHERE id = ?");
+    if (!$stmt) {
+        echo json_encode(["error" => "Error al preparar la consulta", "mysqli_error" => $conn->error]);
         return;
     }
 
-    $stmt = $conn->prepare("UPDATE empresa SET nombre = ?, direccion = ?, telefono = ?, email = ? WHERE id = ?");
-    $stmt->bind_param("ssssi", $data["nombre"], $data["direccion"], $data["telefono"], $data["email"], $data["id"]);
-    $stmt->execute();
-    echo json_encode(["message" => "Empresa actualizada"]);
+    $stmt->bind_param("si", $nombre, $id);
+    if ($stmt->execute()) {
+        echo json_encode(["message" => "nombre actualizado correctamente"]);
+    } else {
+        echo json_encode(["error" => "Error al actualizar nombre", "mysqli_error" => $stmt->error]);
+    }
+    $stmt->close();
 }
-//FALTA
-function delete() {
-    global $conn;
-    $data = json_decode(file_get_contents("php://input"), true);
-    $stmt = $conn->prepare("DELETE FROM empresa WHERE id = ?");
-    $stmt->bind_param("i", $data["id"]);
-    $stmt->execute();
-    echo json_encode(["message" => "Empresa eliminada"]);
-}
+
+
 ?>

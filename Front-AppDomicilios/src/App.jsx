@@ -27,6 +27,7 @@ import RegistroUser from "./view/auth/reguister";
 import Baner_Empresa from "./view/admin/baner_empresa";
 import Baner_Negocios from "./view/admin/bener_negocios";
 import RegisterClient from "./view/client/Register";
+import Categorias_Negocios from "./view/admin/Categoria_Negocio";
 
 function App() {
   const [Rol, setRol] = useState(null);
@@ -39,12 +40,12 @@ function App() {
   axios.defaults.baseURL = " https://domicilios.fundacionhuellas.com.co/API/";
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token"); // Obtiene el token
+    const token = sessionStorage.getItem("token");
     if (token) {
       try {
         const decoded = jwtDecode(token);
         setIdUser(decoded.id);
-        setRol(decoded.rol); // ✅ Se actualiza solo una vez
+        setRol(decoded.rol);
         localStorage.setItem("id", decoded.id);
         setnombre(decoded.nombre);
         return setusuarios(decoded);
@@ -52,7 +53,7 @@ function App() {
         console.error("Error decodificando el token:", error);
       }
     }
-  }, []); // Se ejecuta solo una vez al montar el componente
+  }, []);
 
   useEffect(() => {
     const Get = async () => {
@@ -110,7 +111,11 @@ function App() {
                       element={<Negocios IdUser={IdUser} Roles={Rol} />}
                     />
                     <Route
-                      path="/productos/:id"
+                      path="/categoriasnegocios"
+                      element={<Categorias_Negocios />}
+                    />
+                    <Route
+                      path="/productos/:id/:name"
                       element={<Productos IdUser={IdUser} Roles={Rol} />}
                     />
                   </Routes>

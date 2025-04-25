@@ -17,9 +17,9 @@ export const fields = [
   { name: "nombre", label: "Nombre Negocio", type: "text" },
   { 
     name: "usuario_id", 
-    label: "Usuario Asignado",
+    label: "Administrador del negocio",
     type: "dinamiselect",
-    url:'/api/usuarios/controller.php',
+    url:'/api/usuarios/user_negocios.php',
     value:'id', 
     text:'nombre', 
   },
@@ -40,9 +40,16 @@ export const fields = [
 ];
 
 
-export const fieldsEstado = [
-   { name: "id", label: "ID", type: "number" ,disable:true},
-  { name: "estado", label: "Cambiar Estado", type: "select",options:[{value:0,label:'Activo'},{value:1,label:'Inactivo'}] },
- 
-];
-
+export const FielsEstado =[
+  { name: "id", label: "ID", type: "number",disable:true },
+  { name: "estado", label: "estado", type: "select",options:[
+    {
+      value:0,
+      label:'Activo'
+    },
+    {
+      value:1,
+      label:'Inactivo'
+    }
+  ] },
+]

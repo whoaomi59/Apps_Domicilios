@@ -1,0 +1,9 @@
+RAW:
+{"id":"6","nombre":"update"}
+
+PARSED:
+Array
+(
+    [id] => 6
+    [nombre] => update
+)

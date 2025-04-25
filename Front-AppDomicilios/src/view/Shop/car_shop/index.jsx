@@ -2,7 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { enviarWhatsApp } from "../../../API/CallmeBot";
 import { formatearCOP } from "../../../components/content/formatoMoneda";
-import { ShoppingBagIcon } from "@heroicons/react/24/outline";
+import {
+  CheckCircleIcon,
+  InformationCircleIcon,
+  ShoppingBagIcon,
+} from "@heroicons/react/24/outline";
 import { Alertas } from "../../../components/content/alert/Sweealert";
 
 export default function Car_Shop({ usuarios }) {
@@ -251,9 +255,19 @@ export default function Car_Shop({ usuarios }) {
               </div>
             ))
           ) : (
-            <p className="text-center text-gray-500">
+            /*     <p className="text-center text-gray-500">
               No hay productos en el carrito.
-            </p>
+            </p> */
+            <div class={`w-full text-white bg-green-400`}>
+              <div
+                class={`container flex items-center justify-between px-2 py-2 mx-auto mt-2`}
+              >
+                <div class="flex text-center">
+                  <InformationCircleIcon class="w-6 h-6" />
+                  <p class="mx-3"> No hay productos en el carrito.</p>
+                </div>
+              </div>
+            </div>
           )}
         </div>
 

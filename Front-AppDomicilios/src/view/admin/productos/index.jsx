@@ -1,17 +1,18 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Grid from "../../../components/grid/grid";
-import { Columns, fields } from "./models";
+import { Columns, fields, FielsEstado } from "./models";
 import { useParams } from "react-router-dom";
 import { Alertas } from "../../../components/content/alert/Sweealert";
+import Form from "../../../components/grid/formulario";
+import { ClockIcon } from "@heroicons/react/24/outline";
 
 const Productos = ({ Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
   const [refresh, setrefresh] = useState([]);
-  const { id } = useParams();
-
-  const abrirModal = () => {};
-  const Verdetalle = () => {};
+  const { id, name } = useParams();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingItem, setEditingItem] = useState(null);
 
   const handleFormSubmit = async (formData) => {
     const form = new FormData();
@@ -54,21 +55,33 @@ const Productos = ({ Roles }) => {
     }
   };
 
+  const ActiveProduct = async (formData) => {
+    try {
+      let response = await axios.delete("/api/productos/controller.php", {
+        data: formData,
+      });
+
+      setrefresh((prev) => !prev);
+      return Alertas({
+        icon: "success",
+        message: "Registrado!!",
+      });
+    } catch (error) {
+      return Alertas({
+        icon: "error",
+        message: "Error sl Registrar!!",
+      });
+    }
+  };
+
   useEffect(() => {
     const Get = async () => {
       try {
         let response = await axios.get("/api/productos/controller.php");
-
-        if (Roles.includes("admin")) {
-          setUsuarios(response.data);
-        } else {
-          // Filtrar las rutas basadas en los roles del usuario
-          const rutasPermitidas = response.data.filter((item) =>
-            item.id_negocio.includes(id)
-          );
-          console.log(rutasPermitidas);
-          setUsuarios(rutasPermitidas);
-        }
+        const rutasPermitidas = response.data.filter((item) =>
+          item.id_negocio.includes(id)
+        );
+        setUsuarios(rutasPermitidas);
       } catch (error) {
         console.log(error);
       }
@@ -78,29 +91,54 @@ const Productos = ({ Roles }) => {
 
   const Formater = usuarios.map((item) => ({
     id: item.id_producto,
-    img: <img src={item.img} className="w-10" />,
+    img: <img src={item.img} className="w-12" />,
     nombre: item.nombre_producto,
     Tipo: item.Tipo,
     negocio_id: item.Negocio,
     descripcion: item.descripcion_productos,
+    estado:
+      item.estado_producto === "1" ? (
+        <p className="flex">
+          <ClockIcon className="w-5 mr-2 text-red-500" />
+          Inactivo
+        </p>
+      ) : (
+        <p className="flex">
+          <ClockIcon className="w-5 mr-2 text-green-500" />
+          Activo
+        </p>
+      ),
     precio: item.precio_producto,
-    stock: item.stock_producto,
     fecha_producto: item.fecha_producto,
   }));
 
   return (
     <div className="p-4">
+      <Form
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setEditingItem(null);
+        }}
+        fields={FielsEstado}
+        onSubmit={ActiveProduct}
+        title={"Estado"}
+        initialValues={editingItem}
+      />
       <Grid
-        module={"Productos"}
+        module={"Productos" + " " + name}
         columns={Columns}
         data={Formater}
         fields={fields}
         handleFormSubmit={handleFormSubmit}
         actions={[
           {
-            icon: "TrashIcon",
-            className: "bg-red-500 text-white",
-            onClick: (record) => Verdetalle(record), // Llama a la función abrirModal con el registro
+            icon: "NoSymbolIcon",
+            className: "bg-blue-500 text-white",
+            onClick: (record) => {
+              setIsModalOpen(true);
+              setEditingItem(record);
+            },
           },
         ]}
       />

@@ -136,8 +136,8 @@ export default function ProductosShop() {
       setSearchTerm={setSearchTerm}
     >
       <section class="antialiased">
-        <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
-          <div class="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-3">
+        <div class="mx-auto  px-4 2xl:px-0">
+          <div class="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-3 max-lg:mt-5">
             {productosFiltrados.map((item) => (
               <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
                 <div class="h-56 w-full">
