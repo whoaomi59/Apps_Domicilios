@@ -103,7 +103,7 @@ function App() {
                       element={<Baner_Negocios />}
                     />
                     <Route
-                      path="/pedidos"
+                      path="/pedidos/:id/:name"
                       element={<Pedidos IdUser={IdUser} Roles={Rol} />}
                     />
                     <Route

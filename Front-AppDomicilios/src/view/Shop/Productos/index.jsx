@@ -73,21 +73,6 @@ export default function ProductosShop() {
 
   const addToCart = (item) => {
     const cantidad = quantityByProduct[item.Producto] || 1;
-
-    if (item.stock <= 0) {
-      return Alertas({
-        icon: "error",
-        message: "¡Producto no disponible!",
-      });
-    }
-
-    if (item.stock < cantidad) {
-      return Alertas({
-        icon: "error",
-        message: "¡Cantidad no disponible!",
-      });
-    }
-
     setCart((prevCart) => {
       // Si el carrito no está vacío, verificamos el negocio
       if (prevCart.length > 0) {
