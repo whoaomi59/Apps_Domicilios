@@ -3,9 +3,12 @@ import axios from "axios";
 import Grid from "../../../components/grid/grid";
 import { Columns, fields } from "./models";
 import { formatearCOP } from "../../../components/content/formatoMoneda";
+import { useParams } from "react-router-dom";
+import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
 
 const Pedidos = ({ IdUser, Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
+  const { id, name } = useParams();
 
   const VerProductos = (record) => {
     const { id_pedido, usuario_pedido } = record;
@@ -20,20 +23,16 @@ const Pedidos = ({ IdUser, Roles }) => {
     const Get = async () => {
       try {
         let response = await axios.get("/api/pedidos/controller.php");
-        if (Roles.includes("admin")) {
-          setUsuarios(response.data);
-        } else {
-          const rutasPermitidas = response.data.filter((item) =>
-            item.usuario_id.includes(IdUser)
-          );
-          setUsuarios(rutasPermitidas);
-        }
+        const rutasPermitidas = response.data.filter((item) =>
+          item.nombre_negocio.includes(name)
+        );
+        setUsuarios(rutasPermitidas);
       } catch (error) {
         console.log(error);
       }
     };
     Get();
-  }, [IdUser, Roles]);
+  }, [id]);
   const Formater = usuarios.map((item) => ({
     id_pedido: item.id_pedido,
     logo_pedido: <img src={item.logo_pedido} className="w-10" />,
@@ -51,7 +50,7 @@ const Pedidos = ({ IdUser, Roles }) => {
   return (
     <div className="p-4">
       <Grid
-        module={"Pedidos"}
+        module={"Pedidos" + " " + name}
         columns={Columns}
         data={Formater}
         fields={fields}

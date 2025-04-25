@@ -15,6 +15,9 @@ const Negocios = ({ IdUser, Roles }) => {
   const VerProductos = (record) => {
     window.location.href = `/productos/${record.id}/${record.nombre}`;
   };
+  const VerPedidos = (record) => {
+    window.location.href = `/pedidos/${record.id}/${record.nombre}`;
+  };
 
   const handleFormSubmit = async (formData) => {
     const form = new FormData();
@@ -159,8 +162,13 @@ const Negocios = ({ IdUser, Roles }) => {
             },
           },
           {
-            icon: "ArrowRightCircleIcon",
+            icon: "ShoppingCartIcon",
             className: "bg-blue-500 text-white",
+            onClick: (record) => VerPedidos(record),
+          },
+          {
+            icon: "ArrowRightCircleIcon",
+            className: "bg-gray-500 text-white",
             onClick: (record) => VerProductos(record),
           },
         ]}
