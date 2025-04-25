@@ -13,7 +13,7 @@ const Negocios = ({ IdUser, Roles }) => {
   const [editingItem, setEditingItem] = useState(null);
 
   const VerProductos = (record) => {
-    window.location.href = `/productos/${record.id}`;
+    window.location.href = `/productos/${record.id}/${record.nombre}`;
   };
 
   const handleFormSubmit = async (formData) => {

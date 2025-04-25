@@ -35,8 +35,8 @@ function App() {
   const [usuarios, setusuarios] = useState(null);
   const [nombre, setnombre] = useState(null);
 
-  axios.defaults.baseURL = " http://localhost/Apps_Domicilios/API/";
-  //axios.defaults.baseURL = " https://domicilios.fundacionhuellas.com.co/API/";
+  //axios.defaults.baseURL = " http://localhost/Apps_Domicilios/API/";
+  axios.defaults.baseURL = " https://domicilios.fundacionhuellas.com.co/API/";
 
   useEffect(() => {
     const token = sessionStorage.getItem("token"); // Obtiene el token
@@ -110,7 +110,7 @@ function App() {
                       element={<Negocios IdUser={IdUser} Roles={Rol} />}
                     />
                     <Route
-                      path="/productos/:id"
+                      path="/productos/:id/:name"
                       element={<Productos IdUser={IdUser} Roles={Rol} />}
                     />
                   </Routes>

@@ -8,7 +8,7 @@ import { Alertas } from "../../../components/content/alert/Sweealert";
 const Productos = ({ Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
   const [refresh, setrefresh] = useState([]);
-  const { id } = useParams();
+  const { id, name } = useParams();
 
   const Verdetalle = () => {};
 
@@ -82,7 +82,7 @@ const Productos = ({ Roles }) => {
   return (
     <div className="p-4">
       <Grid
-        module={"Productos"}
+        module={"Productos" + " " + name}
         columns={Columns}
         data={Formater}
         fields={fields}
