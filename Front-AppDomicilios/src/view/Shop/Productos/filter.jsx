@@ -203,7 +203,7 @@ export default function FilterProduct({
               <div class="relative w-full mb-8 mt-2">
                 {categorias.map((item) => (
                   <button
-                    onClick={() => setfiltCategorias(item.nombre)}
+                    onClick={() => setidproductos(item.nombre)}
                     className="p-2 m-1 rounded-full bg-green-500 text-white font-semibold  shadow-sm shadow-transparent transition-all duration-500 hover:bg-green-400"
                     style={{
                       fontSize: 13,
