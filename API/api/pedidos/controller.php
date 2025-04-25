@@ -52,6 +52,55 @@ function get() {
 
 function post() {
     global $conn;
+    
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    if (!isset($data["cliente_id"], $data["negocio_id"], $data["total"], $data["estado"], $data["productos"]) || !is_array($data["productos"])) {
+        echo json_encode(["error" => "Faltan datos o formato incorrecto"]);
+        return;
+    }
+
+    // Iniciar transacción
+    $conn->begin_transaction();
+
+    try {
+        // Insertar el pedido
+        $stmt = $conn->prepare("INSERT INTO pedidos (cliente_id, negocio_id, domiciliario_id, total, estado) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("iiids", $data["cliente_id"], $data["negocio_id"], $data["domiciliario_id"], $data["total"], $data["estado"]);
+
+        if (!$stmt->execute()) {
+            throw new Exception("Error al crear el pedido: " . $stmt->error);
+        }
+
+        // Obtener el ID del pedido recién creado
+        $pedido_id = $conn->insert_id;
+
+        // Insertar los detalles del pedido
+        $stmt_detalle = $conn->prepare("INSERT INTO detalle_pedidos (pedido_id, producto_id, cantidad, precio_unitario, subtotal) VALUES (?, ?, ?, ?, ?)");
+
+        foreach ($data["productos"] as $producto) {
+            if (!isset($producto["producto_id"], $producto["cantidad"], $producto["precio_unitario"], $producto["subtotal"])) {
+                throw new Exception("Datos incompletos en productos: " . json_encode($producto));
+            }
+
+            $stmt_detalle->bind_param("iiidd", $pedido_id, $producto["producto_id"], $producto["cantidad"], $producto["precio_unitario"], $producto["subtotal"]);
+
+            if (!$stmt_detalle->execute()) {
+                throw new Exception("Error al insertar detalle del pedido: " . $stmt_detalle->error);
+            }
+        }
+
+        $conn->commit();
+
+        echo json_encode(["message" => "Pedido y detalle insertados correctamente", "pedido_id" => $pedido_id]);
+    } catch (Exception $e) {
+        $conn->rollback();
+        echo json_encode(["error" => $e->getMessage()]);
+    }
+}
+
+/* function post() {
+    global $conn;
 
     $data = json_decode(file_get_contents("php://input"), true);
 
@@ -130,7 +179,7 @@ function post() {
         echo json_encode(["error" => $e->getMessage()]);
     }
 }
-
+ */
 function Update(){
     global $conn;
     try {
