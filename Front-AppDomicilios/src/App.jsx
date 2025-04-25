@@ -36,16 +36,16 @@ function App() {
   const [usuarios, setusuarios] = useState(null);
   const [nombre, setnombre] = useState(null);
 
-  axios.defaults.baseURL = " http://localhost/Apps_Domicilios/API/";
-  //axios.defaults.baseURL = " https://domicilios.fundacionhuellas.com.co/API/";
+  //axios.defaults.baseURL = " http://localhost/Apps_Domicilios/API/";
+  axios.defaults.baseURL = " https://domicilios.fundacionhuellas.com.co/API/";
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token"); // Obtiene el token
+    const token = sessionStorage.getItem("token");
     if (token) {
       try {
         const decoded = jwtDecode(token);
         setIdUser(decoded.id);
-        setRol(decoded.rol); // ✅ Se actualiza solo una vez
+        setRol(decoded.rol);
         localStorage.setItem("id", decoded.id);
         setnombre(decoded.nombre);
         return setusuarios(decoded);
@@ -53,7 +53,7 @@ function App() {
         console.error("Error decodificando el token:", error);
       }
     }
-  }, []); // Se ejecuta solo una vez al montar el componente
+  }, []);
 
   useEffect(() => {
     const Get = async () => {
