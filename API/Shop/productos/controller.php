@@ -37,7 +37,7 @@ function get() {
                     n.nombre AS Negocio, 
                     t.nombre AS Tipo, 
                     p.negocio_id AS negocio_id,
-                    p.stock
+                    p.estado
                     FROM productos p
                     JOIN negocios n ON p.negocio_id = n.id
                     JOIN tipos_productos t ON p.tipo_id = t.id 

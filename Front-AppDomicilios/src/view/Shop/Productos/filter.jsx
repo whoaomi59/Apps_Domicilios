@@ -216,7 +216,7 @@ export default function FilterProduct({
               <label className="text-gray-600">Negocios:</label>
               <div class="relative w-full mb-8 mt-2">
                 <DynamicSelect
-                  url="Shop/negocios/controller.php?Get=Get"
+                  url="/Shop/negocios/Fillt_negocios.php"
                   name="Negocio"
                   value={formData["Negocio"]}
                   onChange={handleChange}
