@@ -11,7 +11,7 @@ import { useState } from "react";
 export default function NavbarShop({ logo, Roles, nombre }) {
   const [Toggle, setToggle] = useState(false);
   return (
-    <header class="flex flex-wrap lg:justify-start lg:flex-nowrap z-50 w-full py-7">
+    <header class="flex flex-wrap lg:justify-start lg:flex-nowrap z-50 w-full py-2">
       <nav class="relative max-w-7xl w-full flex flex-wrap lg:grid lg:grid-cols-12 basis-full items-center px-4 md:px-6 lg:px-8 mx-auto">
         <div class="lg:col-span-3 flex items-center">
           <a
@@ -20,24 +20,16 @@ export default function NavbarShop({ logo, Roles, nombre }) {
             aria-label="Preline"
           >
             <img
-              class="w-28 h-auto"
-              width="116"
-              height="32"
+              class="w-20 h-auto"
               src={logo ? logo : "/SVG PAGINA/undraw_pair-programming_9jyg.svg"}
               alt="Logo"
             />
           </a>
-
-          <div class="ms-1 sm:ms-2"></div>
         </div>
 
         <div class="flex items-center gap-x-1 lg:gap-x-2 ms-auto py-1 lg:ps-6 lg:order-3 lg:col-span-3">
           <div className="flex items-center mr-2">
-            {nombre && (
-              <>
-                {nombre} <CircleStackIcon className="w-5 ml-2 text-gray-500" />
-              </>
-            )}
+            {nombre && <>{nombre}</>}
           </div>
 
           {Roles ? (
@@ -167,6 +159,68 @@ export default function NavbarShop({ logo, Roles, nombre }) {
           </div>
         </div>
       </nav>
+      <div className="fixed bottom-1 md:hidden left-1/2 transform -translate-x-1/2 w-[95%] max-w-md bg-white rounded-2xl shadow-lg flex justify-around items-center py-2 px-4 z-50 sm:mb-0">
+        <a
+          href="/"
+          className="flex flex-col items-center text-gray-600 hover:text-blue-600 text-xs"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 mb-1"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"
+            />
+          </svg>
+          Inicio
+        </a>
+        <a
+          href="/shop/negocios"
+          className="flex flex-col items-center text-gray-600 hover:text-blue-600 text-xs"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 mb-1"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M8 16l-4-4m0 0l4-4m-4 4h18"
+            />
+          </svg>
+          Negocios
+        </a>
+        <a
+          href="/shop/car_shop"
+          className="flex flex-col items-center text-gray-600 hover:text-blue-600 text-xs"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 mb-1"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 7h13a1 1 0 001-1V6H6.6"
+            />
+          </svg>
+          Carrito
+        </a>
+      </div>
     </header>
   );
 }
