@@ -34,7 +34,7 @@ function get() {
                     p.negocio_id AS id_negocio,
                     p.precio AS precio_producto,
                     p.estado AS estado_producto,
-                    p.created_at AS fecha_producto,p.img,n.usuario_id
+                    p.created_at AS fecha_producto,p.img,n.usuario_id,p.tipo_id AS idtipo
                     FROM productos p
                     JOIN negocios n ON p.negocio_id = n.id
                     JOIN tipos_productos t ON p.tipo_id = t.id");
@@ -93,13 +93,12 @@ function update() {
     $nombre = $_POST['nombre'];
     $descripcion = $_POST['descripcion'];
     $precio = floatval($_POST['precio']);
-    $estado = intval($_POST['estado']);
 
         $hayLogo = isset($_FILES["img"]) && $_FILES["img"]["error"] === UPLOAD_ERR_OK;
 
         if ($hayLogo) {
             $logo = file_get_contents($_FILES["img"]["tmp_name"]);
-            $sql = "UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, estado = ?, img = ? WHERE id = ?";
+            $sql = "UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, img = ? WHERE id = ?";
         
             $stmt = $conn->prepare($sql);
         
@@ -109,10 +108,10 @@ function update() {
             }
         
             $null = NULL;
-            $stmt->bind_param("ssdibi", $nombre, $descripcion, $precio, $estado, $null, $id);
-            $stmt->send_long_data(4, $logo); // índice 4 para img
+            $stmt->bind_param("ssdbi", $nombre, $descripcion, $precio, $null, $id);
+            $stmt->send_long_data(3, $logo); // índice 4 para img
         }else {
-            $sql = "UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, estado = ? WHERE id = ?";
+            $sql = "UPDATE productos SET nombre = ?, descripcion = ?, precio = ? WHERE id = ?";
     
             $stmt = $conn->prepare($sql);
     
@@ -121,7 +120,7 @@ function update() {
                 return;
             }
     
-            $stmt->bind_param("ssdii",$nombre, $descripcion, $precio, $estado, $id);
+            $stmt->bind_param("ssdi", $nombre, $descripcion, $precio, $id);
         }
     
         if ($stmt->execute()) {

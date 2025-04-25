@@ -22,7 +22,7 @@ switch ($request_method) {
 //OK
 function get() {
     global $conn;
-    $result = $conn->query("SELECT n.id as idnegocio, n.nombre AS Negocio, c.nombre AS Categoria,direccion,n.telefono,n.email,n.created_at,u.nombre AS usuario, u.id AS iduser,n.logo AS logo_negocio,Horario_inicial,Horario_final,n.estado AS estadoNegocio FROM negocios n LEFT JOIN categorias_negocios c ON n.categoria_id = c.id LEFT JOIN usuarios u ON usuario_id=u.id");
+    $result = $conn->query("SELECT n.id as idnegocio, n.nombre AS Negocio, c.nombre AS Categoria,direccion,n.telefono,n.email,n.created_at,u.nombre AS usuario, u.id AS iduser,n.logo AS logo_negocio,Horario_inicial,Horario_final,n.estado AS estadoNegocio,categoria_id AS idCategoria FROM negocios n LEFT JOIN categorias_negocios c ON n.categoria_id = c.id LEFT JOIN usuarios u ON usuario_id=u.id");
 
     $empresas = [];
 
@@ -41,8 +41,6 @@ function get() {
 
 function post() {
     global $conn;
-
-        // 📌 Verificar si se enviaron todos los datos necesarios
         $usuario_id = $_POST["usuario_id"] ?? null;
         $categoria_id = $_POST["categoria_id"] ?? null;
         $nombre = $_POST["nombre"] ?? null;

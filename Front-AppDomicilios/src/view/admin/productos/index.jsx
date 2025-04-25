@@ -94,7 +94,9 @@ const Productos = ({ Roles }) => {
     img: <img src={item.img} className="w-12" />,
     nombre: item.nombre_producto,
     Tipo: item.Tipo,
-    negocio_id: item.Negocio,
+    tipo_id: item.idtipo,
+    Negocio: item.Negocio,
+    negocio_id: item.id_negocio,
     descripcion: item.descripcion_productos,
     estado:
       item.estado_producto === "1" ? (
