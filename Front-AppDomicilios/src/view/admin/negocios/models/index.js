@@ -15,7 +15,6 @@ export const Columns = [
   { key: "created_at", label: "created_at" },
 ];
 export const fields = [
-  { name: "id", label: "ID", type: "number" ,disable:true},
   { name: "nombre", label: "Nombre Negocio", type: "text" },
   { 
     name: "usuario_id", 
@@ -39,6 +38,7 @@ export const fields = [
   { name: "logo", label: "Logo Negocio", type: "file" },
   { name: "Horario_inicial", label: "Horario_inicial", type: "time" },
   { name: "Horario_final", label: "Horario_final", type: "time" },
+  { name: "id", label: "ID", type: "number" ,disable:true},
 ];
 
 

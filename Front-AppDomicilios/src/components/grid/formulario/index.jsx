@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DynamicSelect from "./DynamicSelect ";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 const Form = ({ isOpen, onClose, fields, onSubmit, title, initialValues }) => {
   const [formData, setFormData] = useState({});
@@ -36,14 +37,23 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title, initialValues }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-[#0000007a] bg-opacity-50 z-200 p-4">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl z-50 overflow-y-auto max-h-[90vh]">
+        <div className="flex justify-end">
+          <button type="button" onClick={onClose}>
+            <XMarkIcon className="w-5 hover:text-green-600" />
+          </button>
+        </div>
         <h2 className="text-2xl font-semibold text-gray-700 mb-4">{title}</h2>
+
         <form onSubmit={handleSubmit}>
           {fields.map((field) => (
             <div key={field.name} className="mb-4">
-              <label className="block text-gray-600 text-sm font-medium mb-1">
+              <label
+                className={`block text-gray-600 text-sm font-medium mb-1 ${
+                  field.disable && "bg-white border-white text-white"
+                }`}
+              >
                 {field.label}
               </label>
-
               {field.type === "select" ? (
                 <select
                   name={field.name}
@@ -85,7 +95,7 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title, initialValues }) => {
                   value={formData[field.name]}
                   onChange={handleChange}
                   className={`w-full px-4 py-2 border rounded-lg border-gray-300 ${
-                    field.disable && "bg-gray-200"
+                    field.disable && "bg-white border-white text-white"
                   }`}
                   disabled={field.disable}
                 />

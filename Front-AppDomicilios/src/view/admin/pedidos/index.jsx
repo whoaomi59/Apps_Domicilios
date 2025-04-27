@@ -55,6 +55,7 @@ const Pedidos = ({ IdUser, Roles }) => {
         data={Formater}
         fields={fields}
         handleFormSubmit={handleFormSubmit}
+        button={true}
         actions={[
           {
             icon: "ArrowRightCircleIcon",

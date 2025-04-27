@@ -193,9 +193,6 @@ export default function ProductosShop() {
                     <p class="text-sm font-medium text-gray-900 .:text-white">
                       5.0
                     </p>
-                    <p class="text-sm font-medium text-gray-500 .:text-gray-400">
-                      ({item.stock})
-                    </p>
                   </div>
 
                   <ul class="mt-2 flex items-center gap-4">
@@ -277,7 +274,7 @@ export default function ProductosShop() {
               type="button"
               class="rounded-lg border border-green-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:text-green-700"
             >
-              Show more
+              Ver Mas
             </button>
           </div>
         </div>
