@@ -9,6 +9,7 @@ const Grid = ({
   module,
   fields,
   handleFormSubmit,
+  button,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(6);
@@ -72,19 +73,23 @@ const Grid = ({
               </div>
             </form>
           </div>
-          <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-            <button
-              type="button"
-              className="flex items-center justify-center text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 "
-              onClick={() => {
-                setEditingItem(null);
-                setIsModalOpen(true);
-              }}
-            >
-              <Icons.PlusIcon className="w-5 mr-2" />
-              Añadir {module}
-            </button>
-          </div>
+          {button ? (
+            ""
+          ) : (
+            <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+              <button
+                type="button"
+                className="flex items-center justify-center text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 "
+                onClick={() => {
+                  setEditingItem(null);
+                  setIsModalOpen(true);
+                }}
+              >
+                <Icons.PlusIcon className="w-5 mr-2" />
+                Añadir {module}
+              </button>
+            </div>
+          )}
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-sm text-left text-gray-500    ">
