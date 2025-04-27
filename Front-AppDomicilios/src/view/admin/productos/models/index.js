@@ -14,7 +14,6 @@ export const Columns = [
 
 
 export const fields = [
-  { name: "id", label: "ID", type: "number",disable:true },
   { name: "nombre", label: "nombre", type: "text" },
   { 
     name: "negocio_id", 
@@ -35,6 +34,7 @@ export const fields = [
   { name: "descripcion", label: "descripcion", type: "text" },
   { name: "precio", label: "precio", type: "number" },
   { name: "img", label: "img", type: "file" },
+  { name: "id", label: "ID", type: "number",disable:true },
 ];
 
 export const FielsEstado =[

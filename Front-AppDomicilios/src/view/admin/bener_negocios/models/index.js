@@ -6,7 +6,6 @@ export const Columns = [
 
 
 export const fields = [
-  { name: "id", label: "ID", type: "number",disable:true },
   { 
     name: "negocios_id", 
     label: "Negocios",
@@ -16,5 +15,6 @@ export const fields = [
     text:'Negocio', 
   },
   { name: "img", label: "img", type: "file" },
+  { name: "id", label: "ID", type: "number",disable:true },
 ];
 
