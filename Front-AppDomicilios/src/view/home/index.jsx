@@ -8,9 +8,7 @@ export default function Home() {
   const [empresa, setEmpresa] = useState({});
   const [loader, setLoader] = useState(false);
   const [currentBanner, setCurrentBanner] = useState(0);
-
-  let textos =
-    "Hola, Sr. Administrador. ¿Podría ayudarme con un domiciliario, por favor?";
+  const [baner, setbaner] = useState([]);
 
   useEffect(() => {
     const Get = async () => {
@@ -24,16 +22,26 @@ export default function Home() {
         setLoader(false);
       }
     };
+
+    const GetBaner = async () => {
+      try {
+        let response = await axios.get("/api/empresas/empresa_imagenes.php");
+        setbaner(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     Get();
+    GetBaner();
 
-    // Cambiar imagen de fondo cada 5 segundos
     const interval = setInterval(() => {
-      setCurrentBanner((prev) => (prev + 1) % Baners.length);
-    }, 5000); // 5000ms = 5 segundos
+      setCurrentBanner((prev) =>
+        baner.length > 0 ? (prev + 1) % baner.length : 0
+      );
+    }, 5000);
 
-    // Limpiar el intervalo cuando el componente se desmonte
     return () => clearInterval(interval);
-  }, []);
+  }, [baner.length]); // importante para que lea bien baner.length actualizado
 
   if (loader) {
     return <Loader />;
@@ -44,7 +52,10 @@ export default function Home() {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)), url(${Baners[currentBanner].img})`,
+          backgroundImage:
+            baner.length > 0
+              ? `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)), url(${baner[currentBanner].img})`
+              : "",
           filter: "blur(0px) brightness(1) contrast(1.1) saturate(1)",
           transition: "background-image 1s ease-in-out",
           zIndex: 0,

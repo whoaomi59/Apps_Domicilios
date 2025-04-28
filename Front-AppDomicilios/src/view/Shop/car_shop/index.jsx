@@ -150,7 +150,7 @@ export default function Car_Shop({ usuarios }) {
       }
 
       // 🟢 BORRAR EL LOCAL STORAGE DESPUÉS DE GUARDAR EL PEDIDO
-      localStorage.removeItem("cart");
+      sessionStorage.removeItem("cart");
       setProducts([]);
       Alertas({ icon: "success", message: "Pedido enviado!!" });
       return setTimeout(() => {
@@ -171,7 +171,7 @@ export default function Car_Shop({ usuarios }) {
 
     if (!token) {
       const currentPath = window.location.pathname;
-      localStorage.setItem("redirectAfterLogin", currentPath);
+      sessionStorage.setItem("redirectAfterLogin", currentPath);
       window.location.href = "/login";
       return;
     }

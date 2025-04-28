@@ -11,7 +11,6 @@ export default function Header({ setFilter }) {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState([]);
-  const [baner, setbaner] = useState([]);
   const [loader, setloader] = useState(false);
 
   useEffect(() => {
@@ -56,28 +55,6 @@ export default function Header({ setFilter }) {
       setFilteredData(resultados);
     }
   }, [searchTerm, data]);
-
-  useEffect(() => {
-    const Get = async () => {
-      try {
-        let response = await axios.get("/api/empresas/empresa_imagenes.php");
-        setbaner(response.data[0]);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    Get();
-  }, []);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const found = data.find((neg) =>
-      neg.nombre.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    if (found) {
-      setFilter(found.id);
-    }
-  };
 
   if (loader) {
     return <Loader />;
