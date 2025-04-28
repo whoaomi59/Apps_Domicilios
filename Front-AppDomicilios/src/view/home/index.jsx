@@ -9,7 +9,7 @@ export default function Home() {
   const [loader, setLoader] = useState(false);
   const [currentBanner, setCurrentBanner] = useState(0);
 
-  let texto =
+  let textos =
     "Hola, Sr. Administrador. ¿Podría ayudarme con un domiciliario, por favor?";
 
   useEffect(() => {
@@ -106,7 +106,7 @@ export default function Home() {
           className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6"
         >
           <button
-            onClick={() => handleWhatsappClick(texto)}
+            onClick={() => handleWhatsappClick(textos)}
             className="py-2 px-6 inline-flex items-center gap-x-2 text-lg font-bold rounded-full bg-green-500 text-white hover:bg-green-600 transition-all shadow-lg"
           >
             Domiciliario

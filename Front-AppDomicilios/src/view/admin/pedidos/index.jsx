@@ -6,6 +6,8 @@ import { formatearCOP } from "../../../components/content/formatoMoneda";
 import { useParams } from "react-router-dom";
 import { enviarWhatsApp } from "../../../API/CallmeBot";
 import { Alertas } from "../../../components/content/alert/Sweealert";
+import { TruckIcon } from "@heroicons/react/24/outline";
+import { handleWhatsappClick } from "../../../API/Whassapp";
 
 const Pedidos = ({ IdUser, Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
@@ -56,6 +58,14 @@ const Pedidos = ({ IdUser, Roles }) => {
     }
   };
 
+  const SendtDomiciliario = async (data) => {
+    const texto = {
+      mesaje: `Hola, Sr. Administrador. Podría ayudarme con un domiciliario, para el pedido ${data.id_pedido}`,
+      negocio: data.nombre_negocio,
+    };
+    handleWhatsappClick(texto);
+  };
+
   useEffect(() => {
     const Get = async () => {
       try {
@@ -84,6 +94,14 @@ const Pedidos = ({ IdUser, Roles }) => {
       </div>
     ),
     total: formatearCOP(item.total),
+    Domiciliario: item.estado === "procesando" && (
+      <button
+        onClick={() => SendtDomiciliario(item)}
+        className="p-1 rounded bg-green-500 text-white hover:bg-gray-400"
+      >
+        Domiciliario
+      </button>
+    ),
   }));
 
   return (
