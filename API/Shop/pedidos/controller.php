@@ -62,6 +62,4 @@ function get() {
         echo json_encode(["error" => "ID inválido"]);
     }
 }
-
-
 ?>

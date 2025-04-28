@@ -73,7 +73,7 @@ export default function Home() {
             src={
               empresa.logo
                 ? empresa.logo
-                : "/SVG PAGINA/undraw_pair-programming_9jyg.svg"
+                : "/logo/LogoPropio-removebg-preview.png"
             }
             alt="Logo Empresa"
           />
@@ -89,7 +89,7 @@ export default function Home() {
           <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight drop-shadow-md">
             ¡Bienvenido a{" "}
             <span className="text-green-500">
-              {empresa.nombre || "nuestra plataforma"}
+              {empresa.nombre || "DomiExpress"}
             </span>
             !
           </h1>

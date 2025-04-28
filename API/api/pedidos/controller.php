@@ -60,13 +60,19 @@ function post() {
         return;
     }
 
-    // Iniciar transacción
     $conn->begin_transaction();
 
     try {
         // Insertar el pedido
         $stmt = $conn->prepare("INSERT INTO pedidos (cliente_id, negocio_id, domiciliario_id, total, estado) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("iiids", $data["cliente_id"], $data["negocio_id"], $data["domiciliario_id"], $data["total"], $data["estado"]);
+        $stmt->bind_param(
+            "iiids", 
+            $data["cliente_id"], 
+            $data["negocio_id"], 
+            $data["domiciliario_id"], 
+            $data["total"], 
+            $data["estado"]
+        );
 
         if (!$stmt->execute()) {
             throw new Exception("Error al crear el pedido: " . $stmt->error);
@@ -83,21 +89,50 @@ function post() {
                 throw new Exception("Datos incompletos en productos: " . json_encode($producto));
             }
 
-            $stmt_detalle->bind_param("iiidd", $pedido_id, $producto["producto_id"], $producto["cantidad"], $producto["precio_unitario"], $producto["subtotal"]);
+            $stmt_detalle->bind_param(
+                "iiidd", 
+                $pedido_id, 
+                $producto["producto_id"], 
+                $producto["cantidad"], 
+                $producto["precio_unitario"], 
+                $producto["subtotal"]
+            );
 
             if (!$stmt_detalle->execute()) {
                 throw new Exception("Error al insertar detalle del pedido: " . $stmt_detalle->error);
             }
         }
 
+        // Ahora hacer el SELECT que quieres
+        $stmt_info = $conn->prepare("
+            SELECT p.id, n.telefono, n.ApiKey 
+            FROM pedidos p 
+            JOIN negocios n ON p.negocio_id = n.id 
+            WHERE p.id = ?
+        ");
+        $stmt_info->bind_param("i", $pedido_id);
+
+        if (!$stmt_info->execute()) {
+            throw new Exception("Error al obtener información del pedido: " . $stmt_info->error);
+        }
+
+        $result = $stmt_info->get_result();
+        $info = $result->fetch_assoc();
+
         $conn->commit();
 
-        echo json_encode(["message" => "Pedido y detalle insertados correctamente", "pedido_id" => $pedido_id]);
+        echo json_encode([
+            "message" => "Pedido y detalle insertados correctamente",
+            "pedido_id" => $pedido_id,
+            "info_negocio" => $info // Aquí mandas teléfono y ApiKey también
+        ]);
+
     } catch (Exception $e) {
         $conn->rollback();
         echo json_encode(["error" => $e->getMessage()]);
     }
 }
+
 
 /* function post() {
     global $conn;

@@ -8,12 +8,14 @@ import {
   ShoppingBagIcon,
 } from "@heroicons/react/24/outline";
 import { Alertas } from "../../../components/content/alert/Sweealert";
+import Swal from "sweetalert2";
 
 export default function Car_Shop({ usuarios }) {
   const [products, setProducts] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
   const [ubicacionEnvio, setUbicacionEnvio] = useState("");
   const [tipoUbicacion, setTipoUbicacion] = useState("");
+  const [numerotelefono, setnumerotelefono] = useState("");
   const [shippingCost, setShippingCost] = useState(0);
 
   const taxRate = 0.0; // 5% de impuestos
@@ -89,8 +91,12 @@ export default function Car_Shop({ usuarios }) {
     }, {});
 
     try {
-      if (!tipoUbicacion || !shippingCost) {
-        return alert("Ubicacion requerida!!");
+      if (!tipoUbicacion || !shippingCost || !numerotelefono) {
+        return Swal.fire({
+          title: "info",
+          text: `Todos los datos de infomacion del usuario son requeridos!!`,
+          icon: "info",
+        });
       }
       for (const negocioId in pedidosPorNegocio) {
         const productos = pedidosPorNegocio[negocioId];
@@ -104,14 +110,16 @@ export default function Car_Shop({ usuarios }) {
           productos: productos,
         });
 
-        let number = response.data.telefono;
-        let key = response.data.ApiKey;
+        let number = response.data.info_negocio.telefono;
+        let key = response.data.info_negocio.ApiKey;
+        let factura = response.data.info_negocio.id;
 
         if (number) {
           enviarWhatsApp({
             numeroNegocio: number,
             keyNegocios: key,
             mensaje: {
+              numero_Factura: factura,
               cliente_id: usuarios.id,
               negocio_id: negocioId,
               total: total,
@@ -119,6 +127,7 @@ export default function Car_Shop({ usuarios }) {
               productos: products,
               ubicacion: ubicacionEnvio,
               tipoUbicacion: tipoUbicacion,
+              telefono: numerotelefono,
               costoEnvio: shippingCost,
             },
           });
@@ -146,14 +155,11 @@ export default function Car_Shop({ usuarios }) {
     const token = sessionStorage.getItem("token");
 
     if (!token) {
-      // No autenticado, redirigir al login o mostrar mensaje
       const currentPath = window.location.pathname;
-      localStorage.setItem("redirectAfterLogin", currentPath); // guarda la ruta actual
+      localStorage.setItem("redirectAfterLogin", currentPath);
       window.location.href = "/login";
       return;
     }
-
-    // Si tiene token, hacer el post
     PostCar();
   };
 
@@ -273,6 +279,15 @@ export default function Car_Shop({ usuarios }) {
 
         <div className="bg-white rounded-md px-4 py-6 h-max shadow-[0_2px_12px_-3px_rgba(61,63,68,0.3)]">
           <ul className="text-green-900 font-medium space-y-4">
+            <li className="flex flex-wrap gap-4 text-sm">
+              Numer de telefono
+              <input
+                type="number"
+                className="w-full px-4 py-2 border rounded-lg border-gray-300"
+                value={numerotelefono}
+                onChange={(e) => setnumerotelefono(e.target.value)}
+              />
+            </li>
             <li className="flex flex-wrap gap-4 text-sm">
               Ubicación de envío
               <input
