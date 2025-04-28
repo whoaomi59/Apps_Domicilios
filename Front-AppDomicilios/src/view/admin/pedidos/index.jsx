@@ -94,7 +94,7 @@ const Pedidos = ({ IdUser, Roles }) => {
       </div>
     ),
     total: formatearCOP(item.total),
-    Domiciliario: item.estado === "procesando" && (
+    Domiciliario: Roles === "negocio" && item.estado === "procesando" && (
       <button
         onClick={() => SendtDomiciliario(item)}
         className="p-1 rounded bg-green-500 text-white hover:bg-gray-400"
