@@ -3,6 +3,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
+
 require __DIR__ . '/../../config/db.php'; // Ajustar si es necesario
 $request_method = $_SERVER["REQUEST_METHOD"];
 
@@ -26,6 +27,7 @@ function update() {
     $nombre = $_POST["nombre"] ?? null;
     $direccion = $_POST["direccion"] ?? null;
     $telefono = $_POST["telefono"] ?? null;
+    $ApiKey = $_POST["ApiKey"] ?? null;
     $email = $_POST["email"] ?? null;
     $horario_inicial = $_POST["Horario_inicial"] ?? null;
     $horario_final = $_POST["Horario_final"] ?? null;
@@ -45,6 +47,7 @@ function update() {
                     nombre = ?, 
                     direccion = ?, 
                     telefono = ?, 
+                    ApiKey = ?, 
                     email = ?, 
                     Horario_inicial = ?, 
                     Horario_final = ?, 
@@ -58,14 +61,14 @@ function update() {
             return;
         }
 
-        // Usamos "i", "s", y "b" para el blob
         $null = NULL; // marcador temporal
-        $stmt->bind_param("iissssssbi",
+        $stmt->bind_param("iisssssssbi",
             $usuario_id,
             $categoria_id,
             $nombre,
             $direccion,
             $telefono,
+            $ApiKey,
             $email,
             $horario_inicial,
             $horario_final,
@@ -82,7 +85,8 @@ function update() {
                     categoria_id = ?, 
                     nombre = ?, 
                     direccion = ?, 
-                    telefono = ?, 
+                    telefono = ?,
+                    ApiKey = ?,
                     email = ?, 
                     Horario_inicial = ?, 
                     Horario_final = ?
@@ -95,12 +99,13 @@ function update() {
             return;
         }
 
-        $stmt->bind_param("iissssssi",
+        $stmt->bind_param("iisssssssi",
             $usuario_id,
             $categoria_id,
             $nombre,
             $direccion,
             $telefono,
+            $ApiKey,
             $email,
             $horario_inicial,
             $horario_final,

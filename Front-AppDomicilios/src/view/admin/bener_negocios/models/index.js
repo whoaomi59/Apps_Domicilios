@@ -1,5 +1,5 @@
 export const Columns = [
-  { key: "id", label: "id" },
+  { key: "negocios_id", label: "negocios_id" },
   { key: "img", label: "img" },
   { key: "negocios_id", label: "negocio" },
 ];
@@ -15,6 +15,6 @@ export const fields = [
     text:'Negocio', 
   },
   { name: "img", label: "img", type: "file" },
-  { name: "id", label: "ID", type: "number",disable:true },
+  { name: "negocios_id", label: "ID", type: "number",disable:true },
 ];
 

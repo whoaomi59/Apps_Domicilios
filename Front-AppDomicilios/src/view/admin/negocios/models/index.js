@@ -8,6 +8,7 @@ export const Columns = [
   { key: "usuario_id", label: "idUsuario" },
   { key: "direccion", label: "direccion" },
   { key: "telefono", label: "telefono" },
+  { key: "ApiKey", label: "ApiKey" },
   { key: "email", label: "email" },
   { key: "estado", label: "estado" },
   { key: "Horario_inicial", label: "Horario_inicial" },
@@ -34,6 +35,7 @@ export const fields = [
   },
   { name: "direccion", label: "Ubicacion Negocio", type: "text" },
   { name: "telefono", label: "Telefono", type: "number" },
+  { name: "ApiKey", label: "ApiKey", type: "number" },
   { name: "email", label: "Correo Electronico", type: "email" },
   { name: "logo", label: "Logo Negocio", type: "file" },
   { name: "Horario_inicial", label: "Horario_inicial", type: "time" },
@@ -43,7 +45,6 @@ export const fields = [
 
 
 export const FielsEstado =[
-  { name: "id", label: "ID", type: "number",disable:true },
   { name: "estado", label: "estado", type: "select",options:[
     {
       value:0,
@@ -54,4 +55,5 @@ export const FielsEstado =[
       label:'Inactivo'
     }
   ] },
+  { name: "id", label: "ID", type: "number",disable:true },
 ]

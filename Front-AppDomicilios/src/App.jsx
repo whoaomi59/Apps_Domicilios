@@ -36,8 +36,8 @@ function App() {
   const [usuarios, setusuarios] = useState(null);
   const [nombre, setnombre] = useState(null);
 
-  //axios.defaults.baseURL = " http://localhost/Apps_Domicilios/API/";
-  axios.defaults.baseURL = " https://domicilios.fundacionhuellas.com.co/API/";
+  axios.defaults.baseURL = " http://localhost/Apps_Domicilios/API/";
+  //axios.defaults.baseURL = " https://domicilios.fundacionhuellas.com.co/API/";
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");

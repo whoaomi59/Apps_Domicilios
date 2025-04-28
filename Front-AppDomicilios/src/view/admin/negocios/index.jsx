@@ -117,6 +117,7 @@ const Negocios = ({ IdUser, Roles }) => {
     usuario_id: item.iduser,
     direccion: item.direccion,
     telefono: item.telefono,
+    ApiKey: item.ApiNegocios,
     email: item.email,
     estado:
       item.estadoNegocio === "1" ? (
