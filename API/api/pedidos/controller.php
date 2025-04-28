@@ -49,7 +49,6 @@ function get() {
     }
 }
 //OK
-
 function post() {
     global $conn;
     
@@ -133,107 +132,46 @@ function post() {
     }
 }
 
-
-/* function post() {
-    global $conn;
-
-    $data = json_decode(file_get_contents("php://input"), true);
-
-    if (!isset($data["cliente_id"], $data["negocio_id"], $data["total"], $data["estado"], $data["productos"]) || !is_array($data["productos"])) {
-        echo json_encode(["error" => "Faltan datos o formato incorrecto"]);
-        return;
-    }
-
-    // Iniciar transacción
-    $conn->begin_transaction();
-
-    try {
-        // Insertar el pedido
-        $stmt = $conn->prepare("INSERT INTO pedidos (cliente_id, negocio_id, domiciliario_id, total, estado) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("iiids", $data["cliente_id"], $data["negocio_id"], $data["domiciliario_id"], $data["total"], $data["estado"]);
-
-        if (!$stmt->execute()) {
-            throw new Exception("Error al crear el pedido: " . $stmt->error);
-        }
-
-        $pedido_id = $conn->insert_id;
-
-        // Insertar productos y descontar stock
-        $stmt_detalle = $conn->prepare("INSERT INTO detalle_pedidos (pedido_id, producto_id, cantidad, precio_unitario, subtotal) VALUES (?, ?, ?, ?, ?)");
-        $stmt_stock = $conn->prepare("UPDATE productos SET stock = stock - ? WHERE id = ? AND negocio_id = ? AND stock >= ?");
-
-        foreach ($data["productos"] as $producto) {
-            if (!isset($producto["producto_id"], $producto["cantidad"], $producto["precio_unitario"], $producto["subtotal"])) {
-                throw new Exception("Datos incompletos en productos: " . json_encode($producto));
-            }
-
-            // Insertar en detalle_pedidos
-            $stmt_detalle->bind_param("iiidd", $pedido_id, $producto["producto_id"], $producto["cantidad"], $producto["precio_unitario"], $producto["subtotal"]);
-
-            if (!$stmt_detalle->execute()) {
-                throw new Exception("Error al insertar detalle del pedido: " . $stmt_detalle->error);
-            }
-
-            // Descontar stock del producto
-            $stmt_stock->bind_param("iiii", $producto["cantidad"], $producto["producto_id"], $data["negocio_id"], $producto["cantidad"]);
-
-            if (!$stmt_stock->execute()) {
-                throw new Exception("Error al actualizar el stock: " . $stmt_stock->error);
-            }
-
-            if ($stmt_stock->affected_rows === 0) {
-                throw new Exception("Stock insuficiente para el producto ID: " . $producto["producto_id"]);
-            }
-        }
-
-        // Obtener teléfono del usuario asociado al negocio
-        $stmt_telefono = $conn->prepare("SELECT u.telefono, u.ApiKey FROM negocios n LEFT JOIN usuarios u ON n.usuario_id = u.id WHERE n.id = ?");
-        $stmt_telefono->bind_param("i", $data["negocio_id"]);
-        $stmt_telefono->execute();
-        $result_telefono = $stmt_telefono->get_result();
-
-        $telefono = null;
-        $ApiKey = null;
-        if ($row = $result_telefono->fetch_assoc()) {
-            $telefono = $row["telefono"];
-            $ApiKey = $row["ApiKey"];
-        }
-
-        // Confirmar todo
-        $conn->commit();
-
-        echo json_encode([
-            "message" => "Pedido y detalle insertados correctamente",
-            "pedido_id" => $pedido_id,
-            "telefono" => $telefono,
-            "ApiKey" => $ApiKey
-        ]);
-
-    } catch (Exception $e) {
-        $conn->rollback();
-        echo json_encode(["error" => $e->getMessage()]);
-    }
-}
- */
-function Update(){
+function Update() {
     global $conn;
     try {
         $data = json_decode(file_get_contents("php://input"), true);
+
         if (!isset($data["estado"], $data["id"])) {
             throw new Exception("Datos incompletos");
         }
 
         $id = $data["id"];
         $estado = $data["estado"];
+
+        // Actualizar el estado del pedido
         $sql = "UPDATE pedidos SET estado = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("si", $estado,$id);
+        $stmt->bind_param("si", $estado, $id);
 
         if (!$stmt->execute()) {
             throw new Exception("Error al actualizar estado: " . $stmt->error);
         }
 
-        echo json_encode(["message" => "Estado No actualizado"]);
+        // Ahora hacer el SELECT que quieres
+        $stmt_info = $conn->prepare("
+            SELECT * FROM mensajesapi where fk_pedido=?;
+        ");
+        $stmt_info->bind_param("i", $id);
+
+        if (!$stmt_info->execute()) {
+            throw new Exception("Error al obtener información del pedido: " . $stmt_info->error);
+        }
+
+        $result = $stmt_info->get_result();
+        $info = $result->fetch_assoc();
+
+        // Retornar el mensaje junto con la información consultada
+        echo json_encode([
+            "message" => "Estado actualizado correctamente",
+            "pedido_info" => $info
+        ]);
+        
     } catch (Exception $e) {
         $error = [
             "error" => $e->getMessage(),
@@ -246,54 +184,4 @@ function Update(){
 }
 
 
-/* function post() {
-    global $conn;
-    
-    $data = json_decode(file_get_contents("php://input"), true);
-
-    if (!isset($data["cliente_id"], $data["negocio_id"], $data["total"], $data["estado"], $data["productos"]) || !is_array($data["productos"])) {
-        echo json_encode(["error" => "Faltan datos o formato incorrecto"]);
-        return;
-    }
-
-    // Iniciar transacción
-    $conn->begin_transaction();
-
-    try {
-        // Insertar el pedido
-        $stmt = $conn->prepare("INSERT INTO pedidos (cliente_id, negocio_id, domiciliario_id, total, estado) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("iiids", $data["cliente_id"], $data["negocio_id"], $data["domiciliario_id"], $data["total"], $data["estado"]);
-
-        if (!$stmt->execute()) {
-            throw new Exception("Error al crear el pedido: " . $stmt->error);
-        }
-
-        // Obtener el ID del pedido recién creado
-        $pedido_id = $conn->insert_id;
-
-        // Insertar los detalles del pedido
-        $stmt_detalle = $conn->prepare("INSERT INTO detalle_pedidos (pedido_id, producto_id, cantidad, precio_unitario, subtotal) VALUES (?, ?, ?, ?, ?)");
-
-        foreach ($data["productos"] as $producto) {
-            if (!isset($producto["producto_id"], $producto["cantidad"], $producto["precio_unitario"], $producto["subtotal"])) {
-                throw new Exception("Datos incompletos en productos: " . json_encode($producto));
-            }
-
-            $stmt_detalle->bind_param("iiidd", $pedido_id, $producto["producto_id"], $producto["cantidad"], $producto["precio_unitario"], $producto["subtotal"]);
-
-            if (!$stmt_detalle->execute()) {
-                throw new Exception("Error al insertar detalle del pedido: " . $stmt_detalle->error);
-            }
-        }
-
-        // Confirmar la transacción
-        $conn->commit();
-
-        echo json_encode(["message" => "Pedido y detalle insertados correctamente", "pedido_id" => $pedido_id]);
-    } catch (Exception $e) {
-        // Si algo falla, revertir la transacción
-        $conn->rollback();
-        echo json_encode(["error" => $e->getMessage()]);
-    }
-} */
 ?>

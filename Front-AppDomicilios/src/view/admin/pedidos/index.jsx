@@ -4,10 +4,12 @@ import Grid from "../../../components/grid/grid";
 import { Columns, fields } from "./models";
 import { formatearCOP } from "../../../components/content/formatoMoneda";
 import { useParams } from "react-router-dom";
-import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
+import { enviarWhatsApp } from "../../../API/CallmeBot";
+import { Alertas } from "../../../components/content/alert/Sweealert";
 
 const Pedidos = ({ IdUser, Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
+  const [refresh, setrefresh] = useState(false);
   const { id, name } = useParams();
 
   const VerProductos = (record) => {
@@ -15,8 +17,43 @@ const Pedidos = ({ IdUser, Roles }) => {
     window.location.href = `/shop/pedidos/detalle/${id_pedido}/${usuario_pedido}`;
   };
 
-  const handleFormSubmit = (newData) => {
-    setData([...data, { id: data.length + 1, ...newData }]);
+  const handleFormSubmit = async (data) => {
+    try {
+      let response = await axios.put("/api/pedidos/controller.php", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (data.estado == "procesando") {
+        enviarWhatsApp({
+          numeroNegocio: response.data.pedido_info.numeroNegocio, //OK
+          keyNegocios: response.data.pedido_info.keyNegocios, //OK
+          mensaje: {
+            numero_Factura: data.id, //OK
+            cliente_id: response.data.pedido_info.cliente_id, //OK
+            negocio_id: response.data.pedido_info.negocio_id, //OK
+            total: response.data.pedido_info.total, //OK
+            estado: data.estado, //OK
+            productos: [{}],
+            ubicacion: response.data.pedido_info.ubicacion,
+            tipoUbicacion: response.data.pedido_info.tipoUbicacion,
+            telefono: response.data.pedido_info.telefono,
+            costoEnvio: response.data.pedido_info.costoEnvio,
+          },
+        });
+      }
+      setrefresh((prev) => !prev);
+      return Alertas({
+        icon: "success",
+        message: "Registrado!!",
+      });
+    } catch (error) {
+      alert(error);
+      return Alertas({
+        icon: "error",
+        message: error,
+      });
+    }
   };
 
   useEffect(() => {
@@ -32,13 +69,15 @@ const Pedidos = ({ IdUser, Roles }) => {
       }
     };
     Get();
-  }, [id]);
+  }, [id, refresh]);
+
   const Formater = usuarios.map((item) => ({
-    id_pedido: item.id_pedido,
+    id: item.id_pedido,
     logo_pedido: <img src={item.logo_pedido} className="w-10" />,
     nombre_negocio: item.nombre_negocio,
     usuario_pedido: item.usuario_pedido,
-    estado: (
+    estado: item.estado,
+    estadoPedido: (
       <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-gray-100/60">
         <span class="h-1.5 w-1.5 rounded-full bg-gray-500"></span>
         <h2 class="text-sm font-normal text-gray-500">{item.estado}</h2>
