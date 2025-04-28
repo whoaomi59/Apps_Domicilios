@@ -20,7 +20,7 @@ switch ($request_method) {
 //OK
 function get() {
     global $conn;
-    $result = $conn->query("SELECT * FROM `negocios_imagenes` ORDER BY id DESC;");
+    $result = $conn->query("SELECT * FROM `negocios_imagenes` ORDER BY id_Negocios DESC");
  
     $empresas = [];
     while ($row = $result->fetch_assoc()) {

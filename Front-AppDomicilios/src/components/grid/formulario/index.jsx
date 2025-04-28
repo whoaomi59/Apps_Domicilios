@@ -96,8 +96,8 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title, initialValues }) => {
                   onChange={handleChange}
                   className={`w-full px-4 py-2 border rounded-lg border-gray-300 ${
                     field.disable && "bg-white border-white text-white"
-                  }`}
-                  disabled={field.disable}
+                  } ${field.gray && "bg-gray-300"}`}
+                  disabled={field.disable || field.gray}
                 />
               )}
             </div>

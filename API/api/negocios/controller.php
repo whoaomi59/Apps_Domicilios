@@ -22,7 +22,7 @@ switch ($request_method) {
 //OK
 function get() {
     global $conn;
-    $result = $conn->query("SELECT n.id as idnegocio, n.nombre AS Negocio, c.nombre AS Categoria,direccion,n.telefono,n.email,n.created_at,u.nombre AS usuario, u.id AS iduser,n.logo AS logo_negocio,Horario_inicial,Horario_final,n.estado AS estadoNegocio,categoria_id AS idCategoria FROM negocios n LEFT JOIN categorias_negocios c ON n.categoria_id = c.id LEFT JOIN usuarios u ON usuario_id=u.id");
+    $result = $conn->query("SELECT n.id as idnegocio, n.nombre AS Negocio, c.nombre AS Categoria,direccion,n.telefono,n.email,n.created_at,u.nombre AS usuario, u.id AS iduser,n.logo AS logo_negocio,Horario_inicial,Horario_final,n.estado AS estadoNegocio,categoria_id AS idCategoria,n.ApiKey AS ApiNegocios FROM negocios n LEFT JOIN categorias_negocios c ON n.categoria_id = c.id LEFT JOIN usuarios u ON usuario_id=u.id");
 
     $empresas = [];
 
@@ -46,17 +46,16 @@ function post() {
         $nombre = $_POST["nombre"] ?? null;
         $direccion = $_POST["direccion"] ?? null;
         $telefono = $_POST["telefono"] ?? null;
+        $ApiKey = $_POST["ApiKey"] ?? null;
         $email = $_POST["email"] ?? null;
         $horario_inicial = $_POST["Horario_inicial"] ?? null;
         $horario_final = $_POST["Horario_final"] ?? null;
 
-        // Validación de datos obligatorios
         if ( !$categoria_id || !$nombre || !$direccion || !$telefono || !$email || !$horario_inicial || !$horario_final) {
             echo json_encode(["error" => "Faltan datos obligatorios"]);
             return;
         }
 
-        // 📂 Validar si se envió una imagen
         if (isset($_FILES["logo"]) && $_FILES["logo"]["error"] === UPLOAD_ERR_OK) {
             $logo = file_get_contents($_FILES["logo"]["tmp_name"]); // Leer imagen binaria
         } else {
@@ -64,19 +63,20 @@ function post() {
             return;
         }
 
-    $stmt = $conn->prepare("INSERT INTO negocios (usuario_id, categoria_id, nombre, direccion, telefono, email, Horario_inicial, Horario_final, logo) 
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO negocios (usuario_id, categoria_id, nombre, direccion, telefono,ApiKey, email, Horario_inicial, Horario_final, logo) 
+                            VALUES (?, ?, ?, ?, ?, ?,?, ?, ?, ?)");
 
     if (!$stmt) {
             echo json_encode(["error" => "Error en la consulta", "mysqli_error" => $conn->error]);
     return;
     }
-        $stmt->bind_param("iisssssss", 
+        $stmt->bind_param("iissssssss", 
             $usuario_id, 
             $categoria_id, 
             $nombre, 
             $direccion, 
-            $telefono, 
+            $telefono,
+            $ApiKey, 
             $email, 
             $horario_inicial, 
             $horario_final, 

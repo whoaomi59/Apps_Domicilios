@@ -1,4 +1,5 @@
 import {
+  ArrowLongLeftIcon,
   BuildingStorefrontIcon,
   CircleStackIcon,
   HomeIcon,
@@ -46,7 +47,7 @@ export default function NavbarShop({ logo, Roles, nombre }) {
             <button
               onClick={() => setToggle((prev) => !prev)}
               type="button"
-              class="hs-collapse-toggle size-9.5 flex justify-center items-center text-sm font-semibold rounded-xl border border-gray-200 text-black hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none .:text-white .:border-neutral-700 .:hover:bg-neutral-700 .:focus:bg-neutral-700"
+              class="hs-collapse-toggle size-9.5 flex justify-center items-center text-sm font-semibold rounded-xl border border-gray-200 text-black hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none"
               id="hs-navbar-hcail-collapse"
               aria-expanded="false"
               aria-controls="hs-navbar-hcail"
@@ -164,61 +165,22 @@ export default function NavbarShop({ logo, Roles, nombre }) {
           href="/"
           className="flex flex-col items-center text-gray-600 hover:text-blue-600 text-xs"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 mb-1"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"
-            />
-          </svg>
+          <HomeIcon className="h-6 w-6" />
           Inicio
+        </a>
+        <a
+          href="/shop/car_shop"
+          className="flex flex-col items-center text-gray-800 hover:text-blue-600 text-xs"
+        >
+          <ShoppingCartIcon className="h-6 w-6" />
+          Carrito
         </a>
         <a
           href="/shop/negocios"
           className="flex flex-col items-center text-gray-600 hover:text-blue-600 text-xs"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 mb-1"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M8 16l-4-4m0 0l4-4m-4 4h18"
-            />
-          </svg>
+          <ArrowLongLeftIcon className="w-7" />
           Negocios
-        </a>
-        <a
-          href="/shop/car_shop"
-          className="flex flex-col items-center text-gray-600 hover:text-blue-600 text-xs"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 mb-1"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 7h13a1 1 0 001-1V6H6.6"
-            />
-          </svg>
-          Carrito
         </a>
       </div>
     </header>

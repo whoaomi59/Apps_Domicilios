@@ -31,18 +31,22 @@ const construirMensaje = (pedido) => {
   const {
     cliente_id,
     negocio_id,
+    numero_Factura,
     total,
     estado,
     productos,
     ubicacion,
     tipoUbicacion,
+    telefono,
   } = pedido;
 
   let mensaje = `🛍️ *Nueva Compra Realizada*\n\n`;
+  mensaje += `🧑 Factura ID: ${numero_Factura}\n`;
   mensaje += `🧑 Cliente ID: ${cliente_id}\n`;
   mensaje += `🏪 Negocio ID: ${negocio_id}\n`;
   mensaje += `🏪 Ubicacion: ${ubicacion}\n`;
   mensaje += `🏪 tipoUbicacion: ${tipoUbicacion}\n`;
+  mensaje += `🏪 Numero telefono usuario: ${telefono}\n`;
   mensaje += `💵 Total: $${total}\n`;
   mensaje += `📦 Estado: ${estado}\n\n`;
   mensaje += `🛒 *Productos comprados:*\n`;
