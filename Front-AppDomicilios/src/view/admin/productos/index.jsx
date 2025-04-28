@@ -136,7 +136,8 @@ const Productos = ({ Roles }) => {
         actions={[
           {
             icon: "NoSymbolIcon",
-            className: "bg-blue-500 text-white",
+            className: "bg-orange-500 text-white",
+            label: "Bloquear Productos",
             onClick: (record) => {
               setIsModalOpen(true);
               setEditingItem(record);

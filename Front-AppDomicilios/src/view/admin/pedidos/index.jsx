@@ -15,8 +15,8 @@ const Pedidos = ({ IdUser, Roles }) => {
   const { id, name } = useParams();
 
   const VerProductos = (record) => {
-    const { id_pedido, usuario_pedido } = record;
-    window.location.href = `/shop/pedidos/detalle/${id_pedido}/${usuario_pedido}`;
+    const { id, usuario_pedido } = record;
+    window.location.href = `/shop/pedidos/detalle/${id}/${usuario_pedido}`;
   };
 
   const handleFormSubmit = async (data) => {

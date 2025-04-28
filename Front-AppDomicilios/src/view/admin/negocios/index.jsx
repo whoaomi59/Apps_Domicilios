@@ -159,6 +159,7 @@ const Negocios = ({ IdUser, Roles }) => {
           {
             icon: "NoSymbolIcon",
             className: "bg-orange-500 text-white",
+            label: "Bloquear Negocios",
             onClick: (record) => {
               setIsModalOpen(true);
               setEditingItem(record);
@@ -167,11 +168,13 @@ const Negocios = ({ IdUser, Roles }) => {
           {
             icon: "ShoppingCartIcon",
             className: "bg-blue-500 text-white",
+            label: "Ver Pedidos",
             onClick: (record) => VerPedidos(record),
           },
           {
             icon: "ArrowRightCircleIcon",
             className: "bg-gray-500 text-white",
+            label: "Ver Productos",
             onClick: (record) => VerProductos(record),
           },
         ]}

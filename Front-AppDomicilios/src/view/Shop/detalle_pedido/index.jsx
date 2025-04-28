@@ -138,19 +138,19 @@ export default function Detalle_Pedido({ logo, empresa, datos_empresa }) {
                   </div>
                   <div>
                     <h5 className="sm:hidden text-xs font-medium text-gray-500 uppercase">
-                      Qty
+                      Cantidad
                     </h5>
                     <p className="text-gray-800">{item.cantidad}</p>
                   </div>
                   <div>
                     <h5 className="sm:hidden text-xs font-medium text-gray-500 uppercase">
-                      Rate
+                      Negocio
                     </h5>
                     <p className="text-gray-800">{item.Negocio}</p>
                   </div>
                   <div>
                     <h5 className="sm:hidden text-xs font-medium text-gray-500 uppercase">
-                      Amount
+                      subtotal
                     </h5>
                     <p className="sm:text-end text-gray-800">
                       ${item.subtotal}
