@@ -233,7 +233,7 @@ export default function ProductosShop() {
                         />
                       </svg>
                       <p class="text-sm font-medium text-gray-500 .:text-gray-400">
-                        Best Price
+                        Mejor precio
                       </p>
                     </li>
                   </ul>
