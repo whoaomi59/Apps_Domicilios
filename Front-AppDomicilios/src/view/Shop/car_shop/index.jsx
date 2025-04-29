@@ -18,6 +18,8 @@ export default function Car_Shop({ usuarios }) {
   const [numerotelefono, setnumerotelefono] = useState("");
   const [shippingCost, setShippingCost] = useState(0);
 
+  console.log(usuarios.nombre);
+
   const taxRate = 0.0; // 5% de impuestos
 
   // Cargar productos desde localStorage al montar el componente
@@ -102,6 +104,8 @@ export default function Car_Shop({ usuarios }) {
         const productos = pedidosPorNegocio[negocioId];
         const totalPedido = productos.reduce((sum, p) => sum + p.subtotal, 0);
 
+        const Negocio = products[0].Negocio;
+
         let response = await axios.post(`/api/pedidos/controller.php`, {
           cliente_id: usuarios.id,
           negocio_id: negocioId,
@@ -120,8 +124,9 @@ export default function Car_Shop({ usuarios }) {
             keyNegocios: key,
             mensaje: {
               numero_Factura: factura,
-              cliente_id: usuarios.id,
-              negocio_id: negocioId,
+              cliente_id: usuarios.nombre,
+              negocio_id: Negocio,
+              telefono_negocio: number,
               total: total,
               estado: "pendiente",
               productos: products,
