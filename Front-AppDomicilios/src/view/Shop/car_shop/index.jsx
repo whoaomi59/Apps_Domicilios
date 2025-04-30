@@ -18,8 +18,6 @@ export default function Car_Shop({ usuarios }) {
   const [numerotelefono, setnumerotelefono] = useState("");
   const [shippingCost, setShippingCost] = useState(0);
 
-  console.log(usuarios.nombre);
-
   const taxRate = 0.0; // 5% de impuestos
 
   // Cargar productos desde localStorage al montar el componente
@@ -124,7 +122,7 @@ export default function Car_Shop({ usuarios }) {
             keyNegocios: key,
             mensaje: {
               numero_Factura: factura,
-              cliente_id: usuarios.nombre,
+              cliente_id: usuarios?.nombre || "",
               negocio_id: Negocio,
               telefono_negocio: number,
               total: total,
@@ -155,7 +153,7 @@ export default function Car_Shop({ usuarios }) {
       }
 
       // 🟢 BORRAR EL LOCAL STORAGE DESPUÉS DE GUARDAR EL PEDIDO
-      sessionStorage.removeItem("cart");
+      localStorage.removeItem("cart");
       setProducts([]);
       Alertas({ icon: "success", message: "Pedido enviado!!" });
       return setTimeout(() => {

@@ -52,7 +52,8 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title, initialValues }) => {
                   field.disable && "bg-white border-white text-white"
                 }`}
               >
-                {field.label}
+                {field.label}{" "}
+                {field.required && <span className="text-red-600">*</span>}
               </label>
               {field.type === "select" ? (
                 <select
@@ -98,6 +99,7 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title, initialValues }) => {
                     field.disable && "bg-white border-white text-white"
                   } ${field.gray && "bg-gray-300"}`}
                   disabled={field.disable || field.gray}
+                  required={field.required}
                 />
               )}
             </div>

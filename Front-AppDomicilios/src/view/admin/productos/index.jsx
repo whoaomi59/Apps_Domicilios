@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { Alertas } from "../../../components/content/alert/Sweealert";
 import Form from "../../../components/grid/formulario";
 import { ClockIcon } from "@heroicons/react/24/outline";
+import Loader from "../../../components/content/loader";
 
 const Productos = ({ Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
@@ -13,6 +14,7 @@ const Productos = ({ Roles }) => {
   const { id, name } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
+  const [loader, setloader] = useState(false);
 
   const handleFormSubmit = async (formData) => {
     const form = new FormData();
@@ -77,13 +79,16 @@ const Productos = ({ Roles }) => {
   useEffect(() => {
     const Get = async () => {
       try {
+        setloader(true);
         let response = await axios.get("/api/productos/controller.php");
         const rutasPermitidas = response.data.filter((item) =>
           item.id_negocio.includes(id)
         );
         setUsuarios(rutasPermitidas);
+        return setloader(false);
       } catch (error) {
         console.log(error);
+        return setloader(false);
       }
     };
     Get();
@@ -98,7 +103,8 @@ const Productos = ({ Roles }) => {
     Negocio: item.Negocio,
     negocio_id: item.id_negocio,
     descripcion: item.descripcion_productos,
-    estado:
+    estado: item.estado_producto,
+    estado_formater:
       item.estado_producto === "1" ? (
         <p className="flex">
           <ClockIcon className="w-5 mr-2 text-red-500" />
@@ -113,6 +119,10 @@ const Productos = ({ Roles }) => {
     precio: item.precio_producto,
     fecha_producto: item.fecha_producto,
   }));
+
+  if (loader) {
+    return <Loader />;
+  }
 
   return (
     <div className="p-4">

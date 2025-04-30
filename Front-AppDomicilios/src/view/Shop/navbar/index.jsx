@@ -98,7 +98,7 @@ export default function NavbarShop({ logo, Roles, nombre }) {
           <div class="flex flex-col gap-y-4 gap-x-0 mt-5 lg:flex-row lg:justify-center lg:items-center lg:gap-y-0 lg:gap-x-7 lg:mt-0">
             <div className="flex items-center">
               <a
-                class="relative inline-block text-black focus:outline-hidden before:absolute before:bottom-0.5 before:start-0 before:-z-1 before:w-full before:h-1 before:bg-green-500 hover:text-green-600"
+                class="relative  text-black focus:outline-hidden before:absolute before:bottom-0.5 before:start-0 before:-z-1 before:w-full before:h-1 before:bg-green-500 hover:text-green-600"
                 href="/"
                 aria-current="page"
               >
@@ -106,56 +106,47 @@ export default function NavbarShop({ logo, Roles, nombre }) {
               </a>
               <HomeIcon className="w-5 ml-2 text-gray-500" />
             </div>
-            <div className="flex items-center">
-              <a
-                className="inline-block text-black hover:text-green-600"
-                href="/shop/negocios"
-              >
-                Negocios
-              </a>
+            <a
+              className="flex items-center text-black hover:text-green-600"
+              href="/shop/negocios"
+            >
+              Negocios{" "}
               <BuildingStorefrontIcon className="w-5 ml-2 text-gray-500" />
-            </div>{" "}
+            </a>
             {Roles && (
               <div className="flex items-center">
                 <a
-                  className="inline-block text-black hover:text-green-600"
+                  className="flex items-center text-black hover:text-green-600"
                   href="/shop/pedidos"
                 >
-                  Mis pedidos
+                  Mis pedidos{" "}
+                  <ShoppingBagIcon className="w-5 ml-2 text-gray-500" />
                 </a>
-                <ShoppingBagIcon className="w-5 ml-2 text-gray-500" />
               </div>
             )}
-            <div className="flex items-center">
-              <a
-                className="inline-block text-black hover:text-green-600"
-                href="/shop/car_shop"
-              >
-                Carrito
-              </a>
-              <ShoppingCartIcon className="w-5 ml-2 text-gray-500" />
-            </div>
+            <a
+              className="flex items-center text-black hover:text-green-600"
+              href="/shop/car_shop"
+            >
+              Carrito <ShoppingCartIcon className="w-5 ml-2 text-gray-500" />
+            </a>
             {Roles === "admin" && (
-              <div className="flex items-center">
-                <a
-                  className="inline-block text-black hover:text-green-600"
-                  href="/dashboard"
-                >
-                  Admin
-                </a>
+              <a
+                className="flex items-center text-black hover:text-green-600"
+                href="/dashboard"
+              >
+                Admin{" "}
                 <WrenchScrewdriverIcon className="w-5 ml-2 text-gray-500" />
-              </div>
+              </a>
             )}
             {Roles === "negocio" && (
-              <div className="flex items-center">
-                <a
-                  className="inline-block text-black hover:text-green-600"
-                  href="/dashboard"
-                >
-                  Admin
-                </a>
+              <a
+                className="flex items-center text-black hover:text-green-600"
+                href="/dashboard"
+              >
+                Admin{" "}
                 <WrenchScrewdriverIcon className="w-5 ml-2 text-gray-500" />
-              </div>
+              </a>
             )}
           </div>
         </div>

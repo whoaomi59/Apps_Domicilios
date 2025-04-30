@@ -5,12 +5,14 @@ import { Columns, fields, FielsEstado } from "./models";
 import { Alertas } from "../../../components/content/alert/Sweealert";
 import Form from "../../../components/grid/formulario";
 import { ClockIcon } from "@heroicons/react/24/outline";
+import Loader from "../../../components/content/loader";
 
 const Negocios = ({ IdUser, Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
   const [refresh, setrefresh] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
+  const [loader, setloader] = useState(false);
 
   const VerProductos = (record) => {
     window.location.href = `/productos/${record.id}/${record.nombre}`;
@@ -26,15 +28,7 @@ const Negocios = ({ IdUser, Roles }) => {
         form.append(key, formData[key]);
       }
     }
-    console.log(formData);
     try {
-      if (formData.update) {
-        let response = await axios.put("/api/negocios/controller.php", form, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-      }
       if (formData.id) {
         let response = await axios.post(
           "/api/negocios/update_negocios.php",
@@ -51,7 +45,6 @@ const Negocios = ({ IdUser, Roles }) => {
             "Content-Type": "multipart/form-data",
           },
         });
-        console.log(response.data);
       }
       setrefresh((prev) => !prev);
       return Alertas({
@@ -90,6 +83,7 @@ const Negocios = ({ IdUser, Roles }) => {
   useEffect(() => {
     const Get = async () => {
       try {
+        setloader(true);
         let response = await axios.get("/api/negocios/controller.php");
         if (Roles.includes("admin")) {
           setUsuarios(response.data);
@@ -100,8 +94,10 @@ const Negocios = ({ IdUser, Roles }) => {
           );
           setUsuarios(rutasPermitidas);
         }
+        return setloader(false);
       } catch (error) {
         console.log(error);
+        return setloader(false);
       }
     };
     Get();
@@ -135,6 +131,10 @@ const Negocios = ({ IdUser, Roles }) => {
     Horario_final: item.Horario_final,
     created_at: item.created_at,
   }));
+
+  if (loader) {
+    return <Loader />;
+  }
 
   return (
     <div className="p-4">

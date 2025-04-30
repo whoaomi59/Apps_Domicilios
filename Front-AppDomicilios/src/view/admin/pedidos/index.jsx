@@ -4,14 +4,14 @@ import Grid from "../../../components/grid/grid";
 import { Columns, fields } from "./models";
 import { formatearCOP } from "../../../components/content/formatoMoneda";
 import { useParams } from "react-router-dom";
-import { enviarWhatsApp } from "../../../API/CallmeBot";
 import { Alertas } from "../../../components/content/alert/Sweealert";
-import { TruckIcon } from "@heroicons/react/24/outline";
-import { handleWhatsappClick } from "../../../API/Whassapp";
+import { EnviarWhatsApp_Negocio } from "../../../API/CallmeBot_Negocio";
+import Loader from "../../../components/content/loader";
 
 const Pedidos = ({ IdUser, Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
   const [refresh, setrefresh] = useState(false);
+  const [loader, setloader] = useState(false);
   const { id, name } = useParams();
 
   const VerProductos = (record) => {
@@ -27,20 +27,13 @@ const Pedidos = ({ IdUser, Roles }) => {
         },
       });
       if (data.estado == "procesando") {
-        enviarWhatsApp({
-          numeroNegocio: response.data.pedido_info.numeroNegocio, //OK
-          keyNegocios: response.data.pedido_info.keyNegocios, //OK
+        EnviarWhatsApp_Negocio({
+          numeroNegocio: response.data.pedido_info.telefono, //OK
+          keyNegocios: response.data.pedido_info.KeyNegocio, //OK
           mensaje: {
             numero_Factura: data.id, //OK
-            cliente_id: response.data.pedido_info.cliente_id, //OK
-            negocio_id: response.data.pedido_info.negocio_id, //OK
-            total: response.data.pedido_info.total, //OK
-            estado: data.estado, //OK
-            productos: [{}],
-            ubicacion: response.data.pedido_info.ubicacion,
-            tipoUbicacion: response.data.pedido_info.tipoUbicacion,
-            telefono: response.data.pedido_info.telefono,
-            costoEnvio: response.data.pedido_info.costoEnvio,
+            negocio_id: "RunWay", //OK
+            productos: response.data.pedido_info.productos,
           },
         });
       }
@@ -58,24 +51,19 @@ const Pedidos = ({ IdUser, Roles }) => {
     }
   };
 
-  const SendtDomiciliario = async (data) => {
-    const texto = {
-      mesaje: `Hola, Sr. Administrador. Podría ayudarme con un domiciliario, para el pedido ${data.id_pedido}`,
-      negocio: data.nombre_negocio,
-    };
-    handleWhatsappClick(texto);
-  };
-
   useEffect(() => {
     const Get = async () => {
       try {
+        setloader(true);
         let response = await axios.get("/api/pedidos/controller.php");
         const rutasPermitidas = response.data.filter((item) =>
           item.nombre_negocio.includes(name)
         );
         setUsuarios(rutasPermitidas);
+        return setloader(false);
       } catch (error) {
         console.log(error);
+        return setloader(false);
       }
     };
     Get();
@@ -94,16 +82,11 @@ const Pedidos = ({ IdUser, Roles }) => {
       </div>
     ),
     total: formatearCOP(item.total),
-    Domiciliario: Roles === "negocio" && item.estado === "procesando" && (
-      <button
-        onClick={() => SendtDomiciliario(item)}
-        className="p-1 rounded bg-green-500 text-white hover:bg-gray-400"
-      >
-        Domiciliario
-      </button>
-    ),
   }));
 
+  if (loader) {
+    return <Loader />;
+  }
   return (
     <div className="p-4">
       <Grid

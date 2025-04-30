@@ -6,16 +6,12 @@ export const Columns = [
   { key: "estado", label: "estado" },
   { key: "estadoPedido", label: "estadoPedido" },
   { key: "total", label: "total" },
-  { key: "Domiciliario", label: "Domiciliario" }
 ];
 export const fields = [
   { name: "estado", label: "Cambiar Estado", type: "select",options:
   [
     {value:'pendiente',label:'pendiente'},
-    {value:'procesando',label:'procesando'},
-    {value:'enviado',label:'enviado'},
-    {value:'entregado',label:'entregado'},
-    {value:'cancelado',label:'cancelado'},
+    {value:'procesando',label:'Solicitado'},
   ] 
 },
 { name: "id", label: "ID", type: "number" ,disable:true},
