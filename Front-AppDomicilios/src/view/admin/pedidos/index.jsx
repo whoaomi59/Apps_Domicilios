@@ -76,9 +76,9 @@ const Pedidos = ({ IdUser, Roles }) => {
     usuario_pedido: item.usuario_pedido,
     estado: item.estado,
     estadoPedido: (
-      <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-gray-100/60">
-        <span class="h-1.5 w-1.5 rounded-full bg-gray-500"></span>
-        <h2 class="text-sm font-normal text-gray-500">{item.estado}</h2>
+      <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-300/50">
+        <span class="h-1.5 w-1.5 rounded-full bg-green-900"></span>
+        <h2 class="text-sm font-normal text-green-500">{item.estado}</h2>
       </div>
     ),
     total: formatearCOP(item.total),
