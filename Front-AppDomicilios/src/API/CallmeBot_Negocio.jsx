@@ -28,7 +28,7 @@ const construirMensaje = (pedido) => {
 
   let mensaje = `🛍️ *Nueva Compra Realizada*\n\n`;
   mensaje += `🧑 Factura ID: ${numero_Factura}\n`;
-  mensaje += `🧑 Negocio: ${negocio_id}\n`;
+  mensaje += `🧑 Cliente: ${negocio_id}\n`;
   mensaje += `🛒 *Productos comprados:*\n`;
 
   productos.forEach((prod, index) => {
