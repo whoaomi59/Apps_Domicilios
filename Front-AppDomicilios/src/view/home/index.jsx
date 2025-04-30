@@ -25,10 +25,13 @@ export default function Home() {
 
     const GetBaner = async () => {
       try {
+        setLoader(true);
         let response = await axios.get("/api/empresas/empresa_imagenes.php");
         setbaner(response.data);
+        return setLoader(false);
       } catch (error) {
         console.log(error);
+        return setLoader(false);
       }
     };
     Get();
