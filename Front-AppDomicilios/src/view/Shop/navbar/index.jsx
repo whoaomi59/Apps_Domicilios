@@ -22,7 +22,7 @@ export default function NavbarShop({ logo, Roles, nombre }) {
           >
             <img
               class="w-20 h-auto"
-              src={logo ? logo : "/SVG PAGINA/undraw_pair-programming_9jyg.svg"}
+              src={logo ? logo : "/logo/LogoPropio-removebg-preview.png"}
               alt="Logo"
             />
           </a>
