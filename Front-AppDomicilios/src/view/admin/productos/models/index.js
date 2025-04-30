@@ -7,21 +7,23 @@ export const Columns = [
   { key: "Negocio", label: "Negocio" },
   { key: "negocio_id", label: "idNegocio" },
   { key: "descripcion", label: "Descripcion" },
-  { key: "estado", label: "estado" },
+  { key: "estado", label: "keyestado" },
+  { key: "estado_formater", label: "estado" },
   { key: "precio", label: "Precio" },
   { key: "fecha_producto", label: "Fecha" },
 ];
 
 
 export const fields = [
-  { name: "nombre", label: "nombre", type: "text" },
+  { name: "nombre", label: "nombre", type: "text" ,required:true},
   { 
     name: "negocio_id", 
     label: "Negocio Asignar",
     type: "dinamiselect",
     url:'/api/negocios/controller.php',
     value:'idnegocio', 
-    text:'Negocio', 
+    text:'Negocio'
+    ,required:true
   },
   { 
     name: "tipo_id", 
@@ -29,16 +31,16 @@ export const fields = [
     type: "dinamiselect",
     url:'/api/tipos_productos/controller.php',
     value:'id', 
-    text:'nombre', 
+    text:'nombre'
+    ,required:true
   },
-  { name: "descripcion", label: "descripcion", type: "text" },
-  { name: "precio", label: "precio", type: "number" },
-  { name: "img", label: "img", type: "file" },
+  { name: "descripcion", label: "descripcion", type: "text" ,required:true},
+  { name: "precio", label: "precio", type: "number" ,required:true},
+  { name: "img", label: "img", type: "file" ,required:true},
   { name: "id", label: "ID", type: "number",disable:true },
 ];
 
 export const FielsEstado =[
-  { name: "id", label: "ID", type: "number",disable:true },
   { name: "estado", label: "estado", type: "select",options:[
     {
       value:0,
@@ -49,4 +51,5 @@ export const FielsEstado =[
       label:'Inactivo'
     }
   ] },
+  { name: "id", label: "ID", type: "number",disable:true },
 ]

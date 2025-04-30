@@ -16,14 +16,14 @@ export const Columns = [
   { key: "created_at", label: "created_at" },
 ];
 export const fields = [
-  { name: "nombre", label: "Nombre Negocio", type: "text" },
+  { name: "nombre", label: "Nombre Negocio", type: "text", required:true},
   { 
     name: "usuario_id", 
     label: "Administrador del negocio",
     type: "dinamiselect",
     url:'/api/usuarios/user_negocios.php',
     value:'id', 
-    text:'nombre', 
+    text:'nombre', required:true
   },
   { 
     name: "categoria_id", 
@@ -31,15 +31,15 @@ export const fields = [
     type: "dinamiselect",
     url:'/api/categorias_negocios/controller.php',
     value:'id', 
-    text:'nombre',
+    text:'nombre',required:true
   },
-  { name: "direccion", label: "Ubicacion Negocio", type: "text" },
-  { name: "telefono", label: "Telefono", type: "number" },
+  { name: "direccion", label: "Ubicacion Negocio", type: "text",required:true },
+  { name: "telefono", label: "Telefono", type: "number" ,required:true},
   { name: "ApiKey", label: "ApiKey", type: "number" },
-  { name: "email", label: "Correo Electronico", type: "email" },
+  { name: "email", label: "Correo Electronico", type: "email" ,required:true},
   { name: "logo", label: "Logo Negocio", type: "file" },
-  { name: "Horario_inicial", label: "Horario_inicial", type: "time" },
-  { name: "Horario_final", label: "Horario_final", type: "time" },
+  { name: "Horario_inicial", label: "Horario_inicial", type: "time",required:true },
+  { name: "Horario_final", label: "Horario_final", type: "time" ,required:true},
   { name: "id", label: "ID", type: "number" ,disable:true},
 ];
 
