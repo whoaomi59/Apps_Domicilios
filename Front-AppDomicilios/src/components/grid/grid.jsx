@@ -10,6 +10,7 @@ const Grid = ({
   fields,
   handleFormSubmit,
   button,
+  role,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(6);
