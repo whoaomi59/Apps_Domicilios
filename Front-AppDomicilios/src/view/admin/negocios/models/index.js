@@ -1,5 +1,6 @@
 export const Columns = [
   { key: "id", label: "id" },
+  { key: "estado", label: "estado" },
   { key: "logo_negocio", label: "logo" },
   { key: "nombre", label: "Negocio" },
   { key: "categoria", label: "Categoria" },
@@ -10,7 +11,7 @@ export const Columns = [
   { key: "telefono", label: "telefono" },
   { key: "ApiKey", label: "ApiKey" },
   { key: "email", label: "email" },
-  { key: "estado", label: "estado" },
+
   { key: "Horario_inicial", label: "Horario_inicial" },
   { key: "Horario_final", label: "Horario_final" },
   { key: "created_at", label: "created_at" },

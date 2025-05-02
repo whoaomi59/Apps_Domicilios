@@ -96,14 +96,14 @@ const Grid = ({
           <table class="w-full text-sm text-left text-gray-500    ">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
+                <th scope="col" className="px-4 py-3">
+                  Configuracion 🛠️
+                </th>
                 {columns.map((col) => (
                   <th key={col.key} scope="col" className="px-4 py-3">
                     {col.label}
                   </th>
                 ))}
-                <th scope="col" className="px-4 py-3">
-                  Configuracion 🛠️
-                </th>
               </tr>
             </thead>
             <tbody>
@@ -113,11 +113,7 @@ const Grid = ({
                   scope="row"
                   className="px-4 py-3 font-medium text-gray-600 whitespace-nowrap"
                 >
-                  {columns.map((col) => (
-                    <td key={col.key} className="px-4 py-3">
-                      {row[col.key]}
-                    </td>
-                  ))}
+                  {" "}
                   {actions && actions.length > 0 && (
                     <td className="p-4 space-x-2 ">
                       {buttonedit ? (
@@ -155,6 +151,11 @@ const Grid = ({
                       })}
                     </td>
                   )}
+                  {columns.map((col) => (
+                    <td key={col.key} className="px-4 py-3">
+                      {row[col.key]}
+                    </td>
+                  ))}
                 </tr>
               ))}
             </tbody>

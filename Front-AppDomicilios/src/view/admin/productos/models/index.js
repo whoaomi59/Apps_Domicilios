@@ -1,5 +1,6 @@
 export const Columns = [
   { key: "id", label: "id" },
+  { key: "estado_formater", label: "estado" },
   { key: "img", label: "img" },
   { key: "nombre", label: "Nombre" },
   { key: "Tipo", label: "Tipo Producto" },
@@ -8,7 +9,6 @@ export const Columns = [
   { key: "negocio_id", label: "idNegocio" },
   { key: "descripcion", label: "Descripcion" },
   { key: "estado", label: "keyestado" },
-  { key: "estado_formater", label: "estado" },
   { key: "precio", label: "Precio" },
   { key: "fecha_producto", label: "Fecha" },
 ];
