@@ -9,6 +9,7 @@ export default function Home() {
   const [loader, setLoader] = useState(false);
   const [currentBanner, setCurrentBanner] = useState(0);
   const [baner, setbaner] = useState([]);
+  let textos;
 
   useEffect(() => {
     const Get = async () => {
