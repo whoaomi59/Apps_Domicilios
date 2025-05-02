@@ -125,7 +125,7 @@ export default function Car_Shop({ usuarios }) {
               cliente_id: usuarios?.nombre || "",
               negocio_id: Negocio,
               telefono_negocio: number,
-              total: total,
+              total: totalPedido,
               estado: "pendiente",
               productos: products,
               ubicacion: ubicacionEnvio,
