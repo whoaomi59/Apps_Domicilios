@@ -22,7 +22,7 @@ export default function NavbarShop({ logo, Roles, nombre }) {
           >
             <img
               class="w-20 h-auto"
-              src={logo ? logo : "/logo/LogoPropio-removebg-preview.png"}
+              src={logo ? logo : "/logo/logo.png"}
               alt="Logo"
             />
           </a>
