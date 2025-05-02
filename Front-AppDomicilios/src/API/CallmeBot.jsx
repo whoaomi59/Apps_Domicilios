@@ -7,13 +7,13 @@ export const enviarWhatsApp = async ({
 }) => {
   console.log("numero del api" + numeroNegocio);
   const numero = "573184141985"; //Numero Admin
-  /* const numero = "573144160224"; */
-  const numero2 = numeroNegocio; //Numeros de los negocios
-  const KeyNegocios = keyNegocios;
+  /*   const numero = "573144160224"; */
   const texto = construirMensaje(mensaje);
   const url = `https://api.callmebot.com/whatsapp.php?phone=${numero}&text=${encodeURIComponent(
     texto
   )}&apikey=9181021`;
+  /* 9181021 */
+  /* 7774438 */
 
   try {
     axios.get(url);

@@ -36,7 +36,7 @@ export const fields = [
   },
   { name: "descripcion", label: "descripcion", type: "text" ,required:true},
   { name: "precio", label: "precio", type: "number" ,required:true},
-  { name: "img", label: "img", type: "file" ,required:true},
+  { name: "img", label: "img", type: "file"},
   { name: "id", label: "ID", type: "number",disable:true },
 ];
 
