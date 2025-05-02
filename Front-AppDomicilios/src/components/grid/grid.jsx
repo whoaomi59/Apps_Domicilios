@@ -10,7 +10,7 @@ const Grid = ({
   fields,
   handleFormSubmit,
   button,
-  role,
+  buttonedit,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(6);
@@ -120,16 +120,21 @@ const Grid = ({
                   ))}
                   {actions && actions.length > 0 && (
                     <td className="p-4 space-x-2 ">
-                      <button
-                        className="p-2 rounded bg-green-500 text-white hover:bg-gray-400 m-0.5"
-                        title="Editar"
-                        onClick={() => {
-                          setEditingItem(row);
-                          setIsModalOpen(true);
-                        }}
-                      >
-                        <Icons.PencilSquareIcon className="w-4" />
-                      </button>
+                      {buttonedit ? (
+                        ""
+                      ) : (
+                        <button
+                          className="p-2 rounded bg-green-500 text-white hover:bg-gray-400 m-0.5"
+                          title="Editar"
+                          onClick={() => {
+                            setEditingItem(row);
+                            setIsModalOpen(true);
+                          }}
+                        >
+                          <Icons.PencilSquareIcon className="w-4" />
+                        </button>
+                      )}
+
                       {actions.map((action, actionIndex) => {
                         const IconComponent = Icons[action.icon];
                         return (

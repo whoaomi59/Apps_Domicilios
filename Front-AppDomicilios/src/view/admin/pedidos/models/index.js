@@ -4,8 +4,8 @@ export const Columns = [
   { key: "nombre_negocio", label: "negocio" },
   { key: "usuario_pedido", label: "usuario" },
   { key: "estado", label: "estado" },
-  { key: "estadoPedido", label: "estadoPedido" },
   { key: "total", label: "total" },
+  { key: "button", label: "Estado" },
 ];
 export const fields = [
   { name: "estado", label: "Cambiar Estado", type: "select",options:
