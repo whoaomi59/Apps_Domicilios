@@ -51,6 +51,41 @@ const Pedidos = ({ IdUser, Roles }) => {
     }
   };
 
+  const ChangueStatus = async (data, status) => {
+    try {
+      let response = await axios.put(
+        "/api/pedidos/controller.php",
+        {
+          id: data.id_pedido,
+          estado: status,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (status == "procesando") {
+        EnviarWhatsApp_Negocio({
+          numeroNegocio: response.data.pedido_info.telefono, //OK
+          keyNegocios: response.data.pedido_info.KeyNegocio, //OK
+          mensaje: {
+            numero_Factura: data.id_pedido, //OK
+            negocio_id: "RunWay", //OK
+            productos: response.data.pedido_info.productos,
+          },
+        });
+      }
+      setrefresh((prev) => !prev);
+      return Alertas({
+        icon: "success",
+        message: "Registrado!!",
+      });
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   useEffect(() => {
     const Get = async () => {
       try {
@@ -75,13 +110,22 @@ const Pedidos = ({ IdUser, Roles }) => {
     nombre_negocio: item.nombre_negocio,
     usuario_pedido: item.usuario_pedido,
     estado: item.estado,
-    estadoPedido: (
-      <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-300/50">
-        <span class="h-1.5 w-1.5 rounded-full bg-green-900"></span>
-        <h2 class="text-sm font-normal text-green-500">{item.estado}</h2>
-      </div>
-    ),
     total: formatearCOP(item.total),
+    button:
+      item.estado === "procesando" ? (
+        <button className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-500/70 hover:bg-green-500">
+          <span class="h-1.5 w-1.5 rounded-full bg-green-900"></span>
+          Solicitado
+        </button>
+      ) : (
+        <button
+          onClick={() => ChangueStatus(item, "procesando")}
+          className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-500/70 hover:bg-red-500"
+        >
+          <span class="h-1.5 w-1.5 rounded-full bg-red-900"></span>
+          Pendiente
+        </button>
+      ),
   }));
 
   if (loader) {
@@ -96,6 +140,7 @@ const Pedidos = ({ IdUser, Roles }) => {
         fields={fields}
         handleFormSubmit={handleFormSubmit}
         button={true}
+        buttonedit={true}
         actions={[
           {
             icon: "ArrowRightCircleIcon",

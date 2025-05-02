@@ -24,7 +24,6 @@ export const EnviarWhatsApp_Negocio = async ({
 
 const construirMensaje = (pedido) => {
   const { negocio_id, numero_Factura, productos } = pedido;
-  console.log(productos);
 
   let mensaje = `🛍️ *Nueva Compra Realizada*\n\n`;
   mensaje += `🧑 Factura ID: ${numero_Factura}\n`;
@@ -32,8 +31,8 @@ const construirMensaje = (pedido) => {
   mensaje += `🛒 *Productos comprados:*\n`;
 
   productos.forEach((prod, index) => {
-    mensaje += `\n${index + 1}. ${prod.nombre || "Sin nombre"} - Cantidad: ${
-      prod.cantidad || 0
+    mensaje += `\n${prod.cantidad || 0}. ${
+      prod.nombre || "Sin nombre"
     } - Precio: $${prod.precio || 0}`;
   });
 

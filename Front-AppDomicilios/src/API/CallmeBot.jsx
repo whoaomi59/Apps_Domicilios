@@ -7,18 +7,13 @@ export const enviarWhatsApp = async ({
 }) => {
   console.log("numero del api" + numeroNegocio);
   const numero = "573184141985"; //Numero Admin
-  /* const numero = "573144160224"; */
-  const numero2 = numeroNegocio; //Numeros de los negocios
-  const KeyNegocios = keyNegocios;
+  /*   const numero = "573144160224"; */
   const texto = construirMensaje(mensaje);
   const url = `https://api.callmebot.com/whatsapp.php?phone=${numero}&text=${encodeURIComponent(
     texto
   )}&apikey=9181021`;
-
-  //URL Negocios
-  /*   const url2 = `https://api.callmebot.com/whatsapp.php?phone=57${numero2}&text=${encodeURIComponent(
-    texto
-  )}&apikey=${KeyNegocios}`; */
+  /* 9181021 */
+  /* 7774438 */
 
   try {
     axios.get(url);
@@ -45,23 +40,25 @@ const construirMensaje = (pedido) => {
   } = pedido;
 
   let mensaje = `🛍️ *Nueva Compra Realizada*\n\n`;
-  mensaje += `🧑 Factura ID: ${numero_Factura}\n`;
-  mensaje += `🧑 Cliente: ${cliente_id}\n`;
-  mensaje += `🏪 Telefono Cliente: ${telefono}\n`;
-  mensaje += `🏪 Negocio: ${negocio_id}\n`;
-  mensaje += `🏪 Telefono Negocio: ${telefono_negocio}\n`;
-  mensaje += `🏪 Ubicacion: ${ubicacion}\n`;
-  mensaje += `🏪 Tipo Ubicacion: ${tipoUbicacion}\n`;
-  mensaje += `💵 Total: $${total}\n`;
-  mensaje += `📦 Estado: ${estado}\n\n`;
-  mensaje += `📦 Costo Envio: ${costoEnvio}\n\n`;
-  mensaje += `🛒 *Productos comprados:*\n`;
-
+  mensaje += `Numero de factura: ${numero_Factura}\n\n`;
+  mensaje += `🧑*Cliente cosumidor:*\n\n`;
+  mensaje += `Nombre: ${cliente_id}\n`;
+  mensaje += `Telefono: ${telefono}\n`;
+  mensaje += `Direccion: ${tipoUbicacion}\n`;
+  mensaje += `Ubicacion: ${ubicacion}\n`;
+  mensaje += `🏪*Restaurante:*\n`;
+  mensaje += `Nombre: ${negocio_id}\n`;
+  mensaje += `Telefono: ${telefono_negocio}\n`;
+  mensaje += `🛒 *Datos del pedido:*\n`;
   productos.forEach((prod, index) => {
     mensaje += `\n${index + 1}. ${prod.Producto || "Sin nombre"} - Cantidad: ${
       prod.cantidad || 0
     } - Precio: $${prod.precio || 0}`;
   });
+  mensaje += `📦 Estado: ${estado}\n\n`;
+  mensaje += `💵 SubTotal: ${total}\n`;
+  mensaje += `📦 Domicilio: ${costoEnvio}\n\n`;
+  mensaje += `💵 Total: ${total + costoEnvio}\n`;
 
   return mensaje;
 };
