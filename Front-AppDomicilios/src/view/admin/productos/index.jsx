@@ -7,6 +7,7 @@ import { Alertas } from "../../../components/content/alert/Sweealert";
 import Form from "../../../components/grid/formulario";
 import { ClockIcon } from "@heroicons/react/24/outline";
 import Loader from "../../../components/content/loader";
+import { formatearCOP } from "../../../components/content/formatoMoneda";
 
 const Productos = ({ Roles }) => {
   const [usuarios, setUsuarios] = useState([]);

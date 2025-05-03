@@ -115,6 +115,7 @@ export default function Car_Shop({ usuarios }) {
         let number = response.data.info_negocio.telefono;
         let key = response.data.info_negocio.ApiKey;
         let factura = response.data.info_negocio.id;
+        let direccion = response.data.info_negocio.direccion;
 
         if (number) {
           enviarWhatsApp({
@@ -132,6 +133,7 @@ export default function Car_Shop({ usuarios }) {
               tipoUbicacion: tipoUbicacion,
               telefono: numerotelefono,
               costoEnvio: shippingCost,
+              direccion: direccion,
             },
           });
           let mesaje = await axios.post("/api/mesajes.api/mesajes.php", {
