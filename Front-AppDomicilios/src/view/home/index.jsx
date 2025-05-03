@@ -26,13 +26,10 @@ export default function Home() {
 
     const GetBaner = async () => {
       try {
-        setLoader(true);
         let response = await axios.get("/api/empresas/empresa_imagenes.php");
-        setbaner(response.data);
-        return setLoader(false);
+        return setbaner(response.data);
       } catch (error) {
-        console.log(error);
-        return setLoader(false);
+        return console.log(error);
       }
     };
     Get();
@@ -59,7 +56,7 @@ export default function Home() {
           backgroundImage:
             baner.length > 0
               ? `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)), url(${baner[currentBanner].img})`
-              : "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)),url(/SVG PAGINA/undraw_space-exploration_dhu1.svg)",
+              : "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)),url('/SVG PAGINA/undraw_space-exploration_dhu1.svg')",
           filter: "blur(0px) brightness(1) contrast(1.1) saturate(1)",
           transition: "background-image 1s ease-in-out",
           zIndex: 0,

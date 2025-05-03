@@ -64,8 +64,9 @@ export default function Header({ setFilter }) {
     <div className="bg-[#00C951] flex flex-col items-center justify-center py-10 px-4 sm:px-6 text-white font-sans mb-5">
       {/* Título */}
       <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-center leading-tight">
-        Si tienes <span className="font-bold">{empresa.nombre},</span> tienes
-        Todo.
+        Si tienes{" "}
+        <span className="font-bold">{empresa.nombre || "DomiExpress"},</span>{" "}
+        tienes Todo.
       </h1>
 
       {/* Buscador */}
@@ -108,7 +109,8 @@ export default function Header({ setFilter }) {
         <div className="mt-6 flex flex-col sm:flex-row sm:justify-between items-center gap-3 text-center text-sm px-2">
           <button className="flex items-center text-white font-bold hover:underline">
             <BuildingOffice2Icon className="w-5 mr-2" />
-            {empresa.descripcion}, {empresa.direccion}
+            {empresa.descripcion || "Software para domicilios"},{" "}
+            {empresa.direccion || "Pitalito, Huila"}
           </button>
         </div>
       </div>
