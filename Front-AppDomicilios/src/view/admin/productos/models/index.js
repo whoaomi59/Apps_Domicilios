@@ -4,13 +4,13 @@ export const Columns = [
   { key: "img", label: "img" },
   { key: "nombre", label: "Nombre" },
   { key: "Tipo", label: "Tipo Producto" },
-  { key: "tipo_id", label: "tipo_id" },
   { key: "Negocio", label: "Negocio" },
   { key: "negocio_id", label: "idNegocio" },
   { key: "descripcion", label: "Descripcion" },
-  { key: "estado", label: "keyestado" },
   { key: "precio", label: "Precio" },
   { key: "fecha_producto", label: "Fecha" },
+  { key: "tipo_id", label: "tipo_id" },
+  { key: "estado", label: "keyestado" },
 ];
 
 

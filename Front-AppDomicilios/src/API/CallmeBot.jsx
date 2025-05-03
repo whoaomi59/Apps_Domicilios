@@ -1,4 +1,5 @@
 import axios from "axios";
+import { formatearCOP } from "../components/content/formatoMoneda";
 
 export const enviarWhatsApp = async ({
   mensaje,
@@ -37,28 +38,40 @@ const construirMensaje = (pedido) => {
     telefono,
     costoEnvio,
     telefono_negocio,
+    direccion,
   } = pedido;
 
+  // Convertir a número para evitar concatenación de strings
+  const subtotal = parseFloat(total) || 0;
+  const envio = parseFloat(costoEnvio) || 0;
+  const Total = subtotal + envio;
+
   let mensaje = `🛍️ *Nueva Compra Realizada*\n\n`;
-  mensaje += `Numero de factura: ${numero_Factura}\n\n`;
-  mensaje += `🧑*Cliente cosumidor:*\n\n`;
+  mensaje += `Numero de factura: ${numero_Factura}\n`;
+  mensaje += `\nEstado: ${estado}\n\n`;
+  mensaje += `🧑*Cliente consumidor:*\n\n`;
   mensaje += `Nombre: ${cliente_id}\n`;
   mensaje += `Telefono: ${telefono}\n`;
   mensaje += `Direccion: ${tipoUbicacion}\n`;
-  mensaje += `Ubicacion: ${ubicacion}\n`;
-  mensaje += `🏪*Restaurante:*\n`;
+  mensaje += `Ubicacion: ${ubicacion}\n\n`;
+  mensaje += `🏪*Restaurante:*\n\n`;
   mensaje += `Nombre: ${negocio_id}\n`;
   mensaje += `Telefono: ${telefono_negocio}\n`;
-  mensaje += `🛒 *Datos del pedido:*\n`;
+  mensaje += `Direccion: ${direccion}\n\n`;
+  mensaje += `🛒 *Datos del pedido:*\n\n`;
+
   productos.forEach((prod, index) => {
-    mensaje += `\n${index + 1}. ${prod.Producto || "Sin nombre"} - Cantidad: ${
-      prod.cantidad || 0
-    } - Precio: $${prod.precio || 0}`;
+    const nombre = prod.Producto || "Sin nombre";
+    const cantidad = prod.cantidad || 0;
+    const precio = parseFloat(prod.precio) || 0;
+    mensaje += `${
+      index + 1
+    }. ${nombre} - Cantidad: ${cantidad} - Precio: $${precio.toFixed(2)}`;
   });
-  mensaje += `📦 Estado: ${estado}\n\n`;
-  mensaje += `💵 SubTotal: ${total}\n`;
-  mensaje += `📦 Domicilio: ${costoEnvio}\n\n`;
-  mensaje += `💵 Total: ${total + costoEnvio}\n`;
+
+  mensaje += `\n\n💵 SubTotal: ${formatearCOP(subtotal)}\n`;
+  mensaje += `📦 Domicilio: ${formatearCOP(envio)}\n\n`;
+  mensaje += `💵 Total: ${formatearCOP(Total)}\n`;
 
   return mensaje;
 };
