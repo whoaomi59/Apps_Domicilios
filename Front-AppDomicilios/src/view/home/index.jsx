@@ -85,11 +85,7 @@ export default function Home() {
         >
           <img
             className="rounded-xl w-50 md:w-60  p-2"
-            src={
-              empresa.logo
-                ? empresa.logo
-                : "/logo/LogoPropio-removebg-preview.png"
-            }
+            src={empresa.logo ? empresa.logo : "/logo/logo.png"}
             alt="Logo Empresa"
           />
         </motion.div>
