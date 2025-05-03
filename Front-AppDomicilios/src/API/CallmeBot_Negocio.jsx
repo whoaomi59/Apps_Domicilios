@@ -1,4 +1,5 @@
 import axios from "axios";
+import { formatearCOP } from "../components/content/formatoMoneda";
 
 export const EnviarWhatsApp_Negocio = async ({
   mensaje,
@@ -46,9 +47,9 @@ const construirMensaje = (pedido) => {
     const nombre = prod.nombre || "Sin nombre";
     const precio = parseFloat(prod.precio) || 0;
     const cantidad = parseInt(prod.cantidad) || 0;
-    mensaje += `\n${cantidad} x ${nombre} - Precio: $${precio.toFixed(2)}`;
+    mensaje += `\n${cantidad} x ${nombre} - Precio: ${formatearCOP(precio)}`;
   });
-  mensaje += `\n\n💵 Total: $${subtotal.toFixed(2)}`;
+  mensaje += `\n\n💵 Total: ${formatearCOP(subtotal)}`;
 
   return mensaje;
 };
