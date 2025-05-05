@@ -155,14 +155,12 @@ function App() {
                   <Route
                     path="/pedidos/detalle/:id/:nombre"
                     element={
-                      <PrivateRoute>
-                        <Detalle_Pedido
-                          logo={empresa.logo}
-                          empresa={empresa.nombre}
-                          datos_empresa={empresa}
-                          usuarios={usuarios}
-                        />
-                      </PrivateRoute>
+                      <Detalle_Pedido
+                        logo={empresa.logo}
+                        empresa={empresa.nombre}
+                        datos_empresa={empresa}
+                        usuarios={usuarios}
+                      />
                     }
                   />
                 </Routes>
