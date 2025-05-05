@@ -29,6 +29,9 @@ import Baner_Negocios from "./view/admin/bener_negocios";
 import RegisterClient from "./view/client/Register";
 import Categorias_Negocios from "./view/admin/Categoria_Negocio";
 
+export const URL = "https://domicilios.fundacionhuellas.com.co/API/";
+// export const URL = " http://localhost/Apps_Domicilios/API/";
+
 function App() {
   const [Rol, setRol] = useState(null);
   const [IdUser, setIdUser] = useState(null);
@@ -36,8 +39,7 @@ function App() {
   const [usuarios, setusuarios] = useState(null);
   const [nombre, setnombre] = useState(null);
 
-  //axios.defaults.baseURL = " http://localhost/Apps_Domicilios/API/";
-  axios.defaults.baseURL = " https://domicilios.fundacionhuellas.com.co/API/";
+  axios.defaults.baseURL = URL;
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
