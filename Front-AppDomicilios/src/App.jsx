@@ -95,7 +95,10 @@ function App() {
                 <Container Roles={Rol} usuarios={usuarios}>
                   <Routes>
                     <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/usuarios" element={<Usuarios />} />
+                    <Route
+                      path="/usuarios"
+                      element={<Usuarios IdUser={IdUser} Roles={Rol} />}
+                    />
                     <Route path="/empresas" element={<Empresas />} />
                     <Route path="/baner" element={<Baner_Empresa />} />
                     <Route
