@@ -7,9 +7,7 @@ import {
 import Hora from "./Hora";
 import { useEffect, useState } from "react";
 
-/* import Reloj from "./reloj"; */
-
-export default function Header() {
+export default function Header({ nombre }) {
   useEffect(() => {
     const yaSono = sessionStorage.getItem("beeped");
 
@@ -51,6 +49,7 @@ export default function Header() {
               </div>
               <div className="text-gray-500 flex">
                 <KeyIcon className="w-5 mr-1" />
+                {nombre || "RunWay"}
               </div>
 
               <div className="dropdown-menu relative flex shrink-0 group">
@@ -63,7 +62,7 @@ export default function Header() {
                 <div className="dropdown-content hidden group-hover:block shadow-md p-2 bg-white rounded-md absolute top-9 right-0 w-56">
                   <div className="w-full">
                     <a
-                      href="javascript:void(0)"
+                      href="/usuarios"
                       className="text-sm text-gray-800 cursor-pointer flex items-center p-2 rounded-md hover:bg-gray-100 dropdown-item transition duration-300 ease-in-out"
                     >
                       <svg

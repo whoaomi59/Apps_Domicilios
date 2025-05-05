@@ -112,19 +112,31 @@ const Pedidos = ({ IdUser, Roles }) => {
     estado: item.estado,
     total: formatearCOP(item.total),
     button:
-      item.estado === "procesando" ? (
-        <button className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-500/70 hover:bg-green-500">
+      Roles === "admin" ? (
+        item.estado === "procesando" ? (
+          <button className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-500/70">
+            <span class="h-1.5 w-1.5 rounded-full bg-green-900"></span>
+            Solicitado
+          </button>
+        ) : (
+          <button
+            onClick={() => ChangueStatus(item, "procesando")}
+            className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-500/70 hover:bg-red-500"
+          >
+            <span class="h-1.5 w-1.5 rounded-full bg-red-900"></span>
+            Pendiente
+          </button>
+        )
+      ) : item.estado === "procesando" ? (
+        <label className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-400/70 ">
           <span class="h-1.5 w-1.5 rounded-full bg-green-900"></span>
           Solicitado
-        </button>
+        </label>
       ) : (
-        <button
-          onClick={() => ChangueStatus(item, "procesando")}
-          className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-500/70 hover:bg-red-500"
-        >
+        <label className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-500/70">
           <span class="h-1.5 w-1.5 rounded-full bg-red-900"></span>
           Pendiente
-        </button>
+        </label>
       ),
   }));
 
@@ -133,6 +145,7 @@ const Pedidos = ({ IdUser, Roles }) => {
   }
   return (
     <div className="p-4">
+      {Roles}
       <Grid
         module={"Pedidos" + " " + name}
         columns={Columns}

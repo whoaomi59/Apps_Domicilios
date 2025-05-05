@@ -92,15 +92,21 @@ function App() {
             path="/*"
             element={
               <PrivateRoute>
-                <Container Roles={Rol} usuarios={usuarios}>
+                <Container Roles={Rol} usuarios={usuarios} nombre={nombre}>
                   <Routes>
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/usuarios" element={<Usuarios />} />
+                    <Route
+                      path="/dashboard"
+                      element={<Dashboard Roles={Rol} />}
+                    />
+                    <Route
+                      path="/usuarios"
+                      element={<Usuarios IdUser={IdUser} Roles={Rol} />}
+                    />
                     <Route path="/empresas" element={<Empresas />} />
                     <Route path="/baner" element={<Baner_Empresa />} />
                     <Route
-                      path="/baner_negocios"
-                      element={<Baner_Negocios />}
+                      path="/baner_negocios/:id/:name"
+                      element={<Baner_Negocios Roles={Rol} IdUser={IdUser} />}
                     />
                     <Route
                       path="/pedidos/:id/:name"
