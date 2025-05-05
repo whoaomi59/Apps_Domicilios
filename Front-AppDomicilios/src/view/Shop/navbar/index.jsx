@@ -113,40 +113,37 @@ export default function NavbarShop({ logo, Roles, nombre }) {
               Negocios{" "}
               <BuildingStorefrontIcon className="w-5 ml-2 text-gray-500" />
             </a>
-            {Roles && (
-              <div className="flex items-center">
+
+            {Roles === "admin" || Roles === "negocio" ? (
+              <a
+                className="flex items-center text-black hover:text-green-600"
+                href="/dashboard"
+              >
+                Admin
+                <WrenchScrewdriverIcon className="w-5 ml-2 text-gray-500" />
+              </a>
+            ) : (
+              <>
                 <a
                   className="flex items-center text-black hover:text-green-600"
-                  href="/shop/pedidos"
+                  href="/shop/car_shop"
                 >
-                  Mis pedidos{" "}
-                  <ShoppingBagIcon className="w-5 ml-2 text-gray-500" />
+                  Carrito{" "}
+                  <ShoppingCartIcon className="w-5 ml-2 text-gray-500" />
                 </a>
-              </div>
-            )}
-            <a
-              className="flex items-center text-black hover:text-green-600"
-              href="/shop/car_shop"
-            >
-              Carrito <ShoppingCartIcon className="w-5 ml-2 text-gray-500" />
-            </a>
-            {Roles === "admin" && (
-              <a
-                className="flex items-center text-black hover:text-green-600"
-                href="/dashboard"
-              >
-                Admin{" "}
-                <WrenchScrewdriverIcon className="w-5 ml-2 text-gray-500" />
-              </a>
-            )}
-            {Roles === "negocio" && (
-              <a
-                className="flex items-center text-black hover:text-green-600"
-                href="/dashboard"
-              >
-                Admin{" "}
-                <WrenchScrewdriverIcon className="w-5 ml-2 text-gray-500" />
-              </a>
+
+                {Roles && (
+                  <div className="flex items-center">
+                    <a
+                      className="flex items-center text-black hover:text-green-600"
+                      href="/shop/pedidos"
+                    >
+                      Mis pedidos
+                      <ShoppingBagIcon className="w-5 ml-2 text-gray-500" />
+                    </a>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>
