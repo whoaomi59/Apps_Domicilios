@@ -68,10 +68,9 @@ export default function Detalle_Pedido({ logo, empresa, datos_empresa }) {
                 <br />
                 {datos_empresa.descripcion}
                 <br />
-                {datos_empresa.direccion}
-                <br />
-                {datos_empresa.telefono},{datos_empresa.email}
-                <br />
+                {datos_empresa.direccion} <br />
+                {datos_empresa.email}
+                <br /> {datos_empresa.telefono}
               </address>
             </div>
           </div>
