@@ -136,21 +136,6 @@ export default function Car_Shop({ usuarios }) {
               direccion: direccion,
             },
           });
-          let mesaje = await axios.post("/api/mesajes.api/mesajes.php", {
-            numeroNegocio: number,
-            keyNegocios: key,
-            numero_Factura: factura,
-            cliente_id: usuarios.id,
-            negocio_id: negocioId,
-            total: total,
-            estado: "pendiente",
-            productos: products,
-            ubicacion: ubicacionEnvio,
-            tipoUbicacion: tipoUbicacion,
-            telefono: numerotelefono,
-            costoEnvio: shippingCost,
-            fk_pedido: factura,
-          });
         }
       }
 
