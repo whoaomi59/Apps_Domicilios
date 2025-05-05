@@ -2,7 +2,7 @@ import { useState } from "react";
 import Header from "../header";
 import Navbar from "../navbar";
 
-export default function Container({ children, usuarios, Roles }) {
+export default function Container({ children, usuarios, Roles, nombre }) {
   const [statemenu, setstatemenu] = useState(false);
 
   const Toggle = () => {
@@ -11,7 +11,7 @@ export default function Container({ children, usuarios, Roles }) {
 
   return (
     <div className="relative font-[sans-serif] pt-[70px] h-screen">
-      <Header usuarios={usuarios} Toggle={Toggle} />
+      <Header usuarios={usuarios} Toggle={Toggle} nombre={nombre} />
       <div>
         <div className="flex items-start">
           <Navbar toggle={statemenu} Roles={Roles} />

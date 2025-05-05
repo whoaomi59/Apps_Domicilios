@@ -92,9 +92,12 @@ function App() {
             path="/*"
             element={
               <PrivateRoute>
-                <Container Roles={Rol} usuarios={usuarios}>
+                <Container Roles={Rol} usuarios={usuarios} nombre={nombre}>
                   <Routes>
-                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route
+                      path="/dashboard"
+                      element={<Dashboard Roles={Rol} />}
+                    />
                     <Route
                       path="/usuarios"
                       element={<Usuarios IdUser={IdUser} Roles={Rol} />}
