@@ -99,8 +99,8 @@ function App() {
                     <Route path="/empresas" element={<Empresas />} />
                     <Route path="/baner" element={<Baner_Empresa />} />
                     <Route
-                      path="/baner_negocios"
-                      element={<Baner_Negocios />}
+                      path="/baner_negocios/:id/:name"
+                      element={<Baner_Negocios Roles={Rol} IdUser={IdUser} />}
                     />
                     <Route
                       path="/pedidos/:id/:name"

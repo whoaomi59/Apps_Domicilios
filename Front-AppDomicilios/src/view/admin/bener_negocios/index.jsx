@@ -3,10 +3,12 @@ import axios from "axios";
 import Grid from "../../../components/grid/grid";
 import { Columns, fields } from "./models";
 import { Alertas } from "../../../components/content/alert/Sweealert";
+import { useParams } from "react-router-dom";
 
-export default function Baner_Negocios() {
+export default function Baner_Negocios({ IdUser, Roles }) {
   const [usuarios, setUsuarios] = useState([]);
   const [refresh, setrefresh] = useState([]);
+  const { id, name } = useParams();
 
   const handleFormSubmit = async (formData) => {
     const form = new FormData();
@@ -34,8 +36,10 @@ export default function Baner_Negocios() {
     const Get = async () => {
       try {
         let response = await axios.get("/api/negocios/img_negocio.php");
-
-        return setUsuarios(response.data);
+        const rutasPermitidas = response.data.filter(
+          (item) => item.negocios_id && item.negocios_id.includes(id)
+        );
+        setUsuarios(rutasPermitidas);
       } catch (error) {
         console.log(error);
       }
@@ -52,7 +56,7 @@ export default function Baner_Negocios() {
   return (
     <div className="p-4">
       <Grid
-        module={"Baner"}
+        module={("Baner Negocios", name)}
         columns={Columns}
         data={Formater}
         fields={fields}

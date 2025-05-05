@@ -20,6 +20,9 @@ const Negocios = ({ IdUser, Roles }) => {
   const VerPedidos = (record) => {
     window.location.href = `/pedidos/${record.id}/${record.nombre}`;
   };
+  const VerBaners = (record) => {
+    window.location.href = `/baner_negocios/${record.id}/${record.nombre}`;
+  };
 
   const handleFormSubmit = async (formData) => {
     const form = new FormData();
@@ -156,6 +159,12 @@ const Negocios = ({ IdUser, Roles }) => {
         fields={fields}
         handleFormSubmit={handleFormSubmit}
         actions={[
+          {
+            icon: "PhotoIcon",
+            className: "bg-red-500 text-white",
+            label: "Baner Negocio",
+            onClick: (record) => VerBaners(record),
+          },
           {
             icon: "NoSymbolIcon",
             className: "bg-orange-500 text-white",
