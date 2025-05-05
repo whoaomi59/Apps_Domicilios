@@ -7,7 +7,7 @@ export const enviarWhatsApp = async ({
   keyNegocios,
 }) => {
   console.log("numero del api" + numeroNegocio);
-  const numero = "573184141985"; //Numero Admin
+  const numero = "573184141985";
   /*   const numero = "573144160224"; */
   const texto = construirMensaje(mensaje);
   const url = `https://api.callmebot.com/whatsapp.php?phone=${numero}&text=${encodeURIComponent(
@@ -18,7 +18,6 @@ export const enviarWhatsApp = async ({
 
   try {
     axios.get(url);
-    /*    axios.get(url2); */
     console.log("Mensaje enviado con CallMeBot");
   } catch (error) {
     console.error("Error al enviar mensaje:", error);
@@ -41,37 +40,40 @@ const construirMensaje = (pedido) => {
     direccion,
   } = pedido;
 
-  // Convertir a número para evitar concatenación de strings
   const subtotal = parseFloat(total) || 0;
   const envio = parseFloat(costoEnvio) || 0;
   const Total = subtotal + envio;
 
-  let mensaje = `🛍️ *Nueva Compra Realizada*\n\n`;
-  mensaje += `Numero de factura: ${numero_Factura}\n`;
-  mensaje += `\nEstado: ${estado}\n\n`;
-  mensaje += `🧑*Cliente consumidor:*\n\n`;
-  mensaje += `Nombre: ${cliente_id}\n`;
-  mensaje += `Telefono: ${telefono}\n`;
-  mensaje += `Direccion: ${tipoUbicacion}\n`;
-  mensaje += `Ubicacion: ${ubicacion}\n\n`;
-  mensaje += `🏪*Restaurante:*\n\n`;
-  mensaje += `Nombre: ${negocio_id}\n`;
-  mensaje += `Telefono: ${telefono_negocio}\n`;
-  mensaje += `Direccion: ${direccion}\n\n`;
-  mensaje += `🛒 *Datos del pedido:*\n\n`;
+  let mensaje = `🧾 *¡Nueva compra confirmada!*\n\n`;
 
+  mensaje += `📄 *Factura N.º:* ${numero_Factura}\n`;
+  mensaje += `📌 *Estado del pedido:* ${estado}\n\n`;
+
+  mensaje += `🙋‍♂️ *Datos del cliente*\n`;
+  mensaje += `👤 Nombre: ${cliente_id}\n`;
+  mensaje += `📞 Teléfono: ${telefono}\n`;
+  mensaje += `📍 Dirección: ${tipoUbicacion}\n`;
+  mensaje += `🗺️ Ubicación: ${ubicacion}\n\n`;
+
+  mensaje += `🍽️ *Datos del restaurante*\n`;
+  mensaje += `🏪 Nombre: ${negocio_id}\n`;
+  mensaje += `📞 Teléfono: ${telefono_negocio}\n`;
+  mensaje += `📍 Dirección: ${direccion}\n\n`;
+
+  mensaje += `🛒 *Productos comprados*\n`;
   productos.forEach((prod, index) => {
-    const nombre = prod.Producto || "Sin nombre";
+    const nombre = prod.Producto || "Producto sin nombre";
     const cantidad = prod.cantidad || 0;
     const precio = parseFloat(prod.precio) || 0;
-    mensaje += `${
+    mensaje += `  ${
       index + 1
-    }. ${nombre} - Cantidad: ${cantidad} - Precio: $${precio.toFixed(2)}`;
+    }. ${nombre} | Cant: ${cantidad} | $${precio.toFixed(2)}\n`;
   });
 
-  mensaje += `\n\n💵 SubTotal: ${formatearCOP(subtotal)}\n`;
-  mensaje += `📦 Domicilio: ${formatearCOP(envio)}\n\n`;
-  mensaje += `💵 Total: ${formatearCOP(Total)}\n`;
+  mensaje += `\n💵 *Resumen del pedido*\n`;
+  mensaje += `🧾 Subtotal: ${formatearCOP(subtotal)}\n`;
+  mensaje += `🚚 Envío: ${formatearCOP(envio)}\n`;
+  mensaje += `🟩 *Total a pagar: ${formatearCOP(Total)}*\n`;
 
   return mensaje;
 };
