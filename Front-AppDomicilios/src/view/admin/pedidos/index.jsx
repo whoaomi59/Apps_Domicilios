@@ -16,7 +16,13 @@ const Pedidos = ({ IdUser, Roles }) => {
 
   const VerProductos = (record) => {
     const { id, usuario_pedido } = record;
-    window.location.href = `/shop/pedidos/detalle/${id}/${usuario_pedido}`;
+
+    if (Roles.includes("admin")) {
+      window.location.href = `/shop/pedidos/detalle/${id}/${usuario_pedido}`;
+    } else {
+      window.location.href = `/shop/pedidos/detalle/${id}/RunWay`;
+    }
+    return;
   };
 
   const handleFormSubmit = async (data) => {

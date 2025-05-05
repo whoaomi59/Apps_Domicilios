@@ -2,13 +2,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { PrinterIcon } from "@heroicons/react/24/outline";
+import MiQR from "../../../API/qr";
+import { URL } from "../../../App";
 
 export default function Detalle_Pedido({ logo, empresa, datos_empresa }) {
   const { id, nombre } = useParams();
   const [data, setData] = useState([]);
   const FechaHoy = new Date().toISOString().split("T")[0];
-  const [subtotal, setSubtotal] = useState(0);
   const [total, setTotal] = useState(0);
+  const currentUrl = window.location.href;
 
   useEffect(() => {
     if (!id) return;
@@ -68,14 +70,12 @@ export default function Detalle_Pedido({ logo, empresa, datos_empresa }) {
                 <br />
                 {datos_empresa.descripcion}
                 <br />
-                {datos_empresa.direccion}
-                <br />
-                {datos_empresa.telefono},{datos_empresa.email}
-                <br />
+                {datos_empresa.direccion} <br />
+                {datos_empresa.email}
+                <br /> {datos_empresa.telefono}
               </address>
             </div>
           </div>
-
           <div className="mt-8 grid sm:grid-cols-2 gap-3">
             <div>
               <h3 className="text-lg font-semibold text-gray-800">Cobrar a:</h3>
@@ -108,7 +108,6 @@ export default function Detalle_Pedido({ logo, empresa, datos_empresa }) {
             {/* Col */}
           </div>
           {/* End Grid */}
-
           {/* Table */}
           <div className="mt-6">
             <div className="border border-gray-200 p-4 rounded-lg space-y-4">
@@ -179,19 +178,26 @@ export default function Detalle_Pedido({ logo, empresa, datos_empresa }) {
               </div>
             </div>
           </div>
-          <div className="mt-8 sm:mt-12">
-            <h4 className="text-lg font-semibold text-gray-800">¡Gracias!</h4>
-            <p className="text-gray-500">
-              Si tiene alguna pregunta sobre esta factura, utilice la siguiente
-              información de contacto:
-            </p>
-            <div className="mt-2">
-              <p className="block text-sm font-medium text-gray-800">
-                whoaomi11@gmail.com
+
+          <div className="flex flex-col sm:flex-row justify-between items-start gap-8 mt-8 sm:mt-12">
+            <div>
+              <h4 className="text-lg font-semibold text-gray-800">¡Gracias!</h4>
+              <p className="text-gray-500">
+                Si tiene alguna pregunta sobre esta factura, utilice la
+                siguiente información de contacto:
               </p>
-              <p className="block text-sm font-medium text-gray-800">
-                +57 3144160224
-              </p>
+              <div className="mt-2">
+                <p className="block text-sm font-medium text-gray-800">
+                  whoaomi11@gmail.com
+                </p>
+                <p className="block text-sm font-medium text-gray-800">
+                  +57 3144160224
+                </p>
+              </div>
+              <p className="mt-5 text-sm text-gray-500">© 2025 Whoaomi.</p>
+            </div>
+            <div>
+              <MiQR valor={currentUrl} size={150} />
             </div>
           </div>
 
