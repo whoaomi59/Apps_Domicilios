@@ -109,6 +109,9 @@ export default function Car_Shop({ usuarios }) {
           negocio_id: negocioId,
           total: totalPedido.toFixed(2),
           estado: "pendiente",
+          ubicacion: ubicacionEnvio,
+          tipoUbicacion: tipoUbicacion,
+          Telefono: numerotelefono,
           productos: productos,
         });
 

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { formatearCOP } from "../components/content/formatoMoneda";
 
 export const EnviarWhatsApp_Admin = async ({ mensaje }) => {
   const numero = "573184141985";
@@ -20,6 +21,54 @@ export const EnviarWhatsApp_Admin = async ({ mensaje }) => {
   }
 };
 
-const construirMensaje = ({ numero_Factura, negocio_id }) => {
-  return `✅ *Pedido Listo para Entregar*\n\n🧾 Factura ID: ${numero_Factura}\n🏪 Negocio: ${negocio_id}`;
+const construirMensaje = (pedido) => {
+  const {
+    cliente_id,
+    negocio_id,
+    numero_Factura,
+    total,
+    estado,
+    productos,
+    ubicacion,
+    tipoUbicacion,
+    telefono,
+    telefono_negocio,
+    direccion,
+    costoEnvio,
+  } = pedido;
+
+  const subtotal = parseFloat(total) || 0;
+  const envio = parseFloat(costoEnvio) || 0;
+  const Total = subtotal + envio;
+
+  let mensaje = `🧾 *¡Nueva compra confirmada!*\n\n`;
+
+  mensaje += `📄 *Factura N.º:* ${numero_Factura}\n`;
+  mensaje += `📌 *Estado del pedido:* ${estado}\n\n`;
+
+  mensaje += `🙋‍♂️ *Datos del cliente*\n`;
+  mensaje += `👤 Nombre: ${cliente_id}\n`;
+  mensaje += `📞 Teléfono: ${telefono}\n`;
+  mensaje += `📍 Dirección: ${tipoUbicacion}\n`;
+  mensaje += `🗺️ Ubicación: ${ubicacion}\n\n`;
+
+  mensaje += `🍽️ *Datos del restaurante*\n`;
+  mensaje += `🏪 Nombre: ${negocio_id}\n`;
+  mensaje += `📞 Teléfono: ${telefono_negocio}\n`;
+  mensaje += `📍 Dirección: ${direccion}\n\n`;
+
+  mensaje += `🛒 *Productos comprados*\n`;
+  productos.forEach((prod, index) => {
+    const nombre = prod.nombre || "Producto sin nombre";
+    const cantidad = prod.cantidad || 0;
+    const precio = parseFloat(prod.precio) || 0;
+    mensaje += `\n${cantidad} x ${nombre} - Precio: ${formatearCOP(precio)}`;
+  });
+
+  mensaje += `\n\n💵 *Resumen del pedido*\n`;
+  mensaje += `🧾 Subtotal: ${formatearCOP(subtotal)}\n`;
+  mensaje += `🚚 Envío: ${formatearCOP(envio)}\n`;
+  mensaje += `🟩 *Total a pagar: ${formatearCOP(Total)}*\n`;
+
+  return mensaje;
 };

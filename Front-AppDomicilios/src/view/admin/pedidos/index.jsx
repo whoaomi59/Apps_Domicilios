@@ -17,16 +17,43 @@ const Pedidos = ({ IdUser, Roles }) => {
 
   const Notificar = async (item) => {
     console.table(item);
-    EnviarWhatsApp_Admin({
-      mensaje: {
-        numero_Factura: item.id_pedido, //OK
-        negocio_id: item.nombre_negocio, //OK
-      },
-    });
-    return Alertas({
-      icon: "success",
-      message: "RunWay Notificado!!",
-    });
+    try {
+      let response = await axios.put(
+        "/api/pedidos/controller.php",
+        {
+          id: item.id_pedido,
+          estado: "enviado",
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      EnviarWhatsApp_Admin({
+        mensaje: {
+          numero_Factura: item.id_pedido, //OK
+          cliente_id: item.usuario_pedido, //OK
+          negocio_id: item.nombre_negocio, //OK
+          telefono_negocio: response.data.pedido_info.telefono, //OK
+          total: item.total, //OK
+          estado: "Recoger", //OK
+          productos: response.data.pedido_info.productos, //OK
+          direccion: item.direc_negocio, //OK
+          telefono: item.tel_user_pedi, //OK
+          ubicacion: item.ubica_domici, //OK
+          tipoUbicacion: item.tipoUbicacion, //OK
+          costoEnvio: item.tipoUbicacion === "Rural" ? 10000 : 5000,
+        },
+      });
+      setrefresh((prev) => !prev);
+      return Alertas({
+        icon: "success",
+        message: "Registrado!!",
+      });
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const VerProductos = (record) => {
@@ -127,6 +154,11 @@ const Pedidos = ({ IdUser, Roles }) => {
 
   const Formater = usuarios.map((item) => ({
     id: item.id_pedido,
+    dire_negocio: item.dire_negocio,
+    direc_negocio: item.direc_negocio,
+    ubica_domici: item.ubica_domici,
+    tipoUbicacion: item.tipoUbicacion,
+    tel_user_pedi: item.tel_user_pedi,
     logo_pedido: <img src={item.logo_pedido} className="w-10" />,
     nombre_negocio: item.nombre_negocio,
     usuario_pedido: item.usuario_pedido,
@@ -139,6 +171,11 @@ const Pedidos = ({ IdUser, Roles }) => {
             <span class="h-1.5 w-1.5 rounded-full bg-green-900"></span>
             Solicitado
           </button>
+        ) : item.estado === "enviado" ? (
+          <label className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-400/70">
+            <span class="h-1.5 w-1.5 rounded-full bg-orange-900"></span>
+            Notificado
+          </label>
         ) : (
           <button
             onClick={() => ChangueStatus(item, "procesando")}
@@ -152,6 +189,11 @@ const Pedidos = ({ IdUser, Roles }) => {
         <label className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-400/70 ">
           <span class="h-1.5 w-1.5 rounded-full bg-green-900"></span>
           Solicitado
+        </label>
+      ) : item.estado === "enviado" ? (
+        <label className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-400/70">
+          <span class="h-1.5 w-1.5 rounded-full bg-orange-900"></span>
+          Notificado
         </label>
       ) : (
         <label className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-500/70">
