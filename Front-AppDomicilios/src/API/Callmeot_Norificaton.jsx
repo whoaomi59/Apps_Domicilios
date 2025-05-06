@@ -4,7 +4,7 @@ import { formatearCOP } from "../components/content/formatoMoneda";
 export const EnviarWhatsApp_Admin = async ({ mensaje }) => {
   const numero = "573184141985";
   const ApiKey = "9181021";
-  /*   const numero = "573144160224";
+  /*  const numero = "573144160224";
   const ApiKey = "7774438"; */
   const texto = construirMensaje(mensaje);
 
@@ -34,9 +34,12 @@ const construirMensaje = (pedido) => {
     telefono,
     telefono_negocio,
     direccion,
+    costoEnvio,
   } = pedido;
 
   const subtotal = parseFloat(total) || 0;
+  const envio = parseFloat(costoEnvio) || 0;
+  const Total = subtotal + envio;
 
   let mensaje = `🧾 *¡Nueva compra confirmada!*\n\n`;
 
@@ -63,7 +66,9 @@ const construirMensaje = (pedido) => {
   });
 
   mensaje += `\n\n💵 *Resumen del pedido*\n`;
-  mensaje += `🧾 Total: ${formatearCOP(subtotal)}\n`;
+  mensaje += `🧾 Subtotal: ${formatearCOP(subtotal)}\n`;
+  mensaje += `🚚 Envío: ${formatearCOP(envio)}\n`;
+  mensaje += `🟩 *Total a pagar: ${formatearCOP(Total)}*\n`;
 
   return mensaje;
 };

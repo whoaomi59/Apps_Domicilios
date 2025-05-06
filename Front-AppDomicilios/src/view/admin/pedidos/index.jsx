@@ -43,6 +43,7 @@ const Pedidos = ({ IdUser, Roles }) => {
           telefono: item.tel_user_pedi, //OK
           ubicacion: item.ubica_domici, //OK
           tipoUbicacion: item.tipoUbicacion, //OK
+          costoEnvio: item.tipoUbicacion === "Rural" ? 10000 : 5000,
         },
       });
       setrefresh((prev) => !prev);
