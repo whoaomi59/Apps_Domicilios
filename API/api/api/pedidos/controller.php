@@ -23,7 +23,7 @@ switch ($request_method) {
 function get() {
     global $conn;
     try {
-        $result = $conn->query("SELECT pe.id AS id_pedido, u.nombre AS usuario_pedido, n.logo AS logo_pedido, n.nombre AS nombre_negocio,pe.estado, pe.total, n.usuario_id FROM pedidos pe LEFT JOIN usuarios u ON pe.cliente_id = u.id LEFT JOIN negocios n ON pe.negocio_id = n.id ORDER BY pe.id DESC");
+        $result = $conn->query("SELECT pe.id AS id_pedido, u.nombre AS usuario_pedido, n.logo AS logo_pedido, n.nombre AS nombre_negocio,pe.estado, pe.total, n.usuario_id,n.direccion AS dire_negocio,pe.Telefono AS tel_user_pedi,pe.ubicacion AS ubica_domici,pe.tipoUbicacion,n.direccion AS direc_negocio FROM pedidos pe LEFT JOIN usuarios u ON pe.cliente_id = u.id LEFT JOIN negocios n ON pe.negocio_id = n.id ORDER BY pe.id DESC");
      
         $data = [];
         while ($row = $result->fetch_assoc()) {
@@ -63,14 +63,17 @@ function post() {
 
     try {
         // Insertar el pedido
-        $stmt = $conn->prepare("INSERT INTO pedidos (cliente_id, negocio_id, domiciliario_id, total, estado) VALUES (?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO pedidos (cliente_id, negocio_id, domiciliario_id, total, estado,ubicacion,tipoUbicacion,Telefono) VALUES (?, ?, ?, ?, ?,?,?,?)");
         $stmt->bind_param(
-            "iiids", 
+            "iiidssss", 
             $data["cliente_id"], 
             $data["negocio_id"], 
             $data["domiciliario_id"], 
             $data["total"], 
-            $data["estado"]
+            $data["estado"],
+            $data["ubicacion"],
+            $data["tipoUbicacion"],
+            $data["Telefono"]
         );
 
         if (!$stmt->execute()) {

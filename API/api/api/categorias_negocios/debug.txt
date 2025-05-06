@@ -1,9 +1,9 @@
 RAW:
-{"nombre":"PASTELERIAS","id":"2"}
+{"nombre":"RESTAURANTES","id":"5"}
 
 PARSED:
 Array
 (
-    [nombre] => PASTELERIAS
-    [id] => 2
+    [nombre] => RESTAURANTES
+    [id] => 5
 )
