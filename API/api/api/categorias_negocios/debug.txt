@@ -1,0 +1,9 @@
+RAW:
+{"nombre":"PASTELERIAS","id":"2"}
+
+PARSED:
+Array
+(
+    [nombre] => PASTELERIAS
+    [id] => 2
+)
