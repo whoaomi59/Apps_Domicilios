@@ -7,12 +7,27 @@ import { useParams } from "react-router-dom";
 import { Alertas } from "../../../components/content/alert/Sweealert";
 import { EnviarWhatsApp_Negocio } from "../../../API/CallmeBot_Negocio";
 import Loader from "../../../components/content/loader";
+import { EnviarWhatsApp_Admin } from "../../../API/Callmeot_Norificaton";
 
 const Pedidos = ({ IdUser, Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
   const [refresh, setrefresh] = useState(false);
   const [loader, setloader] = useState(false);
   const { id, name } = useParams();
+
+  const Notificar = async (item) => {
+    console.table(item);
+    EnviarWhatsApp_Admin({
+      mensaje: {
+        numero_Factura: item.id_pedido, //OK
+        negocio_id: item.nombre_negocio, //OK
+      },
+    });
+    return Alertas({
+      icon: "success",
+      message: "RunWay Notificado!!",
+    });
+  };
 
   const VerProductos = (record) => {
     const { id, usuario_pedido } = record;
@@ -144,6 +159,17 @@ const Pedidos = ({ IdUser, Roles }) => {
           Pendiente
         </label>
       ),
+    pedido:
+      Roles === "admin"
+        ? null
+        : item.estado === "procesando" && (
+            <button
+              onClick={() => Notificar(item)}
+              className="bg-green-200 p-1.5 rounded-full hover:bg-green-300"
+            >
+              <img src="/iconos/entrega.png" />
+            </button>
+          ),
   }));
 
   if (loader) {
@@ -151,7 +177,6 @@ const Pedidos = ({ IdUser, Roles }) => {
   }
   return (
     <div className="p-4">
-      {Roles}
       <Grid
         module={"Pedidos" + " " + name}
         columns={Columns}
