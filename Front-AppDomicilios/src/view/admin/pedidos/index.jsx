@@ -171,6 +171,11 @@ const Pedidos = ({ IdUser, Roles }) => {
             <span class="h-1.5 w-1.5 rounded-full bg-green-900"></span>
             Solicitado
           </button>
+        ) : item.estado === "enviado" ? (
+          <label className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-400/70">
+            <span class="h-1.5 w-1.5 rounded-full bg-orange-900"></span>
+            Notificado
+          </label>
         ) : (
           <button
             onClick={() => ChangueStatus(item, "procesando")}
