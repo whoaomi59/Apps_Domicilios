@@ -8,7 +8,7 @@ export const enviarWhatsApp = async ({
 }) => {
   console.log("numero del api" + numeroNegocio);
   const numero = "573184141985";
-  /*   const numero = "573144160224"; */
+  /* const numero = "573144160224"; */
   const texto = construirMensaje(mensaje);
   const url = `https://api.callmebot.com/whatsapp.php?phone=${numero}&text=${encodeURIComponent(
     texto
@@ -65,12 +65,10 @@ const construirMensaje = (pedido) => {
     const nombre = prod.Producto || "Producto sin nombre";
     const cantidad = prod.cantidad || 0;
     const precio = parseFloat(prod.precio) || 0;
-    mensaje += `  ${
-      index + 1
-    }. ${nombre} | Cant: ${cantidad} | $${precio.toFixed(2)}\n`;
+    mensaje += `\n${cantidad} x ${nombre} - Precio: ${formatearCOP(precio)}`;
   });
 
-  mensaje += `\n💵 *Resumen del pedido*\n`;
+  mensaje += `\n\n💵 *Resumen del pedido*\n`;
   mensaje += `🧾 Subtotal: ${formatearCOP(subtotal)}\n`;
   mensaje += `🚚 Envío: ${formatearCOP(envio)}\n`;
   mensaje += `🟩 *Total a pagar: ${formatearCOP(Total)}*\n`;
