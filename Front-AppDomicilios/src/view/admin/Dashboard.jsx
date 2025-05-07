@@ -1,30 +1,35 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   ChartBarIcon,
   CalendarDaysIcon,
   CurrencyDollarIcon,
   BanknotesIcon,
 } from "@heroicons/react/24/outline";
+import { formatearCOP } from "../../components/content/formatoMoneda";
 
 const Dashboard = () => {
   const [totalPedidos, setTotalPedidos] = useState(0);
   const [pedidosPorDia, setPedidosPorDia] = useState({});
   const [dineroHoy, setDineroHoy] = useState(0);
   const [dineroTotal, setDineroTotal] = useState(0);
+  const [data, setdata] = useState([]);
+
+  console.table(data);
 
   useEffect(() => {
-    setTotalPedidos(pedidos.length);
+    setTotalPedidos(data.length);
 
     const hoy = new Date().toLocaleDateString();
 
     let totalHoy = 0;
     let totalGlobal = 0;
 
-    const agrupados = pedidos.reduce((acc, pedido) => {
-      const fecha = new Date(pedido.fecha).toLocaleDateString();
+    const agrupados = data.reduce((acc, pedido) => {
+      const fecha = new Date(pedido.fecha_pedido).toLocaleDateString();
       acc[fecha] = (acc[fecha] || 0) + 1;
 
-      const monto = pedido.monto || 0;
+      const monto = parseInt(pedido.total) || 0;
       totalGlobal += monto;
       if (fecha === hoy) {
         totalHoy += monto;
@@ -36,10 +41,22 @@ const Dashboard = () => {
     setPedidosPorDia(agrupados);
     setDineroHoy(totalHoy);
     setDineroTotal(totalGlobal);
-  }, [pedidos]);
+  }, [data]);
 
   const formatoPesos = (valor) =>
     valor.toLocaleString("es-CO", { style: "currency", currency: "COP" });
+
+  useEffect(() => {
+    const Get = async () => {
+      try {
+        let response = await axios.get("/api/pedidos/controller.php");
+        setdata(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    Get();
+  }, []);
 
   return (
     <div className="p-6 space-y-6 bg-gray-50 min-h-screen">
@@ -114,13 +131,15 @@ const Dashboard = () => {
 
         <div className="space-y-6 max-h-[500px] overflow-auto pr-4">
           {Object.entries(
-            pedidos.reduce((acc, pedido) => {
+            data.reduce((acc, pedido) => {
               const hoy = new Date().toLocaleDateString();
-              const fechaPedido = new Date(pedido.fecha).toLocaleDateString();
+              const fechaPedido = new Date(
+                pedido.fecha_pedido
+              ).toLocaleDateString();
               if (fechaPedido !== hoy) return acc; // solo pedidos de hoy
 
-              const negocio = pedido.negocio || "Sin nombre";
-              const monto = pedido.monto || 0;
+              const negocio = pedido.nombre_negocio || "Sin nombre";
+              const monto = parseInt(pedido.total) || 0;
 
               if (!acc[negocio]) acc[negocio] = { pedidos: 0, total: 0 };
 
@@ -144,7 +163,7 @@ const Dashboard = () => {
                 <span>
                   💰 Total:{" "}
                   <strong className="text-green-600">
-                    {formatoPesos(datos.total)}
+                    {formatearCOP(datos.total)}
                   </strong>
                 </span>
               </div>
@@ -157,15 +176,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-const pedidos = [
-  { id: 1, fecha: "2025-05-07", monto: 120000, negocio: "Pedro" },
-  {
-    id: 2,
-    fecha: "2025-05-07",
-    monto: 120000,
-    negocio: "Panadería San Carlos",
-  },
-  { id: 3, fecha: "2025-05-07", monto: 120000, negocio: "Panadería San Juan" },
-  { id: 4, fecha: "2025-05-07", monto: 120000, negocio: "Panadería San Juan" },
-];

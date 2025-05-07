@@ -8,6 +8,7 @@ import { Alertas } from "../../../components/content/alert/Sweealert";
 import { EnviarWhatsApp_Negocio } from "../../../API/CallmeBot_Negocio";
 import Loader from "../../../components/content/loader";
 import { EnviarWhatsApp_Admin } from "../../../API/Callmeot_Norificaton";
+import { ArrowRightIcon, BellIcon } from "@heroicons/react/24/outline";
 
 const Pedidos = ({ IdUser, Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
@@ -67,38 +68,6 @@ const Pedidos = ({ IdUser, Roles }) => {
     return;
   };
 
-  const handleFormSubmit = async (data) => {
-    try {
-      let response = await axios.put("/api/pedidos/controller.php", data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (data.estado == "procesando") {
-        EnviarWhatsApp_Negocio({
-          numeroNegocio: response.data.pedido_info.telefono, //OK
-          keyNegocios: response.data.pedido_info.KeyNegocio, //OK
-          mensaje: {
-            numero_Factura: data.id, //OK
-            negocio_id: "RunWay", //OK
-            productos: response.data.pedido_info.productos,
-          },
-        });
-      }
-      setrefresh((prev) => !prev);
-      return Alertas({
-        icon: "success",
-        message: "Registrado!!",
-      });
-    } catch (error) {
-      alert(error);
-      return Alertas({
-        icon: "error",
-        message: error,
-      });
-    }
-  };
-
   const ChangueStatus = async (data, status) => {
     try {
       let response = await axios.put(
@@ -154,7 +123,6 @@ const Pedidos = ({ IdUser, Roles }) => {
 
   const Formater = usuarios.map((item) => ({
     id: item.id_pedido,
-    dire_negocio: item.dire_negocio,
     direc_negocio: item.direc_negocio,
     ubica_domici: item.ubica_domici,
     tipoUbicacion: item.tipoUbicacion,
@@ -209,7 +177,7 @@ const Pedidos = ({ IdUser, Roles }) => {
               onClick={() => Notificar(item)}
               className="bg-green-200 p-1.5 rounded-full hover:bg-green-300"
             >
-              <img src="/iconos/entrega.png" />
+              <BellIcon className="w-5" />
             </button>
           ),
   }));
@@ -217,24 +185,56 @@ const Pedidos = ({ IdUser, Roles }) => {
   if (loader) {
     return <Loader />;
   }
+
   return (
-    <div className="p-4">
-      <Grid
-        module={"Pedidos" + " " + name}
-        columns={Columns}
-        data={Formater}
-        fields={fields}
-        handleFormSubmit={handleFormSubmit}
-        button={true}
-        buttonedit={true}
-        actions={[
-          {
-            icon: "ArrowRightCircleIcon",
-            className: "bg-blue-500 text-white",
-            onClick: (record) => VerProductos(record), // Llama a la función abrirModal con el registro
-          },
-        ]}
-      />
+    <div>
+      <h1 className="text-3xl font-extrabold text-gray-600 mb-5">
+        Pedidos, {name}
+      </h1>
+      <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {Formater.map((pedido) => (
+          <div
+            key={pedido.id}
+            className="bg-white shadow-md rounded-xl p-4 flex flex-col gap-3 border border-gray-200"
+          >
+            <div className="flex items-center gap-3">
+              {pedido.logo_pedido}
+              <div>
+                <h2 className="text-lg font-semibold">
+                  {pedido.nombre_negocio}
+                </h2>
+                <p className="text-sm text-gray-600">Pedido #{pedido.id}</p>
+              </div>
+            </div>
+
+            <div>
+              <p className="text-sm text-gray-500">Cliente:</p>
+              <p className="text-base">{pedido.usuario_pedido}</p>
+            </div>
+
+            <div>
+              <p className="text-sm text-gray-500">Dirección Negocio:</p>
+              <p className="text-base">{pedido.direc_negocio}</p>
+            </div>
+
+            <div>
+              <p className="text-sm text-gray-500">Total:</p>
+              <p className="text-lg font-bold">{pedido.total}</p>
+            </div>
+
+            <div className="flex gap-2 items-center">
+              {pedido.button}
+              {pedido.pedido}
+              <button
+                onClick={() => VerProductos(pedido)}
+                className="ml-auto p-2 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm"
+              >
+                <ArrowRightIcon className="w-5" />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
