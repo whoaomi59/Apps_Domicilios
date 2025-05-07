@@ -14,6 +14,7 @@ const Pedidos = ({ IdUser, Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
   const [refresh, setrefresh] = useState(false);
   const [loader, setloader] = useState(false);
+  const [filtro, setFiltro] = useState("todos");
   const { id, name } = useParams();
 
   const Notificar = async (item) => {
@@ -130,6 +131,7 @@ const Pedidos = ({ IdUser, Roles }) => {
     logo_pedido: <img src={item.logo_pedido} className="w-10" />,
     nombre_negocio: item.nombre_negocio,
     usuario_pedido: item.usuario_pedido,
+    fecha_pedido: item.fecha_pedido,
     estado: item.estado,
     total: formatearCOP(item.total),
     button:
@@ -225,6 +227,10 @@ const Pedidos = ({ IdUser, Roles }) => {
             <div>
               <p className="text-sm text-gray-500">Dirección Negocio:</p>
               <p className="text-base">{pedido.direc_negocio}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Fecha:</p>
+              <p className="text-base">{pedido.fecha_pedido}</p>
             </div>
 
             <div>

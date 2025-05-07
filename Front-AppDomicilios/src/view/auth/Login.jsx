@@ -36,7 +36,7 @@ const Login = ({ logo }) => {
 
         const rutas = {
           admin: "/dashboard",
-          negocio: "/dashboard",
+          negocio: "/negocios",
           default: "/shop/negocios",
         };
         const redirectPath = localStorage.getItem("redirectAfterLogin") || "/"; //REDIRIJE ALCARRITO SI LA POCISION DEL USUARIO LO REQUIERE
