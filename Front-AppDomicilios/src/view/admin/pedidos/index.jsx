@@ -182,15 +182,25 @@ const Pedidos = ({ IdUser, Roles }) => {
           ),
   }));
 
+  const totalPedidos = usuarios.reduce(
+    (sum, item) => sum + Number(item.total),
+    0
+  );
+
   if (loader) {
     return <Loader />;
   }
 
   return (
     <div className="p-4">
-      <h1 className="text-3xl font-extrabold text-gray-600 mb-5">
-        Pedidos, {name}
-      </h1>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold text-gray-700">
+          Pedidos - {name}
+        </h2>
+        <div className="text-lg font-bold text-green-700 bg-green-100 p-2 rounded-lg shadow">
+          Total pedidos: {formatearCOP(totalPedidos)}
+        </div>
+      </div>
       <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {Formater.map((pedido) => (
           <div
