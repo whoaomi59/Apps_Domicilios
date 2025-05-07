@@ -1,155 +1,171 @@
-import { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import AuthContext from "../../auth/AuthContext";
+import React, { useEffect, useState } from "react";
 import {
-  BuildingOffice2Icon,
-  TruckIcon,
-  UsersIcon,
-} from "@heroicons/react/16/solid";
+  ChartBarIcon,
+  CalendarDaysIcon,
+  CurrencyDollarIcon,
+  BanknotesIcon,
+} from "@heroicons/react/24/outline";
 
-const Dashboard = ({ Roles }) => {
-  const [usuarios, setUsuarios] = useState([]);
-  const [negocios, setnegocios] = useState([]);
-  const [pedidos, setpedidos] = useState([]);
+const Dashboard = () => {
+  const [totalPedidos, setTotalPedidos] = useState(0);
+  const [pedidosPorDia, setPedidosPorDia] = useState({});
+  const [dineroHoy, setDineroHoy] = useState(0);
+  const [dineroTotal, setDineroTotal] = useState(0);
 
   useEffect(() => {
-    const GetUsuarios = async () => {
-      try {
-        let response = await axios.get(
-          "/api/dashboar/Cont_user.php?action=usuarios"
-        );
-        setUsuarios(response.data.data[0]);
-      } catch (error) {
-        console.log(error);
+    setTotalPedidos(pedidos.length);
+
+    const hoy = new Date().toLocaleDateString();
+
+    let totalHoy = 0;
+    let totalGlobal = 0;
+
+    const agrupados = pedidos.reduce((acc, pedido) => {
+      const fecha = new Date(pedido.fecha).toLocaleDateString();
+      acc[fecha] = (acc[fecha] || 0) + 1;
+
+      const monto = pedido.monto || 0;
+      totalGlobal += monto;
+      if (fecha === hoy) {
+        totalHoy += monto;
       }
-    };
-    const GetNegocio = async () => {
-      try {
-        let response = await axios.get(
-          "/api/dashboar/Cont_user.php?action=negocios"
-        );
-        setnegocios(response.data.data[0]);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    const GetPedidos = async () => {
-      try {
-        let response = await axios.get(
-          "/api/dashboar/Cont_user.php?action=pedidos"
-        );
-        setpedidos(response.data.data[0]);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    GetPedidos();
-    GetNegocio();
-    GetUsuarios();
-  }, []);
+
+      return acc;
+    }, {});
+
+    setPedidosPorDia(agrupados);
+    setDineroHoy(totalHoy);
+    setDineroTotal(totalGlobal);
+  }, [pedidos]);
+
+  const formatoPesos = (valor) =>
+    valor.toLocaleString("es-CO", { style: "currency", currency: "COP" });
 
   return (
-    <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* TARJETAS */}
-        <div class="group flex flex-col h-full  border border-gray-200 shadow-2xs rounded-xl">
-          <div class="h-52 flex flex-col justify-center items-center bg-green-500 rounded-t-xl">
-            <BuildingOffice2Icon className="text-white w-30" />
-          </div>
-          <div class="p-4 md:p-6">
-            <span class="block mb-1 text-xs font-semibold uppercase text-green-600 .:text-blue-500">
-              Negocios: {negocios.total}
-            </span>
-            <h3 class="text-xl font-semibold text-gray-800 .:text-neutral-300 .:hover:text-white">
-              Negocios
-            </h3>
-            <p class="mt-3 text-gray-500 .:text-neutral-500">
-              Negocios asociados a nuestra empresa.
-            </p>
-          </div>
-          <div class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200 .:border-neutral-700 .:divide-neutral-700">
-            <a
-              class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none .:bg-neutral-900 .:border-neutral-700 .:text-white .:hover:bg-neutral-800 .:focus:bg-neutral-800"
-              href="/negocios"
-            >
-              Ver Tablas
-            </a>
-            <a
-              class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-xl bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none .:bg-neutral-900 .:border-neutral-700 .:text-white .:hover:bg-neutral-800 .:focus:bg-neutral-800"
-              href="#"
-            >
-              Consumir API
-            </a>
+    <div className="p-6 space-y-6 bg-gray-50 min-h-screen">
+      <h1 className="text-3xl font-extrabold text-gray-800">
+        📈 Dashboard de Pedidos
+      </h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        {/* Total Pedidos */}
+        <div className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-2xl shadow-lg p-6 transition-transform hover:scale-105">
+          <div className="flex justify-between items-center">
+            <div>
+              <h2 className="text-lg font-semibold">Total de Pedidos</h2>
+              <p className="text-5xl font-bold mt-2">{totalPedidos}</p>
+            </div>
+            <ChartBarIcon className="w-16 h-16 opacity-30" />
           </div>
         </div>
 
-        <div class="group flex flex-col h-full bg-white border border-gray-200 shadow-2xs rounded-xl .:bg-neutral-900 .:border-neutral-700 .:shadow-neutral-700/70">
-          <div class="h-52 flex flex-col justify-center items-center bg-gray-500 rounded-t-xl">
-            <UsersIcon className="text-white w-30" />
-          </div>
-          <div class="p-4 md:p-6">
-            <div className="flex">
-              <span class="block mb-1 text-xs font-semibold uppercase text-gray-600 .:text-rose-500">
-                Usuarios: {usuarios.total}
-              </span>
-            </div>
-            <h3 class="text-xl font-semibold text-gray-800 .:text-neutral-300 .:hover:text-white">
-              Usuarios
-            </h3>
-            <p class="mt-3 text-gray-500 .:text-neutral-500">
-              Usuarios asociados a nuestra empresa.
-            </p>
-          </div>
-          <div class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200 .:border-neutral-700 .:divide-neutral-700">
-            <a
-              class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none .:bg-neutral-900 .:border-neutral-700 .:text-white .:hover:bg-neutral-800 .:focus:bg-neutral-800"
-              href="/usuarios"
-            >
-              Ver Tablas
-            </a>
-            <a
-              class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-xl bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none .:bg-neutral-900 .:border-neutral-700 .:text-white .:hover:bg-neutral-800 .:focus:bg-neutral-800"
-              href="#"
-            >
-              Consumir API
-            </a>
-          </div>
-        </div>
-        {Roles === "admin" && (
-          <div class="group flex flex-col h-full bg-white border border-gray-200 shadow-2xs rounded-xl .:bg-neutral-900 .:border-neutral-700 .:shadow-neutral-700/70">
-            <div class="h-52 flex flex-col justify-center items-center bg-amber-500 rounded-t-xl">
-              <TruckIcon className="text-white w-30" />
-            </div>
-            <div class="p-4 md:p-6">
-              <span class="block mb-1 text-xs font-semibold uppercase text-amber-500">
-                Pedidos: {pedidos.total}
-              </span>
-              <h3 class="text-xl font-semibold text-gray-800 .:text-neutral-300 .:hover:text-white">
-                Pedidos
-              </h3>
-              <p class="mt-3 text-gray-500 .:text-neutral-500">
-                Domicilios realizados por nuestra empresa.
+        {/* Dinero Total */}
+        <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-2xl shadow-lg p-6 transition-transform hover:scale-105">
+          <div className="flex justify-between items-center">
+            <div>
+              <h2 className="text-lg font-semibold">Total Dinero</h2>
+              <p className="text-2xl font-bold mt-2">
+                {formatoPesos(dineroTotal)}
               </p>
             </div>
-            <div class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200 .:border-neutral-700 .:divide-neutral-700">
-              <a
-                class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-es-xl bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none .:bg-neutral-900 .:border-neutral-700 .:text-white .:hover:bg-neutral-800 .:focus:bg-neutral-800"
-                href="/pedidos"
-              >
-                Ver Tablas
-              </a>
-              <a
-                class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-xl bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none .:bg-neutral-900 .:border-neutral-700 .:text-white .:hover:bg-neutral-800 .:focus:bg-neutral-800"
-                href="#"
-              >
-                Consumir API
-              </a>
-            </div>
+            <BanknotesIcon className="w-14 h-14 opacity-30" />
           </div>
-        )}
+        </div>
+
+        {/* Dinero Hoy */}
+        <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-2xl shadow-lg p-6 transition-transform hover:scale-105">
+          <div className="flex justify-between items-center">
+            <div>
+              <h2 className="text-lg font-semibold">Dinero Hoy</h2>
+              <p className="text-2xl font-bold mt-2">
+                {formatoPesos(dineroHoy)}
+              </p>
+            </div>
+            <CurrencyDollarIcon className="w-14 h-14 opacity-30" />
+          </div>
+        </div>
+
+        {/* Pedidos por Día */}
+        <div className="bg-white rounded-2xl shadow-lg p-6 transition-transform hover:scale-105">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-gray-800">
+              Pedidos por Día
+            </h2>
+            <CalendarDaysIcon className="w-6 h-6 text-gray-400" />
+          </div>
+          <ul className="divide-y divide-gray-200 max-h-64 overflow-auto">
+            {Object.entries(pedidosPorDia).map(([fecha, cantidad]) => (
+              <li
+                key={fecha}
+                className="py-2 flex justify-between text-gray-700"
+              >
+                <span>{fecha}</span>
+                <span className="font-bold">{cantidad}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>{" "}
+      {/* Métricas por negocio */}
+      {/* Métricas por negocio (solo día actual) */}
+      <div className="bg-white rounded-2xl shadow-lg p-6 mt-6">
+        <h2 className="text-xl font-bold text-gray-800 mb-4">
+          📌 Pedidos de Hoy por Negocio
+        </h2>
+
+        <div className="space-y-6 max-h-[500px] overflow-auto pr-4">
+          {Object.entries(
+            pedidos.reduce((acc, pedido) => {
+              const hoy = new Date().toLocaleDateString();
+              const fechaPedido = new Date(pedido.fecha).toLocaleDateString();
+              if (fechaPedido !== hoy) return acc; // solo pedidos de hoy
+
+              const negocio = pedido.negocio || "Sin nombre";
+              const monto = pedido.monto || 0;
+
+              if (!acc[negocio]) acc[negocio] = { pedidos: 0, total: 0 };
+
+              acc[negocio].pedidos += 1;
+              acc[negocio].total += monto;
+
+              return acc;
+            }, {})
+          ).map(([negocio, datos]) => (
+            <div
+              key={negocio}
+              className="border border-gray-200 rounded-xl p-4"
+            >
+              <h3 className="text-lg font-semibold text-indigo-600 mb-1">
+                {negocio}
+              </h3>
+              <div className="flex justify-between text-sm text-gray-700">
+                <span>
+                  🧾 Pedidos: <strong>{datos.pedidos}</strong>
+                </span>
+                <span>
+                  💰 Total:{" "}
+                  <strong className="text-green-600">
+                    {formatoPesos(datos.total)}
+                  </strong>
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
 export default Dashboard;
+
+const pedidos = [
+  { id: 1, fecha: "2025-05-07", monto: 120000, negocio: "Pedro" },
+  {
+    id: 2,
+    fecha: "2025-05-07",
+    monto: 120000,
+    negocio: "Panadería San Carlos",
+  },
+  { id: 3, fecha: "2025-05-07", monto: 120000, negocio: "Panadería San Juan" },
+  { id: 4, fecha: "2025-05-07", monto: 120000, negocio: "Panadería San Juan" },
+];
