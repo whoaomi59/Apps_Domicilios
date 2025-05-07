@@ -187,7 +187,7 @@ const Pedidos = ({ IdUser, Roles }) => {
   }
 
   return (
-    <div>
+    <div className="p-4">
       <h1 className="text-3xl font-extrabold text-gray-600 mb-5">
         Pedidos, {name}
       </h1>
