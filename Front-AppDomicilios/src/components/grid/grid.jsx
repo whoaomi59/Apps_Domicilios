@@ -16,6 +16,7 @@ const Grid = ({
   const [itemsPerPage] = useState(6);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
+  const [viewMode, setViewMode] = useState("table"); // "table" o "cards"
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentData = data.slice(startIndex, startIndex + itemsPerPage);
@@ -92,33 +93,46 @@ const Grid = ({
             </div>
           )}
         </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm text-left text-gray-500    ">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-              <tr>
-                <th scope="col" className="px-4 py-3">
-                  Configuracion 🛠️
-                </th>
-                {columns.map((col) => (
-                  <th key={col.key} scope="col" className="px-4 py-3">
-                    {col.label}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {currentData.map((row, rowIndex) => (
-                <tr
-                  key={rowIndex}
-                  scope="row"
-                  className="px-4 py-3 font-medium text-gray-600 whitespace-nowrap"
-                >
-                  {" "}
-                  {actions && actions.length > 0 && (
-                    <td className="p-4 space-x-2 ">
-                      {buttonedit ? (
-                        ""
-                      ) : (
+        <div className="flex items-center space-x-2 p-2">
+          <button
+            className={`px-4 py-2 rounded ${
+              viewMode === "table" ? "bg-green-600 text-white" : "bg-gray-200"
+            }`}
+            onClick={() => setViewMode("table")}
+          >
+            <Icons.Bars3CenterLeftIcon className="w-5" />
+          </button>
+          <button
+            className={`px-4 py-2 rounded ${
+              viewMode === "cards" ? "bg-green-600 text-white" : "bg-gray-200"
+            }`}
+            onClick={() => setViewMode("cards")}
+          >
+            <Icons.Squares2X2Icon className="w-5" />
+          </button>
+        </div>
+
+        {viewMode === "table" ? (
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left text-gray-500">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                  <th className="px-4 py-3">Configuración 🛠️</th>
+                  {columns.map((col) => (
+                    <th key={col.key} className="px-4 py-3">
+                      {col.label}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {currentData.map((row, rowIndex) => (
+                  <tr
+                    key={rowIndex}
+                    className="px-4 py-3 font-medium text-gray-600 whitespace-nowrap"
+                  >
+                    <td className="p-4 space-x-2">
+                      {!buttonedit && (
                         <button
                           className="p-2 rounded bg-green-500 text-white hover:bg-gray-400 m-0.5"
                           title="Editar"
@@ -130,37 +144,96 @@ const Grid = ({
                           <Icons.PencilSquareIcon className="w-4" />
                         </button>
                       )}
-
-                      {actions.map((action, actionIndex) => {
+                      {actions.map((action, index) => {
                         const IconComponent = Icons[action.icon];
                         return (
                           <button
-                            key={actionIndex}
+                            key={index}
                             className={`p-2 rounded ${action.className} hover:bg-gray-400 m-0.5`}
-                            title={action.label}
                             onClick={(e) => {
                               e.stopPropagation();
-                              if (typeof action.onClick === "function") {
+                              if (typeof action.onClick === "function")
                                 action.onClick(row);
-                              }
                             }}
+                            title={action.label}
                           >
                             {IconComponent && <IconComponent className="w-4" />}
                           </button>
                         );
                       })}
                     </td>
-                  )}
-                  {columns.map((col) => (
-                    <td key={col.key} className="px-4 py-3">
-                      {row[col.key]}
-                    </td>
+                    {columns.map((col) => (
+                      <td key={col.key} className="px-4 py-3">
+                        {row[col.key]}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+            {currentData.map((row, index) => (
+              <div
+                key={index}
+                className="bg-gradient-to-br from-white to-gray-100 shadow-xl rounded-2xl p-6 border border-gray-200 hover:shadow-2xl hover:scale-[1.01] transition-all duration-300"
+              >
+                {/* Header de acciones */}
+                <div className="flex justify-between items-start mb-4">
+                  <div className="text-lg font-semibold text-gray-800">
+                    {row[columns[0]?.key]}
+                  </div>
+                  <div className="flex space-x-2">
+                    {!buttonedit && (
+                      <button
+                        className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600"
+                        title="Editar"
+                        onClick={() => {
+                          setEditingItem(row);
+                          setIsModalOpen(true);
+                        }}
+                      >
+                        <Icons.PencilSquareIcon className="w-4 h-4" />
+                      </button>
+                    )}
+                    {actions.map((action, actionIndex) => {
+                      const IconComponent = Icons[action.icon];
+                      return (
+                        <button
+                          key={actionIndex}
+                          className={`p-2 rounded-full ${action.className} hover:bg-opacity-80`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (typeof action.onClick === "function")
+                              action.onClick(row);
+                          }}
+                          title={action.label}
+                        >
+                          {IconComponent && (
+                            <IconComponent className="w-4 h-4" />
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Contenido del cuerpo */}
+                <div className="space-y-2">
+                  {columns.slice(1).map((col) => (
+                    <div key={col.key}>
+                      <div className="text-sm text-gray-500">{col.label}</div>
+                      <div className="text-base font-medium text-gray-700">
+                        {row[col.key]}
+                      </div>
+                    </div>
                   ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
         <div className="flex justify-between items-center m-4">
           <button
