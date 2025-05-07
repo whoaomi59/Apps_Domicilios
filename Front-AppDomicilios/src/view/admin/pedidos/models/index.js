@@ -7,11 +7,10 @@ export const Columns = [
   { key: "usuario_pedido", label: "usuario" },
   { key: "estado", label: "estado" },
   { key: "total", label: "total" },
-  { key: "dire_negocio", label: "dire_negocio" },
   { key: "ubica_domici", label: "ubica_domici" },
   { key: "tipoUbicacion", label: "tipoUbicacion" },
   { key: "tel_user_pedi", label: "tel_user_pedi" },
-  { key: "direc_negocio", label: "direc_negocio" },
+  { key: "direc_negocio", label: "direc_negocio",disable:true },
 ];
 
 

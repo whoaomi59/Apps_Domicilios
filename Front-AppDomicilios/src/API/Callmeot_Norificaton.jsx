@@ -4,7 +4,7 @@ import { formatearCOP } from "../components/content/formatoMoneda";
 export const EnviarWhatsApp_Admin = async ({ mensaje }) => {
   const numero = "573184141985";
   const ApiKey = "9181021";
-  /*  const numero = "573144160224";
+  /* const numero = "573144160224";
   const ApiKey = "7774438"; */
   const texto = construirMensaje(mensaje);
 
