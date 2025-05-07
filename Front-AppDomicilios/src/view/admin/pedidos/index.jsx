@@ -14,6 +14,7 @@ const Pedidos = ({ IdUser, Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
   const [refresh, setrefresh] = useState(false);
   const [loader, setloader] = useState(false);
+  const [filtro, setFiltro] = useState("todos");
   const { id, name } = useParams();
 
   const Notificar = async (item) => {
@@ -130,6 +131,7 @@ const Pedidos = ({ IdUser, Roles }) => {
     logo_pedido: <img src={item.logo_pedido} className="w-10" />,
     nombre_negocio: item.nombre_negocio,
     usuario_pedido: item.usuario_pedido,
+    fecha_pedido: item.fecha_pedido,
     estado: item.estado,
     total: formatearCOP(item.total),
     button:
@@ -182,15 +184,25 @@ const Pedidos = ({ IdUser, Roles }) => {
           ),
   }));
 
+  const totalPedidos = usuarios.reduce(
+    (sum, item) => sum + Number(item.total),
+    0
+  );
+
   if (loader) {
     return <Loader />;
   }
 
   return (
-    <div>
-      <h1 className="text-3xl font-extrabold text-gray-600 mb-5">
-        Pedidos, {name}
-      </h1>
+    <div className="p-4">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold text-gray-700">
+          Pedidos - {name}
+        </h2>
+        <div className="text-lg font-bold text-green-700 bg-green-100 p-2 rounded-lg shadow">
+          Total pedidos: {formatearCOP(totalPedidos)}
+        </div>
+      </div>
       <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {Formater.map((pedido) => (
           <div
@@ -215,6 +227,10 @@ const Pedidos = ({ IdUser, Roles }) => {
             <div>
               <p className="text-sm text-gray-500">Dirección Negocio:</p>
               <p className="text-base">{pedido.direc_negocio}</p>
+            </div>
+            <div>
+              <p className="text-sm text-gray-500">Fecha:</p>
+              <p className="text-base">{pedido.fecha_pedido}</p>
             </div>
 
             <div>
