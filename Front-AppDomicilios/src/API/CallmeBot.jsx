@@ -70,7 +70,7 @@ const construirMensaje = (pedido) => {
 
   mensaje += `\n\n💵 *Resumen del pedido*\n`;
   mensaje += `🧾 Subtotal: ${formatearCOP(subtotal)}\n`;
-  mensaje += `🚚 Envío: ${formatearCOP(envio)}\n`;
+  mensaje += `🚚 Domicilio: ${formatearCOP(envio)}\n`;
   mensaje += `🟩 *Total a pagar: ${formatearCOP(Total)}*\n`;
 
   return mensaje;
