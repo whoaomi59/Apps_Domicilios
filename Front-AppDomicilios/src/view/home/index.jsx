@@ -9,6 +9,7 @@ export default function Home() {
   const [loader, setLoader] = useState(false);
   const [currentBanner, setCurrentBanner] = useState(0);
   const [baner, setbaner] = useState([]);
+  const [Info, setInfo] = useState({});
   let textos;
 
   useEffect(() => {
@@ -32,6 +33,15 @@ export default function Home() {
         return console.log(error);
       }
     };
+    const GetInfoAdmin = async () => {
+      try {
+        let response = await axios.get("/api/usuarios/Get_Info_Admin.php");
+        setInfo(response.data[0]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    GetInfoAdmin();
     Get();
     GetBaner();
 
@@ -47,7 +57,7 @@ export default function Home() {
   if (loader) {
     return <Loader />;
   }
-
+  console.log(Info);
   return (
     <div className="relative min-h-screen flex justify-center overflow-hidden">
       <div
@@ -114,7 +124,7 @@ export default function Home() {
           className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6"
         >
           <button
-            onClick={() => handleWhatsappClick(textos)}
+            onClick={() => handleWhatsappClick(textos, Info)}
             className="py-2 px-6 inline-flex items-center gap-x-2 text-lg font-bold rounded-full bg-green-500 text-white hover:bg-green-600 transition-all shadow-lg"
           >
             Domiciliario
