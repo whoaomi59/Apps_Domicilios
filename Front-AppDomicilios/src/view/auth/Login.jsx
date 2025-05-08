@@ -27,7 +27,6 @@ const Login = ({ logo }) => {
         }
       );
       const token = await response.data.token;
-
       if (token) {
         sessionStorage.setItem("token", token);
         setMessage("Login exitoso. Redirigiendo...");
@@ -39,7 +38,8 @@ const Login = ({ logo }) => {
           negocio: "/negocios",
           default: "/shop/negocios",
         };
-        const redirectPath = localStorage.getItem("redirectAfterLogin") || "/"; //REDIRIJE ALCARRITO SI LA POCISION DEL USUARIO LO REQUIERE
+        const redirectPath =
+          sessionStorage.getItem("redirectAfterLogin") || "/"; //REDIRIJE ALCARRITO SI LA POCISION DEL USUARIO LO REQUIERE
         if (redirectPath === "/shop/car_shop") {
           sessionStorage.removeItem("redirectAfterLogin");
           window.location.href = redirectPath;
@@ -122,7 +122,7 @@ const Login = ({ logo }) => {
           )}
           <div class="flex items-center justify-between mt-4">
             <a
-              href="/request-reset"
+              href="/request-reset/null"
               class="text-sm text-gray-600   :text-gray-200 hover:text-gray-500"
             >
               ¿Olvidó su contraseña?

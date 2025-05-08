@@ -9,8 +9,15 @@ const Usuarios = ({ IdUser, Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
   const [refresh, setrefresh] = useState([]);
   const [loader, setloader] = useState(false);
+  const currentUrl = window.location.origin;
 
-  const abrirModal = () => {};
+  const abrirModal = (item) => {
+    window.open(
+      `${currentUrl}/request-reset/${item.email}`,
+      "popup",
+      "width=600,height=400"
+    );
+  };
 
   const handleFormSubmit = async (newData) => {
     try {
