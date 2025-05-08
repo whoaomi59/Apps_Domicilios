@@ -57,7 +57,6 @@ export default function Home() {
   if (loader) {
     return <Loader />;
   }
-  console.log(Info);
   return (
     <div className="relative min-h-screen flex justify-center overflow-hidden">
       <div
