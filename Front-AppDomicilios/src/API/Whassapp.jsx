@@ -1,5 +1,5 @@
-export const handleWhatsappClick = (texto) => {
-  const phoneNumber = "573122048951"; // tu número con código de país
+export const handleWhatsappClick = (texto, Info) => {
+  const phoneNumber = Info.telefono || "573122048951"; // tu número con código de país
   const message =
     "Hola, Sr. Administrador. ¿Podría ayudarme con un domiciliario, por favor?";
 
