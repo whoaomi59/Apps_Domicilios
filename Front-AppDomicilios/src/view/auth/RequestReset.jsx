@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 const RequestReset = () => {
-  const [email, setEmail] = useState("");
+  const { emails } = useParams();
+  const [email, setEmail] = useState("" || emails === "null" ? "" : emails);
   const [message, setMessage] = useState("");
   const [tokensend, settokensend] = useState(null);
   const [password, setpassword] = useState("");
