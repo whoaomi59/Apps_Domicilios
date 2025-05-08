@@ -17,6 +17,7 @@ export default function Car_Shop({ usuarios }) {
   const [tipoUbicacion, setTipoUbicacion] = useState("");
   const [numerotelefono, setnumerotelefono] = useState("");
   const [shippingCost, setShippingCost] = useState(0);
+  const [num, setnum] = useState(false);
 
   const taxRate = 0.0; // 5% de impuestos
 
@@ -96,6 +97,17 @@ export default function Car_Shop({ usuarios }) {
           title: "info",
           text: `Todos los datos de infomacion del usuario son requeridos!!`,
           icon: "info",
+        });
+      }
+      // Validar que el número de teléfono tenga al menos 10 dígitos numéricos
+      const telefonoLimpio = numerotelefono.replace(/\D/g, ""); // elimina cualquier carácter no numérico
+
+      if (telefonoLimpio.length < 10) {
+        setnum(true);
+        return Swal.fire({
+          title: "Número inválido",
+          text: "El número de teléfono debe tener al menos 10 dígitos.",
+          icon: "warning",
         });
       }
       for (const negocioId in pedidosPorNegocio) {
@@ -234,6 +246,7 @@ export default function Car_Shop({ usuarios }) {
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="w-2 fill-white"
+                          s
                           viewBox="0 0 42 42"
                         >
                           <path d="M37.059 16H26V4.941C26 2.224 23.718 0 21 0s-5 2.224-5 4.941V16H4.941C2.224 16 0 18.282 0 21s2.224 5 4.941 5H16v11.059C16 39.776 18.282 42 21 42s5-2.224 5-4.941V26h11.059C39.776 26 42 23.718 42 21s-2.224-5-4.941-5z"></path>
@@ -293,8 +306,14 @@ export default function Car_Shop({ usuarios }) {
                 type="number"
                 className="w-full px-4 py-2 border rounded-lg border-gray-300"
                 value={numerotelefono}
-                onChange={(e) => setnumerotelefono(e.target.value)}
+                onChange={(e) => {
+                  setnumerotelefono(e.target.value);
+                  setnum(false);
+                }}
               />
+              {num && (
+                <span className="text-red-500">Minimo de digitos es de 10</span>
+              )}
             </li>
             <li className="flex flex-wrap gap-4 text-sm">
               Ubicación de envío

@@ -39,7 +39,8 @@ const Login = ({ logo }) => {
           negocio: "/negocios",
           default: "/shop/negocios",
         };
-        const redirectPath = localStorage.getItem("redirectAfterLogin") || "/"; //REDIRIJE ALCARRITO SI LA POCISION DEL USUARIO LO REQUIERE
+        const redirectPath =
+          sessionStorage.getItem("redirectAfterLogin") || "/"; //REDIRIJE ALCARRITO SI LA POCISION DEL USUARIO LO REQUIERE
         if (redirectPath === "/shop/car_shop") {
           sessionStorage.removeItem("redirectAfterLogin");
           window.location.href = redirectPath;
