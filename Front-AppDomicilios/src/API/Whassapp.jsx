@@ -1,7 +1,7 @@
 export const handleWhatsappClick = (texto, Info) => {
-  const phoneNumber = Info.telefono || "573122048951"; // tu número con código de país
+  const phoneNumber = "57" + Info.telefono || "573122048951"; // tu número con código de país
   const message =
-    "Hola, Sr. Administrador. ¿Podría ayudarme con un domiciliario, por favor?";
+    "Hola, RunWay. ¿Podría ayudarme con un domiciliario, por favor?";
 
   const isMobile = /iPhone|Android|iPad/i.test(navigator.userAgent);
   const baseUrl = isMobile

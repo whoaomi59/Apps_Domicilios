@@ -4,7 +4,7 @@ import { formatearCOP } from "../components/content/formatoMoneda";
 export const EnviarWhatsApp_Admin = async ({ mensaje }) => {
   const numero = "573184141985";
   const ApiKey = "9181021";
-  /* const numero = "573144160224";
+  /*  const numero = "573144160224";
   const ApiKey = "7774438"; */
   const texto = construirMensaje(mensaje);
 
@@ -41,7 +41,7 @@ const construirMensaje = (pedido) => {
   const envio = parseFloat(costoEnvio) || 0;
   const Total = subtotal + envio;
 
-  let mensaje = `🧾 *¡Nueva compra confirmada!*\n\n`;
+  let mensaje = `🧾 *¡Pedido listo para recoger!*\n\n`;
 
   mensaje += `📄 *Factura N.º:* ${numero_Factura}\n`;
   mensaje += `📌 *Estado del pedido:* ${estado}\n\n`;
