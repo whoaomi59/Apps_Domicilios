@@ -1,8 +1,7 @@
 import {
+  ArrowsPointingOutIcon,
   CalendarDaysIcon,
   KeyIcon,
-  SpeakerWaveIcon,
-  SpeakerXMarkIcon,
 } from "@heroicons/react/16/solid";
 import Hora from "./Hora";
 import { useEffect, useState } from "react";
@@ -24,6 +23,16 @@ export default function Header({ nombre }) {
     }
   }, []);
 
+  const toggleFullScreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch((err) => {
+        console.error("Error al intentar pantalla completa:", err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  };
+
   const handleLogout = () => {
     sessionStorage.removeItem("token");
     window.location.href = "/"; // Redirigir a la página de login
@@ -42,7 +51,7 @@ export default function Header({ nombre }) {
           <div className="max-lg:fixed max-lg:bg-white max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50">
             <div className="flex items-center max-lg:flex-col-reverse max-lg:ml-auto gap-8">
               <div className="flex items-center space-x-6 max-lg:flex-wrap">
-                <a href="/" className="flex">
+                <a href="#" className="flex">
                   <CalendarDaysIcon className="w-6 text-gray-400 mr-1" />
                   <Hora />
                 </a>
@@ -51,6 +60,13 @@ export default function Header({ nombre }) {
                 <KeyIcon className="w-5 mr-1" />
                 {nombre || "RunWay"}
               </div>
+              <button
+                title="Pantalla Completa"
+                onClick={() => toggleFullScreen()}
+                className="text-sm text-green-600 cursor-pointer flex items-center p-2 rounded-md hover:bg-gray-100 transition duration-300 ease-in-out"
+              >
+                <ArrowsPointingOutIcon className="w-5 h-5" />
+              </button>
 
               <div className="dropdown-menu relative flex shrink-0 group">
                 <img
