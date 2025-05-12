@@ -63,7 +63,7 @@ export default function Header({ nombre }) {
               <button
                 title="Pantalla Completa"
                 onClick={() => toggleFullScreen()}
-                className="text-sm text-gray-800 cursor-pointer flex items-center p-2 rounded-md hover:bg-gray-100 transition duration-300 ease-in-out"
+                className="text-sm text-green-600 cursor-pointer flex items-center p-2 rounded-md hover:bg-gray-100 transition duration-300 ease-in-out"
               >
                 <ArrowsPointingOutIcon className="w-5 h-5" />
               </button>
