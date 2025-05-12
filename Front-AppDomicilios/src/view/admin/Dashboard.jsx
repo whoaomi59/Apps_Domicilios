@@ -7,6 +7,7 @@ import {
   BanknotesIcon,
 } from "@heroicons/react/24/outline";
 import { formatearCOP } from "../../components/content/formatoMoneda";
+import Loader from "../../components/content/loader";
 
 const Dashboard = () => {
   const [totalPedidos, setTotalPedidos] = useState(0);
@@ -14,8 +15,7 @@ const Dashboard = () => {
   const [dineroHoy, setDineroHoy] = useState(0);
   const [dineroTotal, setDineroTotal] = useState(0);
   const [data, setdata] = useState([]);
-
-  console.table(data);
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     setTotalPedidos(data.length);
@@ -49,14 +49,21 @@ const Dashboard = () => {
   useEffect(() => {
     const Get = async () => {
       try {
+        setLoader(true);
         let response = await axios.get("/api/pedidos/controller.php");
         setdata(response.data);
+        setLoader(false);
       } catch (error) {
         console.log(error);
+        setLoader(false);
       }
     };
     Get();
   }, []);
+
+  if (loader) {
+    return <Loader />;
+  }
 
   return (
     <div className="p-6 space-y-6 bg-gray-50 min-h-screen">
