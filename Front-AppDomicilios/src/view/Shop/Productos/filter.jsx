@@ -16,6 +16,7 @@ export default function FilterProduct({
   setSearchTerm,
   id,
   idNegocio,
+  idProductos,
 }) {
   const [formData, setFormData] = useState({});
   const [filtCategorias, setfiltCategorias] = useState("");
@@ -204,10 +205,12 @@ export default function FilterProduct({
                 {categorias.map((item) => (
                   <button
                     onClick={() => setidproductos(item.nombre)}
-                    className="p-2 m-1 rounded-full bg-green-500 text-white font-semibold  shadow-sm shadow-transparent transition-all duration-500 hover:bg-green-400"
-                    style={{
-                      fontSize: 13,
-                    }}
+                    className={`p-2 m-1 rounded-full border text-sm font-medium transition 
+                      ${
+                        idProductos === item.nombre
+                          ? "bg-green-400 text-white border-green-400 shadow-md"
+                          : "bg-white text-gray-800 border-gray-300 hover:bg-green-100"
+                      }`}
                   >
                     {item.nombre}
                   </button>
