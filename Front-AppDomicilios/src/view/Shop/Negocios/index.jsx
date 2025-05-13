@@ -2,14 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "./Header";
 import axios from "axios";
 import Loader from "../../../components/content/loader";
-
-const categorias = [
-  { id: "", nombre: "Todos", icono: "🛍️" },
-  { id: "1", nombre: "Comida", icono: "🍔" },
-  { id: "2", nombre: "Ropa", icono: "👗" },
-  { id: "3", nombre: "Tecnología", icono: "💻" },
-  { id: "4", nombre: "Hogar", icono: "🏠" },
-];
+import CategoriasNegocios from "./Categorias";
 
 export default function NegociosShop() {
   const [data, setData] = useState([]);
@@ -67,97 +60,7 @@ export default function NegociosShop() {
     <section>
       <Header setFilter={setFilter} />
       <div className="mx-auto w-full max-w-7xl px-5">
-        {/*   <div className="flex flex-wrap gap-3 px-4 py-4">
-          {categorias.map((cat) => (
-            <span
-              key={cat.id}
-              onClick={() => setFilter(cat.id)}
-              className="cursor-pointer inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-100 text-green-800 text-sm hover:bg-green-200 transition"
-            >
-              {cat.icono}
-              {cat.nombre}
-            </span>
-          ))}
-        </div> */}
-
-        {/* <div className="flex flex-wrap gap-4 justify-center p-4">
-          {categorias.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setFilter(cat.id)}
-              className="w-16 h-16 bg-white rounded-full shadow flex items-center justify-center hover:bg-green-100 relative group"
-            >
-              <span className="text-xl">{cat.icono}</span>
-              <div className="absolute bottom-[-30px] bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
-                {cat.nombre}
-              </div>
-            </button>
-          ))}
-        </div> */}
-
-        {/* <div className="flex gap-4 overflow-x-auto px-4 py-4 scrollbar-hide">
-          {categorias.map((cat) => (
-            <div
-              key={cat.id}
-              onClick={() => setFilter(cat.id)}
-              className="min-w-[100px] text-center p-3 bg-white rounded-lg shadow hover:bg-green-100 cursor-pointer"
-            >
-              <div className="text-2xl">{cat.icono}</div>
-              <div className="text-sm mt-2">{cat.nombre}</div>
-            </div>
-          ))}
-        </div> */}
-
-        {/*  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 p-4">
-          {categorias.map((cat) => (
-            <div
-              key={cat.id}
-              onClick={() => setFilter(cat.id)}
-              className="cursor-pointer bg-white shadow-md hover:shadow-xl transition rounded-xl p-4 flex flex-col items-center"
-            >
-              <div className="text-3xl mb-2">{cat.icono}</div>
-              <p className="text-sm font-semibold text-gray-700">
-                {cat.nombre}
-              </p>
-            </div>
-          ))}
-        </div> */}
-        <div className="w-full overflow-x-auto scrollbar-hide py-4">
-          <div className="flex gap-4 sm:gap-6 md:gap-8 min-w-max">
-            {categorias.map((cat) => (
-              <div
-                key={cat.id}
-                onClick={() => setFilter(cat.id)}
-                className="flex-shrink-0 w-[90px] sm:w-[100px] md:w-[120px] bg-white rounded-xl shadow hover:shadow-md transition cursor-pointer text-center p-3"
-              >
-                <div className="text-2xl sm:text-3xl mb-1">{cat.icono}</div>
-                <div className="text-xs sm:text-sm text-gray-700 font-medium">
-                  {cat.nombre}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="w-full overflow-x-auto scrollbar-hide  py-4">
-          <div className="flex gap-4 sm:gap-6 md:gap-8 min-w-max">
-            {categorias.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setFilter(cat.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium transition 
-          ${
-            Filter === cat.id
-              ? "bg-green-500 text-white border-green-500 shadow-md"
-              : "bg-white text-gray-800 border-gray-300 hover:bg-green-100"
-          }`}
-              >
-                <span className="text-xl">{cat.icono}</span>
-                <span>{cat.nombre}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-
+        <CategoriasNegocios setFilter={setFilter} Filter={Filter} />
         <div className="grid gap-5 sm:grid-cols-2 md:grid-cols-3 md:gap-4">
           {negociosFiltrados.map((item, index) => {
             const negocioAbierto = estaAbierto(
