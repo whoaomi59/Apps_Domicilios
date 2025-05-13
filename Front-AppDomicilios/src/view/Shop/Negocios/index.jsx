@@ -2,14 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "./Header";
 import axios from "axios";
 import Loader from "../../../components/content/loader";
-
-const categorias = [
-  { id: "", nombre: "Todos", icono: "🛍️" },
-  { id: "1", nombre: "Comida", icono: "🍔" },
-  { id: "2", nombre: "Ropa", icono: "👗" },
-  { id: "3", nombre: "Tecnología", icono: "💻" },
-  { id: "4", nombre: "Hogar", icono: "🏠" },
-];
+import CategoriasNegocios from "./Categorias";
 
 export default function NegociosShop() {
   const [data, setData] = useState([]);
@@ -67,26 +60,7 @@ export default function NegociosShop() {
     <section>
       <Header setFilter={setFilter} />
       <div className="mx-auto w-full max-w-7xl px-5">
-        <div className="w-full overflow-x-auto scrollbar-hide  py-4">
-          <div className="flex gap-4 sm:gap-6 md:gap-8 min-w-max">
-            {categorias.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setFilter(cat.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium transition 
-          ${
-            Filter === cat.id
-              ? "bg-green-400 text-white border-green-400 shadow-md"
-              : "bg-white text-gray-800 border-gray-300 hover:bg-green-100"
-          }`}
-              >
-                <span className="text-xl">{cat.icono}</span>
-                <span>{cat.nombre}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-
+        <CategoriasNegocios setFilter={setFilter} Filter={Filter} />
         <div className="grid gap-5 sm:grid-cols-2 md:grid-cols-3 md:gap-4">
           {negociosFiltrados.map((item, index) => {
             const negocioAbierto = estaAbierto(
