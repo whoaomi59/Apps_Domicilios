@@ -122,24 +122,42 @@ export default function NegociosShop() {
             </div>
           ))}
         </div> */}
-
-        <div className="flex gap-3 whitespace-nowrap py-3">
-          {categorias.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setFilter(cat.id)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium transition 
+        <div className="w-full overflow-x-auto scrollbar-hide py-4">
+          <div className="flex gap-4 sm:gap-6 md:gap-8 min-w-max">
+            {categorias.map((cat) => (
+              <div
+                key={cat.id}
+                onClick={() => setFilter(cat.id)}
+                className="flex-shrink-0 w-[90px] sm:w-[100px] md:w-[120px] bg-white rounded-xl shadow hover:shadow-md transition cursor-pointer text-center p-3"
+              >
+                <div className="text-2xl sm:text-3xl mb-1">{cat.icono}</div>
+                <div className="text-xs sm:text-sm text-gray-700 font-medium">
+                  {cat.nombre}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="w-full overflow-x-auto scrollbar-hide  py-4">
+          <div className="flex gap-4 sm:gap-6 md:gap-8 min-w-max">
+            {categorias.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setFilter(cat.id)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium transition 
           ${
             Filter === cat.id
               ? "bg-green-500 text-white border-green-500 shadow-md"
               : "bg-white text-gray-800 border-gray-300 hover:bg-green-100"
           }`}
-            >
-              <span className="text-xl">{cat.icono}</span>
-              <span>{cat.nombre}</span>
-            </button>
-          ))}
+              >
+                <span className="text-xl">{cat.icono}</span>
+                <span>{cat.nombre}</span>
+              </button>
+            ))}
+          </div>
         </div>
+
         <div className="grid gap-5 sm:grid-cols-2 md:grid-cols-3 md:gap-4">
           {negociosFiltrados.map((item, index) => {
             const negocioAbierto = estaAbierto(
