@@ -29,7 +29,8 @@ import Baner_Negocios from "./view/admin/bener_negocios";
 import RegisterClient from "./view/client/Register";
 import Categorias_Negocios from "./view/admin/Categoria_Negocio";
 
-export const URL = "https://domicilios.fundacionhuellas.com.co/API/";
+/* export const URL = "https://domicilios.fundacionhuellas.com.co/API/"; */
+export const URL = "https://runway.com.co/API/";
 // export const URL = " http://localhost/Apps_Domicilios/API/";
 
 function App() {
