@@ -1,9 +1,10 @@
 RAW:
-{"nombre":"RESTAURANTES","id":"5"}
+{"nombre":"RESTAURANTES","icono":"🍜","id":"5"}
 
 PARSED:
 Array
 (
     [nombre] => RESTAURANTES
+    [icono] => 🍜
     [id] => 5
 )

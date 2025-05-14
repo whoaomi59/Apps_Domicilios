@@ -38,8 +38,8 @@ function post() {
         return;
     }
 
-    $stmt = $conn->prepare("INSERT INTO categorias_negocios (nombre) VALUES (?)");
-    $stmt->bind_param("s", $data["nombre"]);
+    $stmt = $conn->prepare("INSERT INTO categorias_negocios (nombre,icono) VALUES (?,?)");
+    $stmt->bind_param("ss", $data["nombre"],$data["icono"]);
     $stmt->execute();
     echo json_encode(["message" => "registro creada"]);
 }
@@ -57,13 +57,14 @@ function update() {
     }
     $id = $data['id'];
     $nombre = $data['nombre'];
-    $stmt = $conn->prepare("UPDATE categorias_negocios SET nombre = ? WHERE id = ?");
+    $icono = $data['icono'];
+    $stmt = $conn->prepare("UPDATE categorias_negocios SET nombre = ?,icono = ? WHERE id = ?");
     if (!$stmt) {
         echo json_encode(["error" => "Error al preparar la consulta", "mysqli_error" => $conn->error]);
         return;
     }
 
-    $stmt->bind_param("si", $nombre, $id);
+    $stmt->bind_param("ssi", $nombre, $icono, $id);
     if ($stmt->execute()) {
         echo json_encode(["message" => "nombre actualizado correctamente"]);
     } else {
