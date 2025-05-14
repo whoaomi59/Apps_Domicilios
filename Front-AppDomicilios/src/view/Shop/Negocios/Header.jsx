@@ -61,10 +61,12 @@ export default function Header({ setFilter }) {
   }
 
   return (
-    <div className="bg-[#00C951] flex flex-col items-center justify-center py-10 px-4 sm:px-6 text-white font-sans mb-5">
+    <div className="bg-primary flex flex-col items-center justify-center py-10 px-4 sm:px-6 text-white font-sans mb-5">
       <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-center leading-tight">
         Si tienes{" "}
-        <span className="font-bold">{empresa.nombre || "DomiExpress"},</span>{" "}
+        <span className="font-bold color-secondary">
+          {empresa.nombre || "DomiExpress"},
+        </span>{" "}
         tienes Todo.
       </h1>
       <div className="mt-8 w-full max-w-xl">

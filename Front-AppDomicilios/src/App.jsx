@@ -168,7 +168,7 @@ function App() {
                 <footer className="w-full bg-gray-100 text-center py-4 mt-4 ">
                   <p className="text-sm text-gray-600">
                     Desarrollado por{" "}
-                    <span className="font-semibold text-green-600">
+                    <span className="font-semibold color-primary">
                       [Jhon Mario Chilito]
                     </span>{" "}
                     — Apasionado por crear soluciones web modernas y eficientes.

@@ -22,7 +22,7 @@ export default function NavbarShop({ logo, Roles, nombre }) {
           >
             <img
               class="w-20 h-auto"
-              src={logo ? logo : "/logo/logo.png"}
+              src={logo ? logo : "/logo/Logo-Delivra.1.png"}
               alt="Logo"
             />
           </a>
@@ -38,7 +38,7 @@ export default function NavbarShop({ logo, Roles, nombre }) {
           ) : (
             <a
               href="/login"
-              class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium text-nowrap rounded-xl border border-transparent bg-green-500 text-black hover:bg-green-600 text-white"
+              class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium text-nowrap rounded-xl border border-transparent btn-bg-primary"
             >
               Ingresar
             </a>
@@ -98,7 +98,7 @@ export default function NavbarShop({ logo, Roles, nombre }) {
           <div class="flex flex-col gap-y-4 gap-x-0 mt-5 lg:flex-row lg:justify-center lg:items-center lg:gap-y-0 lg:gap-x-7 lg:mt-0">
             <div className="flex items-center">
               <a
-                class="relative  text-black focus:outline-hidden before:absolute before:bottom-0.5 before:start-0 before:-z-1 before:w-full before:h-1 before:bg-green-500 hover:text-green-600"
+                class="relative  text-black focus:outline-hidden before:absolute before:bottom-0.5 before:start-0 before:-z-1 before:w-full before:h-1 before:bg-purple-600 hover:text-gray-600"
                 href="/"
                 aria-current="page"
               >
@@ -107,7 +107,7 @@ export default function NavbarShop({ logo, Roles, nombre }) {
               <HomeIcon className="w-5 ml-2 text-gray-500" />
             </div>
             <a
-              className="flex items-center text-black hover:text-green-600"
+              className="flex items-center text-black hover:text-gray-600"
               href="/shop/negocios"
             >
               Negocios{" "}
@@ -116,7 +116,7 @@ export default function NavbarShop({ logo, Roles, nombre }) {
 
             {Roles === "admin" || Roles === "negocio" ? (
               <a
-                className="flex items-center text-black hover:text-green-600"
+                className="flex items-center text-black hover:text-gray-600"
                 href="/dashboard"
               >
                 Admin
@@ -125,7 +125,7 @@ export default function NavbarShop({ logo, Roles, nombre }) {
             ) : (
               <>
                 <a
-                  className="flex items-center text-black hover:text-green-600"
+                  className="flex items-center text-black hover:text-gray-600"
                   href="/shop/car_shop"
                 >
                   Carrito{" "}
@@ -135,7 +135,7 @@ export default function NavbarShop({ logo, Roles, nombre }) {
                 {Roles && (
                   <div className="flex items-center">
                     <a
-                      className="flex items-center text-black hover:text-green-600"
+                      className="flex items-center text-black hover:text-gray-600"
                       href="/shop/pedidos"
                     >
                       Mis pedidos
