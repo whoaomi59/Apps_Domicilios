@@ -102,11 +102,11 @@ export default function Car_Shop({ usuarios }) {
       // Validar que el número de teléfono tenga al menos 10 dígitos numéricos
       const telefonoLimpio = numerotelefono.replace(/\D/g, ""); // elimina cualquier carácter no numérico
 
-      if (telefonoLimpio.length < 10) {
+      if (telefonoLimpio.length < 10 || telefonoLimpio.length > 10) {
         setnum(true);
         return Swal.fire({
           title: "Número inválido",
-          text: "El número de teléfono debe tener al menos 10 dígitos.",
+          text: "El número de teléfono debe tener 10 dígitos.",
           icon: "warning",
         });
       }
