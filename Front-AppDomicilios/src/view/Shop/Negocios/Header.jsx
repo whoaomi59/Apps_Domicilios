@@ -62,14 +62,11 @@ export default function Header({ setFilter }) {
 
   return (
     <div className="bg-[#00C951] flex flex-col items-center justify-center py-10 px-4 sm:px-6 text-white font-sans mb-5">
-      {/* Título */}
       <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-center leading-tight">
         Si tienes{" "}
         <span className="font-bold">{empresa.nombre || "DomiExpress"},</span>{" "}
         tienes Todo.
       </h1>
-
-      {/* Buscador */}
       <div className="mt-8 w-full max-w-xl">
         <div className="relative w-full">
           <div className="flex items-center bg-white rounded-lg shadow-md overflow-hidden focus-within:ring-2 ring-green-300">
@@ -84,8 +81,6 @@ export default function Header({ setFilter }) {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-
-          {/* Lista de sugerencias */}
           {filteredData.length > 0 && (
             <ul className="absolute top-full mt-1 z-10 w-full bg-white border border-gray-300 max-h-40 overflow-y-auto rounded-md shadow-lg text-black text-sm">
               {filteredData.map((negocio, index) => (
