@@ -147,7 +147,7 @@ export default function Home() {
             className="py-2 px-8 inline-flex items-center gap-x-2 text-lg font-bold rounded-full border border-gray-300 bg-white text-gray-800 hover:bg-gray-100 transition-all shadow-lg"
             href="/shop/negocios"
           >
-            Ver Restaurantes
+            Ver Categorias
           </a>
         </motion.div>
       </div>
