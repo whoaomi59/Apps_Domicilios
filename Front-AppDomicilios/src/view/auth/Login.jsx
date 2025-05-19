@@ -78,7 +78,7 @@ const Login = ({ logo }) => {
 
         <div class="flex justify-center mx-auto">
           <a href="/shop/negocios">
-            <img class="w-auto h-30" src={logo} />
+            <img class="w-auto h-18" src={logo} />
           </a>
         </div>
         <h3 class="mt-3 text-xl font-medium text-center color-primary">

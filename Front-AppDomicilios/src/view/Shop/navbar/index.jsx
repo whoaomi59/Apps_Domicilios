@@ -21,7 +21,7 @@ export default function NavbarShop({ logo, Roles, nombre }) {
             aria-label="Preline"
           >
             <img
-              class="w-20 h-auto"
+              class="w-25 h-auto"
               src={logo ? logo : "/logo/Logo-Delivra.1.png"}
               alt="Logo"
             />

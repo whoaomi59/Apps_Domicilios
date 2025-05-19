@@ -90,7 +90,7 @@ export default function Home() {
           className="flex justify-center mt-5"
         >
           <img
-            className="rounded-xl w-50 md:w-60  p-2"
+            className="rounded-xl w-70 md:w-60  p-2"
             src={empresa.logo ? empresa.logo : "/logo/logo.png"}
             alt="Logo Empresa"
           />
