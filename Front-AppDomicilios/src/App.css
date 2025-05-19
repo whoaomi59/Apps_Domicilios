@@ -7,45 +7,45 @@
 }
 /* TEXTOS */
 .color-primary {
-  color: #5b21b6;
+  color: #EA580C;
 }
 .color-secondary {
-  color: #facc15;
+  color: #0E0E88;
 }
 /* BOTONES */
 
 .btn-bg-primary {
-  background-color: #5b21b6;
+  background-color: #EA580C;
   color: #fff;
 }.btn-bg-primary:hover {
-  background-color: #ffcc00c9;
+  background-color: #0E0E88;
   color: #f3f4f6;
 }
 /* BACGOUND */
 .bg-secondary {
-  background-color: #facc15;
+  background-color: #0E0E88;
   color: #fff;
 }.bg-primary {
-  background-color: #5b21b6;
+  background-color: #EA580C;
   color: #fff;
 }
 /* EFECTOS HOVER */
 .hover-bg-primary:hover {
-  background-color: #5b21b6;
+  background-color: #FB923C;
   color: #fff;
 }
 
 .hover-bg-secondary:hover {
-  background-color: #facc15;
+  background-color: #0E0E88;
   color: #f3f4f6;
 }
 /* BORDES */
 .border-bg-primary {
-  border-color: #5b21b6;
+  border-color: #EA580C;
 }
 
 /* COLORES PASIVOS */
 .p-bg-primary,.p-hover-bg-primary:hover {
-  background-color: #5a21b660;
+  background-color: #ea5a0cbe;
   color: #f3f4f6;
 }

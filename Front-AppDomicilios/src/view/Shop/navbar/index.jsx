@@ -98,7 +98,7 @@ export default function NavbarShop({ logo, Roles, nombre }) {
           <div class="flex flex-col gap-y-4 gap-x-0 mt-5 lg:flex-row lg:justify-center lg:items-center lg:gap-y-0 lg:gap-x-7 lg:mt-0">
             <div className="flex items-center">
               <a
-                class="relative  text-black focus:outline-hidden before:absolute before:bottom-0.5 before:start-0 before:-z-1 before:w-full before:h-1 before:bg-purple-600 hover:text-gray-600"
+                class="relative  text-black focus:outline-hidden before:absolute before:bottom-0.5 before:start-0 before:-z-1 before:w-full before:h-1 before:bg-orange-600 hover:text-gray-600"
                 href="/"
                 aria-current="page"
               >
