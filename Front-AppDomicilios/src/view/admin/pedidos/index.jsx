@@ -14,7 +14,6 @@ const Pedidos = ({ IdUser, Roles }) => {
   const [usuarios, setUsuarios] = useState([]);
   const [refresh, setrefresh] = useState(false);
   const [loader, setloader] = useState(false);
-  const [filtro, setFiltro] = useState("todos");
   const { id, name } = useParams();
 
   const Notificar = async (item) => {

@@ -23,7 +23,7 @@ switch ($request_method) {
 function get() {
     global $conn;
     try {
-        $result = $conn->query("SELECT pe.id AS id_pedido, u.nombre AS usuario_pedido, n.logo AS logo_pedido, n.nombre AS nombre_negocio,pe.estado, pe.total, n.usuario_id FROM pedidos pe LEFT JOIN usuarios u ON pe.cliente_id = u.id LEFT JOIN negocios n ON pe.negocio_id = n.id ORDER BY pe.id DESC");
+        $result = $conn->query("SELECT pe.id AS id_pedido, u.nombre AS usuario_pedido, n.logo AS logo_pedido, n.nombre AS nombre_negocio,pe.estado, pe.total, n.usuario_id,n.direccion AS dire_negocio,pe.Telefono AS tel_user_pedi,pe.ubicacion AS ubica_domici,pe.tipoUbicacion,n.direccion AS direc_negocio ,pe.created_at AS fecha_pedido,n.id AS id_negocio FROM pedidos pe LEFT JOIN usuarios u ON pe.cliente_id = u.id LEFT JOIN negocios n ON pe.negocio_id = n.id ORDER BY pe.id DESC");
      
         $data = [];
         while ($row = $result->fetch_assoc()) {
@@ -63,14 +63,17 @@ function post() {
 
     try {
         // Insertar el pedido
-        $stmt = $conn->prepare("INSERT INTO pedidos (cliente_id, negocio_id, domiciliario_id, total, estado) VALUES (?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO pedidos (cliente_id, negocio_id, domiciliario_id, total, estado,ubicacion,tipoUbicacion,Telefono) VALUES (?, ?, ?, ?, ?,?,?,?)");
         $stmt->bind_param(
-            "iiids", 
+            "iiidssss", 
             $data["cliente_id"], 
             $data["negocio_id"], 
             $data["domiciliario_id"], 
             $data["total"], 
-            $data["estado"]
+            $data["estado"],
+            $data["ubicacion"],
+            $data["tipoUbicacion"],
+            $data["Telefono"]
         );
 
         if (!$stmt->execute()) {
@@ -104,7 +107,7 @@ function post() {
 
         // Ahora hacer el SELECT que quieres
         $stmt_info = $conn->prepare("
-            SELECT p.id, n.telefono, n.ApiKey 
+            SELECT p.id, n.telefono, n.ApiKey,n.direccion 
             FROM pedidos p 
             JOIN negocios n ON p.negocio_id = n.id 
             WHERE p.id = ?
@@ -155,7 +158,7 @@ function Update() {
 
         // Ahora hacer el SELECT que quieres
         $stmt_info = $conn->prepare("
-            SELECT * FROM mensajesapi where fk_pedido=?;
+            SELECT n.telefono,n.ApiKey,pedido_id,pr.nombre,pr.precio,cantidad FROM `detalle_pedidos` LEFT JOIN pedidos p ON pedido_id=p.id LEFT JOIN negocios n ON negocio_id=n.id LEFT JOIN productos pr ON producto_id=pr.id where pedido_id =?;
         ");
         $stmt_info->bind_param("i", $id);
 
@@ -164,14 +167,27 @@ function Update() {
         }
 
         $result = $stmt_info->get_result();
-        $info = $result->fetch_assoc();
-
-        // Retornar el mensaje junto con la información consultada
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+        
+        // Extraer teléfono y ApiKey desde la primera fila
+        $telefono = $rows[0]['telefono'] ?? null;
+        $keyNegocio = $rows[0]['ApiKey'] ?? null;
+        
+        // Eliminar teléfono y KeyNegocio de cada producto
+        $productos = array_map(function($item) {
+            unset($item['telefono'], $item['ApiKey']);
+            return $item;
+        }, $rows);
+        
         echo json_encode([
             "message" => "Estado actualizado correctamente",
-            "pedido_info" => $info
+            "pedido_info" => [
+                "telefono" => $telefono,
+                "KeyNegocio" => $keyNegocio,
+                "productos" => $productos
+            ]
         ]);
-        
+
     } catch (Exception $e) {
         $error = [
             "error" => $e->getMessage(),

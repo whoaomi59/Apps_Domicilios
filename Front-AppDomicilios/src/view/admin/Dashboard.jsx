@@ -65,6 +65,8 @@ const Dashboard = () => {
     return <Loader />;
   }
 
+  console.table(data);
+
   return (
     <div className="p-6 space-y-6 bg-gray-50 min-h-screen">
       <h1 className="text-3xl font-extrabold text-gray-800">
@@ -160,20 +162,22 @@ const Dashboard = () => {
               key={negocio}
               className="border border-gray-200 rounded-xl p-4"
             >
-              <h3 className="text-lg font-semibold text-indigo-600 mb-1">
-                {negocio}
-              </h3>
-              <div className="flex justify-between text-sm text-gray-700">
-                <span>
-                  🧾 Pedidos: <strong>{datos.pedidos}</strong>
-                </span>
-                <span>
-                  💰 Total:{" "}
-                  <strong className="text-green-600">
-                    {formatearCOP(datos.total)}
-                  </strong>
-                </span>
-              </div>
+              <a href={`/pedidos/${datos.pedido}/${negocio}`}>
+                <h3 className="text-lg font-semibold text-indigo-600 mb-1">
+                  {negocio}
+                </h3>
+                <div className="flex justify-between text-sm text-gray-700">
+                  <span>
+                    🧾 Pedidos: <strong>{datos.pedidos}</strong>
+                  </span>
+                  <span>
+                    💰 Total:{" "}
+                    <strong className="text-green-600">
+                      {formatearCOP(datos.total)}
+                    </strong>
+                  </span>
+                </div>
+              </a>
             </div>
           ))}
         </div>
