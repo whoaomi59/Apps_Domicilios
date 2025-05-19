@@ -37,8 +37,8 @@ export default function CategoriasNegocios({ setFilter, Filter }) {
             className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium transition 
           ${
             Filter === cat.id
-              ? "bg-green-400 text-white border-green-400 shadow-md"
-              : "bg-white text-gray-800 border-gray-300 hover:bg-green-100"
+              ? "bg-primary text-white shadow-md"
+              : "bg-white text-gray-800 border-bg-primary"
           }`}
           >
             <span className="text-xl">{cat.icono}</span>

@@ -79,7 +79,7 @@ const Login = ({ logo }) => {
         <div class="flex justify-center mx-auto">
           <img class="w-auto h-30" src={logo} alt="" />
         </div>
-        <h3 class="mt-3 text-xl font-medium text-center text-green-600">
+        <h3 class="mt-3 text-xl font-medium text-center color-primary">
           Bienvenido de nuevo
         </h3>
         <p class="mt-1 text-center text-gray-500   :text-gray-400">
@@ -130,7 +130,7 @@ const Login = ({ logo }) => {
 
             <button
               type="submit"
-              class="px-6 py-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-green-500 rounded-lg hover:bg-green-400 focus:outline-none focus:ring focus:ring-green-300 focus:ring-opacity-50"
+              class="px-6 py-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform  rounded-lg btn-bg-primary"
             >
               Iniciar sesión
             </button>
@@ -143,10 +143,7 @@ const Login = ({ logo }) => {
           ¿No tienes una cuenta?
         </span>
 
-        <a
-          href="/registro"
-          class="mx-2 text-sm font-bold text-green-500   :text-green-400 hover:underline"
-        >
+        <a href="/registro" class="mx-2 text-sm font-bold color-primary">
           Registro
         </a>
       </div>

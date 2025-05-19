@@ -42,8 +42,12 @@ export default function Header({ nombre }) {
     <header className="flex shadow-md py-1 px-4 sm:px-7 bg-white min-h-[70px] tracking-wide z-[110] fixed top-0 w-full">
       <div className="flex flex-wrap items-center justify-between gap-4 w-full relative">
         <a href="/shop/negocios">
-          <img src="/logo/logo.png" alt="logo" className="w-30 h-15" />
-        </a>{" "}
+          <img
+            src="/logo/Logo-Delivra.1.png"
+            alt="logo"
+            className="w-25 h-20"
+          />
+        </a>
         <div className="lg:hidden !ml-7 outline-none flex">
           <Hora />
         </div>
@@ -63,7 +67,7 @@ export default function Header({ nombre }) {
               <button
                 title="Pantalla Completa"
                 onClick={() => toggleFullScreen()}
-                className="text-sm text-green-600 cursor-pointer flex items-center p-2 rounded-md hover:bg-gray-100 transition duration-300 ease-in-out"
+                className="text-sm color-primary cursor-pointer flex items-center p-2 rounded-md hover:bg-gray-100 transition duration-300 ease-in-out"
               >
                 <ArrowsPointingOutIcon className="w-5 h-5" />
               </button>

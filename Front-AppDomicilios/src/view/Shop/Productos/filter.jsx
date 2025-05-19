@@ -87,7 +87,7 @@ export default function FilterProduct({
         >
           <div className="flex">
             <a href="/shop/negocios" className="mr-3">
-              <ArrowLeftCircleIcon className="w-10 text-green-400 hover:text-green-500" />
+              <ArrowLeftCircleIcon className="w-10 color-secondary hover:text-green-500" />
             </a>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 text-white">
               Productos, {Negocios.nombre}
@@ -208,8 +208,8 @@ export default function FilterProduct({
                     className={`p-2 m-1 rounded-full border text-sm font-medium transition 
                       ${
                         idProductos === item.nombre
-                          ? "bg-green-400 text-white border-green-400 shadow-md"
-                          : "bg-white text-gray-800 border-gray-300 hover:bg-green-100"
+                          ? "bg-primary text-white  shadow-md"
+                          : "bg-white text-gray-800 border-gray-300"
                       }`}
                   >
                     {item.nombre}
@@ -231,7 +231,7 @@ export default function FilterProduct({
               </div>
               <button
                 onClick={FilterButton}
-                className="w-full py-2.5 flex items-center justify-center gap-2 rounded-full bg-green-600 text-white font-semibold text-xs shadow-sm shadow-transparent transition-all duration-500 hover:bg-green-700 hover:shadow-green-200"
+                className="w-full py-2.5 flex items-center justify-center gap-2 rounded-full text-white font-semibold text-xs shadow-sm shadow-transparent transition-all duration-500 hover:shadow-green-200 btn-bg-primary"
               >
                 <MagnifyingGlassIcon className="w-4" />
                 Buscar

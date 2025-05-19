@@ -71,13 +71,13 @@ export default function Home() {
           zIndex: 0,
         }}
       />
-      <div className="relative z-10 max-w-7xl w-full mx-auto px-6 py-10">
+      <div className="relative z-10 max-w-7xl w-full mx-auto px-6 py-6">
         <div className="flex justify-end">
           <motion.a
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="py-2 px-6 inline-flex items-center gap-x-2 text-sm font-semibold rounded-full border border-green-400 bg-green-600 text-white hover:bg-green-400 hover:text-white transition-all shadow-md"
+            className="py-2 px-6 inline-flex items-center gap-x-2 text-sm font-semibold rounded-full btn-bg-primary text-white  hover:text-white transition-all shadow-md"
             href="/login"
           >
             Ingresar
@@ -105,7 +105,7 @@ export default function Home() {
         >
           <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight drop-shadow-md">
             ¡Bienvenido a{" "}
-            <span className="text-green-500">
+            <span className="color-primary">
               {empresa.nombre || "DomiExpress"}
             </span>
             !
@@ -124,7 +124,7 @@ export default function Home() {
         >
           <button
             onClick={() => handleWhatsappClick(textos, Info)}
-            className="py-2 px-6 inline-flex items-center gap-x-2 text-lg font-bold rounded-full bg-green-500 text-white hover:bg-green-600 transition-all shadow-lg"
+            className="py-2 px-6 inline-flex items-center gap-x-2 text-lg font-bold rounded-full text-white btn-bg-primary transition-all shadow-lg"
           >
             Domiciliario
             <svg

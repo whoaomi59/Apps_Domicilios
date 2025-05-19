@@ -266,7 +266,7 @@ export default function ProductosShop() {
                       </div>
                       <button
                         type="button"
-                        class="inline-flex items-center rounded-lg bg-green-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-700 "
+                        class="inline-flex items-center rounded-lg px-5 py-2.5 text-sm font-medium text-white btn-bg-primary"
                         onClick={() => addToCart(item)}
                       >
                         <ShoppingCartIcon className="-ms-2 me-2 h-5 w-5" />

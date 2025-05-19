@@ -102,11 +102,11 @@ export default function Car_Shop({ usuarios }) {
       // Validar que el número de teléfono tenga al menos 10 dígitos numéricos
       const telefonoLimpio = numerotelefono.replace(/\D/g, ""); // elimina cualquier carácter no numérico
 
-      if (telefonoLimpio.length < 10) {
+      if (telefonoLimpio.length < 10 || telefonoLimpio.length > 10) {
         setnum(true);
         return Swal.fire({
           title: "Número inválido",
-          text: "El número de teléfono debe tener al menos 10 dígitos.",
+          text: "El número de teléfono debe tener 10 dígitos.",
           icon: "warning",
         });
       }
@@ -190,7 +190,7 @@ export default function Car_Shop({ usuarios }) {
   return (
     <div className="max-w-5xl max-md:max-w-xl mx-auto p-4">
       <div className="flex">
-        <h1 className="text-2xl font-bold text-green-700">Mis Carrito</h1>
+        <h1 className="text-2xl font-bold color-primary">Mis Carrito</h1>
         <ShoppingBagIcon className="w-7 ml-2 text-gray-500" />
       </div>
 
@@ -213,7 +213,7 @@ export default function Car_Shop({ usuarios }) {
 
                   <div className="flex flex-col gap-4">
                     <div>
-                      <h3 className="text-sm sm:text-base font-semibold text-green-900">
+                      <h3 className="text-sm sm:text-base font-semibold color-primary">
                         {product.Producto}
                       </h3>
                       <p className="text-sm font-semibold text-gray-500 mt-2">
@@ -225,7 +225,7 @@ export default function Car_Shop({ usuarios }) {
                       <button
                         type="button"
                         onClick={() => handleDecreaseQuantity(index)}
-                        className="flex items-center justify-center w-5 h-5 bg-green-400 outline-none rounded-full"
+                        className="flex items-center justify-center w-5 h-5 btn-bg-primary outline-none rounded-full"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -241,7 +241,7 @@ export default function Car_Shop({ usuarios }) {
                       <button
                         type="button"
                         onClick={() => handleIncreaseQuantity(index)}
-                        className="flex items-center justify-center w-5 h-5 bg-green-800 outline-none rounded-full"
+                        className="flex items-center justify-center w-5 h-5  btn-bg-primary outline-none rounded-full"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -258,11 +258,10 @@ export default function Car_Shop({ usuarios }) {
 
                 <div className="ml-auto flex flex-col">
                   <div className="flex items-start gap-4 justify-end">
-                    {/* Botón para eliminar producto */}
                     <svg
                       onClick={() => handleRemoveProduct(index)}
                       xmlns="http://www.w3.org/2000/svg"
-                      className="w-4 h-4 cursor-pointer fill-green-400 hover:fill-red-600 inline-block"
+                      className="w-5 h-5 cursor-pointer fill-red-400 hover:fill-red-600 inline-block"
                       viewBox="0 0 24 24"
                     >
                       <path d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"></path>
@@ -275,17 +274,14 @@ export default function Car_Shop({ usuarios }) {
                   </h3>
 
                   {/* Precio total por cantidad */}
-                  <h3 className="text-sm sm:text-base font-semibold text-green-900">
+                  <h3 className="text-sm sm:text-base font-semibold color-primary ">
                     Total:{formatearCOP(product.precio * product.cantidad)}
                   </h3>
                 </div>
               </div>
             ))
           ) : (
-            /*     <p className="text-center text-gray-500">
-              No hay productos en el carrito.
-            </p> */
-            <div class={`w-full text-white bg-green-400`}>
+            <div class={`w-full text-white  bg-primary`}>
               <div
                 class={`container flex items-center justify-between px-2 py-2 mx-auto mt-2`}
               >
@@ -299,7 +295,7 @@ export default function Car_Shop({ usuarios }) {
         </div>
 
         <div className="bg-white rounded-md px-4 py-6 h-max shadow-[0_2px_12px_-3px_rgba(61,63,68,0.3)]">
-          <ul className="text-green-900 font-medium space-y-4">
+          <ul className="color-primary font-medium space-y-4">
             <li className="flex flex-wrap gap-4 text-sm">
               Numer de telefono
               <input
@@ -341,10 +337,10 @@ export default function Car_Shop({ usuarios }) {
               </select>
             </li>
 
-            <hr className="border-green-300" />
+            <hr className="border-bg-primary mb-4" />
           </ul>
 
-          <ul className="text-green-900 font-medium space-y-4">
+          <ul className="color-primary font-medium space-y-4">
             <li className="flex flex-wrap gap-4 text-sm">
               Subtotal{" "}
               <span className="ml-auto font-semibold">
@@ -363,7 +359,7 @@ export default function Car_Shop({ usuarios }) {
                 {formatearCOP(taxAmount)}
               </span>
             </li>
-            <hr className="border-green-300" />
+            <hr className="border-bg-primary" />
             <li className="flex flex-wrap gap-4 text-sm font-semibold">
               Total <span className="ml-auto">{formatearCOP(total)}</span>
             </li>
@@ -373,14 +369,14 @@ export default function Car_Shop({ usuarios }) {
             <button
               onClick={handleBuyClick}
               type="button"
-              className="text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-green-500 hover:bg-green-900 text-white rounded-md"
+              className="text-sm px-4 py-2.5 w-full font-semibold tracking-wide btn-bg-primary  text-white rounded-md"
             >
               Pedir ahora
             </button>
 
             <button
               onClick={() => Comprar()}
-              className="text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-transparent hover:bg-green-100 text-green-900 border border-green-300 rounded-md"
+              className="text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-transparent p-hover-bg-primary color-primary border border-bg-primary rounded-md"
             >
               Adicionar más
             </button>

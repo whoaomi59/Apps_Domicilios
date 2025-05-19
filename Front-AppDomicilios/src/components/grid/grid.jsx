@@ -81,7 +81,7 @@ const Grid = ({
             <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
               <button
                 type="button"
-                className="flex items-center justify-center text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 "
+                className="flex items-center justify-center text-white btn-bg-primary focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 "
                 onClick={() => {
                   setEditingItem(null);
                   setIsModalOpen(true);
@@ -96,7 +96,7 @@ const Grid = ({
         <div className="flex items-center space-x-2 p-2">
           <button
             className={`px-4 py-2 rounded ${
-              viewMode === "table" ? "bg-green-600 text-white" : "bg-gray-200"
+              viewMode === "table" ? "bg-primary text-white" : "bg-gray-200"
             }`}
             onClick={() => setViewMode("table")}
           >
@@ -104,7 +104,7 @@ const Grid = ({
           </button>
           <button
             className={`px-4 py-2 rounded ${
-              viewMode === "cards" ? "bg-green-600 text-white" : "bg-gray-200"
+              viewMode === "cards" ? "bg-primary text-white" : "bg-gray-200"
             }`}
             onClick={() => setViewMode("cards")}
           >
@@ -134,7 +134,7 @@ const Grid = ({
                     <td className="p-4 space-x-2">
                       {!buttonedit && (
                         <button
-                          className="p-2 rounded bg-green-500 text-white hover:bg-gray-400 m-0.5"
+                          className="p-2 rounded bg-primary text-white hover:bg-gray-400 m-0.5"
                           title="Editar"
                           onClick={() => {
                             setEditingItem(row);
@@ -187,7 +187,7 @@ const Grid = ({
                   <div className="flex space-x-2">
                     {!buttonedit && (
                       <button
-                        className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600"
+                        className="p-2 rounded-full bg-primary text-white hover:bg-gray-600"
                         title="Editar"
                         onClick={() => {
                           setEditingItem(row);

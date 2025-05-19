@@ -1,7 +1,51 @@
-.flexx{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin-top:200px ;
+.flexx {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 200px;
+}
+/* TEXTOS */
+.color-primary {
+  color: #5b21b6;
+}
+.color-secondary {
+  color: #facc15;
+}
+/* BOTONES */
+
+.btn-bg-primary {
+  background-color: #5b21b6;
+  color: #fff;
+}.btn-bg-primary:hover {
+  background-color: #ffcc00c9;
+  color: #f3f4f6;
+}
+/* BACGOUND */
+.bg-secondary {
+  background-color: #facc15;
+  color: #fff;
+}.bg-primary {
+  background-color: #5b21b6;
+  color: #fff;
+}
+/* EFECTOS HOVER */
+.hover-bg-primary:hover {
+  background-color: #5b21b6;
+  color: #fff;
+}
+
+.hover-bg-secondary:hover {
+  background-color: #facc15;
+  color: #f3f4f6;
+}
+/* BORDES */
+.border-bg-primary {
+  border-color: #5b21b6;
+}
+
+/* COLORES PASIVOS */
+.p-bg-primary,.p-hover-bg-primary:hover {
+  background-color: #5a21b660;
+  color: #f3f4f6;
 }
