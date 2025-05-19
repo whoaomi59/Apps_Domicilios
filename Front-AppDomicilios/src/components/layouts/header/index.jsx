@@ -45,7 +45,7 @@ export default function Header({ nombre }) {
           <img
             src="/logo/Logo-Delivra.1.png"
             alt="logo"
-            className="w-25 h-20"
+            className="w-40 h-20"
           />
         </a>
         <div className="lg:hidden !ml-7 outline-none flex">
