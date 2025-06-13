@@ -7,7 +7,7 @@ import Hora from "./Hora";
 import { useEffect, useState } from "react";
 
 export default function Header({ nombre }) {
-  useEffect(() => {
+  /*   useEffect(() => {
     const yaSono = sessionStorage.getItem("beeped");
 
     if (!yaSono) {
@@ -21,7 +21,7 @@ export default function Header({ nombre }) {
           console.error("Error al reproducir el sonido:", error);
         });
     }
-  }, []);
+  }, []); */
 
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {

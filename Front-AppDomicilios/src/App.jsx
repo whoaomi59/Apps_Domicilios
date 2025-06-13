@@ -165,7 +165,8 @@ function App() {
                     }
                   />
                 </Routes>
-                <footer className="w-full bg-gray-100 text-center py-4 mt-4 ">
+                <div className="mt-5"></div>
+                {/*   <footer className="w-full bg-gray-100 text-center py-4 mt-4 ">
                   <p className="text-sm text-gray-600">
                     Desarrollado por{" "}
                     <span className="font-semibold color-primary">
@@ -198,7 +199,7 @@ function App() {
                       Contáctame
                     </a>
                   </div>
-                </footer>
+                </footer> */}
               </>
             }
           />
