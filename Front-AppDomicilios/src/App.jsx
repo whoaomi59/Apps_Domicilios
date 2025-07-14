@@ -165,40 +165,6 @@ function App() {
                     }
                   />
                 </Routes>
-                <footer className="w-full bg-gray-100 text-center py-4 mt-4 ">
-                  <p className="text-sm text-gray-600">
-                    Desarrollado por{" "}
-                    <span className="font-semibold color-primary">
-                      [Jhon Mario Chilito]
-                    </span>{" "}
-                    — Apasionado por crear soluciones web modernas y eficientes.
-                    💻🚀
-                  </p>
-                  <div className="mt-2 flex justify-center gap-4 text-gray-500 text-sm">
-                    <a
-                      href="https://github.com/whoaomi59"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-green-600 transition"
-                    >
-                      GitHub
-                    </a>
-                    <a
-                      href="https://linkedin.com/in/jhon-mario-chilito-calderon-b3b41b20a/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-green-600 transition"
-                    >
-                      LinkedIn
-                    </a>
-                    <a
-                      href="mailto:whoaomi11@gmail.com"
-                      className="hover:text-green-600 transition"
-                    >
-                      Contáctame
-                    </a>
-                  </div>
-                </footer>
               </>
             }
           />

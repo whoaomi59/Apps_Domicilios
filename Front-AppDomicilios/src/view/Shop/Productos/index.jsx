@@ -17,7 +17,7 @@ export default function ProductosShop() {
   const [loader, setloader] = useState(false);
   const [data, setData] = useState([]);
   const [idNegocio, setidNegocio] = useState(false);
-  const [idProductos, setidproductos] = useState("Comidas");
+  const [idProductos, setidproductos] = useState("");
   const [quantityByProduct, setQuantityByProduct] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
 
