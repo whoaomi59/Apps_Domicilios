@@ -1,8 +1,8 @@
 <?php
 $host = "localhost";
-$user = "root";
-$pass = "";
-$dbname = "empresa_domicilios";
+$user = "sisottsa_db";
+$pass = "Z7QQ.PI{%0]H^3ZD";
+$dbname = "sisottsa_backonlineshop";
 
 /* $host = "localhost";
 $user = "fundac77_whoaomi";

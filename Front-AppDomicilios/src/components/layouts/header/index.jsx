@@ -4,25 +4,8 @@ import {
   KeyIcon,
 } from "@heroicons/react/16/solid";
 import Hora from "./Hora";
-import { useEffect, useState } from "react";
 
 export default function Header({ nombre }) {
-  useEffect(() => {
-    const yaSono = sessionStorage.getItem("beeped");
-
-    if (!yaSono) {
-      const audio = new Audio("/music/road-runner-beep-beep-mp3.mp3");
-      audio
-        .play()
-        .then(() => {
-          sessionStorage.setItem("beeped", "true"); // Guardamos que ya sonó
-        })
-        .catch((error) => {
-          console.error("Error al reproducir el sonido:", error);
-        });
-    }
-  }, []);
-
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch((err) => {
