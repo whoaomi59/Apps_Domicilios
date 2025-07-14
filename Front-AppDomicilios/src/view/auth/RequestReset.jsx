@@ -61,7 +61,7 @@ const RequestReset = () => {
         />
         <button
           type="submit"
-          className="w-full mt-3 bg-green-600 text-white p-2 rounded"
+          className="w-full mt-3 btn-bg-primary text-white p-2 rounded"
         >
           Enviar Enlace
         </button>
@@ -79,7 +79,7 @@ const RequestReset = () => {
           />
           <button
             type="submit"
-            className="w-full mt-3 bg-green-500 text-white p-2 rounded"
+            className="w-full mt-3 btn-bg-primary text-white p-2 rounded"
           >
             Recuperar
           </button>
