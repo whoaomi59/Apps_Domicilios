@@ -115,7 +115,7 @@ const Form = ({ isOpen, onClose, fields, onSubmit, title, initialValues }) => {
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-green-500 rounded-lg text-white hover:bg-green-600"
+              className="px-4 py-2  rounded-lg text-white btn-bg-primary"
             >
               {initialValues ? "Actualizar" : "Guardar"}
             </button>

@@ -27,6 +27,7 @@ export default function RegistroUser({ logo }) {
       onSubmit={handleFormSubmit}
       title={"Bienvenido al registro 🔑"}
       isOpen={true}
+      onClose={() => (window.location.href = "/login")}
     />
   );
 }
