@@ -4,7 +4,7 @@ import axios from "axios";
 import Loader from "../../../components/content/loader";
 import CategoriasNegocios from "./Categorias";
 
-export default function NegociosShop() {
+export default function NegociosShop({ logo }) {
   const [data, setData] = useState([]);
   const [horaActual, setHoraActual] = useState(new Date());
   const [loader, setloader] = useState(false);
@@ -58,7 +58,7 @@ export default function NegociosShop() {
 
   return (
     <section>
-      <Header setFilter={setFilter} />
+      <Header setFilter={setFilter} logo={logo} />
       <div className="mx-auto w-full max-w-7xl px-5">
         <CategoriasNegocios setFilter={setFilter} Filter={Filter} />
         <div className="grid gap-5 sm:grid-cols-2 md:grid-cols-3 md:gap-4">

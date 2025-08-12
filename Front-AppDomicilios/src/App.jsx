@@ -75,7 +75,6 @@ function App() {
       <Router>
         <Routes>
           {/* AUTENTICACIÓN */}
-
           <Route
             path="/registro"
             element={<RegistroUser logo={empresa.logo} />}
@@ -84,12 +83,19 @@ function App() {
             path="/abV4vjNRhtLWl2TzF1ZANqKDXbZLHarXF2OSpuNMHNlgza6tJwP+x8m14RnuNbwJ"
             element={<RegisterClient logo={empresa.logo} />}
           />
-
           <Route path="/login" element={<Login logo={empresa.logo} />} />
           <Route path="/request-reset/:emails" element={<RequestReset />} />
           <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/" element={<Home />} />
-
+          {/* <Route path="/" element={<Home />} /> */}
+          <Route
+            path="/"
+            element={
+              <>
+                <NavbarShop logo={empresa.logo} Roles={Rol} nombre={nombre} />
+                <NegociosShop logo={empresa.logo} />
+              </>
+            }
+          />
           {/* RUTAS PRIVADAS */}
           <Route
             path="/*"
@@ -138,7 +144,10 @@ function App() {
               <>
                 <NavbarShop logo={empresa.logo} Roles={Rol} nombre={nombre} />
                 <Routes>
-                  <Route path="/negocios" element={<NegociosShop />} />
+                  <Route
+                    path="/negocios"
+                    element={<NegociosShop logo={empresa.logo} />}
+                  />
                   <Route path="/productos/:id" element={<ProductosShop />} />
                   <Route
                     path="/car_shop"

@@ -6,7 +6,7 @@ import {
 } from "@heroicons/react/24/outline";
 import Loader from "../../../components/content/loader";
 
-export default function Header({ setFilter }) {
+export default function Header({ setFilter, logo }) {
   const [empresa, setEmpresa] = useState({});
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -62,13 +62,20 @@ export default function Header({ setFilter }) {
 
   return (
     <div className="bg-primary flex flex-col items-center justify-center py-10 px-4 sm:px-6 text-white font-sans mb-5">
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-center leading-tight">
-        Si tienes{" "}
-        <span className="font-bold color-secondary">
-          {empresa.nombre || "DomiExpress"},
-        </span>{" "}
-        tienes Todo.
-      </h1>
+      <div className="flex">
+        <div className="flex items-center">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-center leading-tight">
+            Si tienes
+          </h1>
+        </div>
+
+        <img src={logo} className="flex w-50 mr-3 ml-2" />
+        <div className="flex items-center">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-center leading-tight">
+            tienes Todo.
+          </h1>
+        </div>
+      </div>
       <div className="mt-8 w-full max-w-xl">
         <div className="relative w-full">
           <div className="flex items-center bg-white rounded-lg shadow-md overflow-hidden focus-within:ring-2 ring-green-300">
